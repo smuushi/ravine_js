@@ -1,0 +1,14 @@
+h3 {
+    text-align: center;
+    background-color: green;
+    max-width: 500px;
+}
+
+#game-canvas {
+    box-shadow: 10px 10px 20px black;
+    border-radius: 2px;
+}
+
+body {
+    background-color: rgba(109, 109, 109, 0.782);
+}
