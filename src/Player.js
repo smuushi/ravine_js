@@ -22,13 +22,16 @@ class Player {
         this.framesDrawn = 0;
 
         this.playerImage = new Image ();
-        // this.playerImage.src = "../graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
-        this.playerImage.src = 'graphics/sprites/objects/rock_in_water_01.png'
+        this.playerImage.src = "../graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
+        // this.playerImage.src = 'graphics/sprites/objects/rock_in_water_01.png'
 
         this.currentMovingDirection = null;
 
         document.addEventListener('keydown', this._keydown) // 
         document.addEventListener('keyup', this._keyup) // listener to set player current moving direction to null if they let go of a direction.
+
+        this.currentFrame = 0;
+
 
     }
 
@@ -39,19 +42,19 @@ class Player {
 
         // currentFrame = this.currentFrame % totalFrames;
 
-        // let srcX = this.currentFrame * this.tileSize / 6;
-        // let srcY = 20;
+        let srcX = this.currentFrame * 48 % 288;
+        let srcY = 208;
 
 
-        ctx.drawImage(this.playerImage, this.x, this.y, this.tileSize, this.tileSize)
+        ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x, this.y, 32, 32)
 
         
         
-        // this.framesDrawn++;
-        // if (this.framesDrawn >= 10){
-        //     this.currentFrame++;
-        //     this.framesDrawn = 0;
-        // }
+        this.framesDrawn++;
+        if (this.framesDrawn >= 10){
+            this.currentFrame++;
+            this.framesDrawn = 0;
+        }
  
     }
 
@@ -69,13 +72,16 @@ class Player {
         }
         // console.log('down')
 
-        this.move();
+        // while (!!this.currentMovingDirection) {
+            
+            
+        
     }
 
-    // _keyup =(event) => {
-    //     // console.log('up')
-    //     this.currentMovingDirection = null;
-    // }
+    _keyup =(event) => {
+        // console.log('up')
+        this.currentMovingDirection = null;
+    }
 
     
 
@@ -84,8 +90,11 @@ class Player {
     }
 
     move() {
-        this.y = this.currentMovingDirection[1]*10 + this.y;
-        this.x = this.currentMovingDirection[0]*10 + this.x;
+
+        if (!!this.currentMovingDirection){
+            this.y = this.currentMovingDirection[1]* this.velocity + this.y;
+            this.x = this.currentMovingDirection[0]* this.velocity + this.x;
+        }
         // console.log(this.x)
         // console.log(this.y)
         // console.log(this.currentMovingDirection)

@@ -6,6 +6,8 @@ class TileMap {
         this.tileSize = tileSize;
         this.grass = new Image();
         this.grass.src = "../graphics/sprites/tilesets/grass.png"
+        this.water = new Image();
+        this.water.src = '../graphics/sprites/tilesets/water2.png'
     }
     
     // P = player
@@ -44,6 +46,9 @@ class TileMap {
                     // this._drawGrass, but also render the player or something so that I can use a player to manip..
                     this._drawGrass(ctx, col, row, this.tileSize);
                     // this.getPlayer()
+                } else if (tile === "W") {
+                    this._drawWater(ctx, col, row, this.tileSize);
+            
 
                 } else {
                     // debugger
@@ -51,6 +56,10 @@ class TileMap {
                 }
             }
         }
+    }
+
+    _drawWater (ctx, col, row, size) {
+        ctx.drawImage(this.water, col * this.waterSize, row * this.tileSize, size, size)
     }
 
     _drawGrass (ctx, col, row, size) {
