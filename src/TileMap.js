@@ -106,7 +106,7 @@ class TileMap {
             for (let col = 0; col < this.theMap[row].length; col++) {
                 let tile = this.theMap[row][col];
                 if (tile === "Wr") {
-                    let rock = new EnvObject(col * this.tileSize, col * this.tileSize, this.tileSize, 0, this.tileMap)
+                    let rock = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this)
                     objectsCollection.push(rock);
                     console.log(objectsCollection)
                 }

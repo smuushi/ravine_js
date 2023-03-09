@@ -31,6 +31,13 @@ Tuesday - Implementing random generation of resources to pick up as well as a fu
 
 Wednesday - Implementing enemy obstacles that will seek out the player. 
 
+############
+
+Basic Wireframe
+
+
+![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/wireframe.png?raw=true)
+
 
 
 

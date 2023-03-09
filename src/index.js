@@ -16,6 +16,8 @@ const theTileMapInstance = new TileMap(tileSize);
 const player = theTileMapInstance.getPlayer(1);
 
 const envObjects = theTileMapInstance.getObjects();
+console.log(envObjects);
+// debugger
 
 
 function gameRender() { // layer draw calls to create layers

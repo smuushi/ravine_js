@@ -4,7 +4,7 @@ class EnvObject {
 
     //let rock = new EnvObject(col * this.tileSize, col * this.tileSize, this.tileSize, this.tileMap)
      
-    constructor(x, y, tileSize, velocity, tileMap, hitboxXOffset, hitboxYOffset) {
+    constructor(x, y, tileSize, velocity, tileMap, hitboxXOffset = 0, hitboxYOffset = 0) {
         this.x = x;
         this.y = y;
         this.tileSize = tileSize;

@@ -20,7 +20,7 @@ class Hitbox { // hitbox logic...
         this.collisionState = false;
 
         this.debugImage = new Image();
-        this.debugImage.src = '../graphics/sprites/objects/chest_01.png';
+        this.debugImage.src = '../graphics/debug.png';
 
     }
 
