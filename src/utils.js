@@ -6,7 +6,7 @@ class Hitbox { // hitbox logic...
                // 
                // Currently thinking of adding an x and y offset so I can attach accurate hitboxes to all the game assets.
                // whenever a new object is made, hitboxes are tied to it through a callback. 
-    constructor(x, y, width, height, xOffset, yOffset){
+    constructor(x, y, width, height, xOffset = 0, yOffset = 0){
 
         this.x = x;
         this.y = y;

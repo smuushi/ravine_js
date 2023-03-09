@@ -22,14 +22,18 @@ Regarding enemies and progression:
 
 Implementation Timeline
 
-Friday Afternoon and Weekend - establish player movement and collision detection.. ie. Player cannot move out of bounds and cannot move into a rock object.. 
-This will necessitate map rendering logic as well as creating the class skeletons for a moveable player and stationary objects. 
+Friday Afternoon and Weekend 
+- establish player movement and collision detection.. ie. Player cannot move out of bounds and cannot move into a rock object.. 
+- This will necessitate map rendering logic as well as creating the class skeletons for a moveable player and stationary objects. 
 
-Monday - Implementing food aquisition and keep track of health. Creating a food object that the player can interact with and increase their hunger/health attribute. 
+Monday 
+- Implementing food aquisition and keep track of health. Creating a food object that the player can interact with and increase their hunger/health attribute. 
 
-Tuesday - Implementing random generation of resources to pick up as well as a functionality to cycle days. 
+Tuesday 
+- Implementing random generation of resources to pick up as well as a functionality to cycle days. 
 
-Wednesday - Implementing enemy obstacles that will seek out the player. 
+Wednesday 
+- Implementing enemy obstacles that will seek out the player. 
 
 ############
 
@@ -37,6 +41,24 @@ Basic Wireframe
 
 
 ![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/wireframe.png?raw=true)
+
+
+
+############
+
+Class Structure 
+
+- In order to keep track of all entities and functionality, this project will attempt to approach the design through an 'object oriented programming' philosophy. By keeping track of the various instances and how they interact and are related to each other, this should allow for a smoother development. 
+
+- Players will interact with environmental objects like rocks as well as other entities like enemies. Player, EnvObjects, Enemy. 
+- All three of these classes will be constructed, rendered, and interact in environemnt of the tilemap. 
+- When needed, these classes will pull common functionality like movement and hitbox collision from the utilities section that is outside of the tilemap. 
+
+
+Basic Class Structure Wireframe
+
+![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/classwireframe.png?raw=true)
+
 
 
 
