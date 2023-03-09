@@ -10,6 +10,7 @@ class EnvObject {
         this.x = x;
         this.y = y;
         this.tileSize = tileSize;
+
         this.velocity = velocity;
         this.tileMap = tileMap;
 

@@ -1,6 +1,6 @@
-import TileMap from "./TileMap.js"
-import Player from './Player.js'
-import Hitbox from './utils.js'
+import TileMap from "./scripts/TileMap";
+// import Player from './scripts/Player';
+// import Hitbox from './scripts/utils';
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
     console.log('hello world')
