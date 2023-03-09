@@ -1,8 +1,8 @@
-import Player from './Player.js'
+import Player from './Player'
 
-import HitBox from './utils.js';
+import HitBox from './utils';
 
-import EnvObject from './EnvObject.js'
+import EnvObject from './EnvObject'
 
 class TileMap {
     
