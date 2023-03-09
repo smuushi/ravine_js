@@ -24,7 +24,7 @@ class Player {
         this.framesDrawn = 0;
 
         this.playerImage = new Image ();
-        this.playerImage.src = "../graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
+        this.playerImage.src = "../../graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
         // this.playerImage.src = '../graphics/sprites/objects/rock_in_water_01.png'
 
         this.currentMovingDirection = null;
