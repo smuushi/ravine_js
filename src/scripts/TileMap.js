@@ -9,11 +9,11 @@ class TileMap {
     constructor(tileSize) {
         this.tileSize = tileSize;
         this.grass = new Image();
-        this.grass.src = "../graphics/sprites/tilesets/grass.png"
+        this.grass.src = "./src/graphics/sprites/tilesets/grass.png"
         this.water = new Image();
-        this.water.src = '../graphics/sprites/tilesets/water2.png'
+        this.water.src = './src/graphics/sprites/tilesets/water2.png'
         this.wro = new Image();
-        this.wro.src = '../graphics/sprites/objects/rock_in_water_01.png'
+        this.wro.src = './src/graphics/sprites/objects/rock_in_water_01.png'
     }
 
     

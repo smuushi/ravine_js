@@ -24,7 +24,7 @@ class Hitbox { // hitbox logic...
         this.collisionState = false;
 
         this.debugImage = new Image();
-        this.debugImage.src = '../graphics/debug.png';
+        this.debugImage.src = './src/graphics/debug.png';
 
         // ALLHITBOXESMADE.push(this);
         // console.log(ALLHITBOXESMADE);
