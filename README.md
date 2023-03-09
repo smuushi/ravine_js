@@ -1,5 +1,7 @@
 # ravine_js
 
+[Live Link](https://smuushi.github.io/ravine_js/)
+
 In this pure javascript app, the user will be able to control a player that can move around in an environment. The goal is to survive as many days as possible on the map. Each day in the wildnerness, the map will spawn more enemies and resources that you have to collect in order to survive each day. 
 
 Functionalities of the app include:
