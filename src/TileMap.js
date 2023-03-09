@@ -1,6 +1,6 @@
 import Player from './Player.js'
 
-import HitBox from './utils.js'
+import HitBox from './utils.js';
 
 import EnvObject from './EnvObject.js'
 
