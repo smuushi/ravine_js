@@ -23,7 +23,7 @@ class Player {
 
         this.playerImage = new Image ();
         this.playerImage.src = "../graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
-        // this.playerImage.src = 'graphics/sprites/objects/rock_in_water_01.png'
+        // this.playerImage.src = '../graphics/sprites/objects/rock_in_water_01.png'
 
         this.currentMovingDirection = null;
 
@@ -87,7 +87,7 @@ class Player {
         
         
         this.framesDrawn++;
-        if (this.framesDrawn >= 10){
+        if (this.framesDrawn >= 12){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -132,7 +132,7 @@ class Player {
             this.y = this.currentMovingDirection[1]* this.velocity + this.y;
             this.x = this.currentMovingDirection[0]* this.velocity + this.x;
         }
-        console.log([this.x, this.y])
+        // console.log([this.x, this.y])
         // console.log(this.x)
         // console.log(this.y)
         // console.log(this.currentMovingDirection)
