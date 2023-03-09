@@ -1,3 +1,7 @@
+
+// const ALLHITBOXESMADE = []
+
+
 class Hitbox { // hitbox logic... 
                // track x, y positions in the game world. 
                // track height and width of the hitbox. 
@@ -22,12 +26,19 @@ class Hitbox { // hitbox logic...
         this.debugImage = new Image();
         this.debugImage.src = '../graphics/debug.png';
 
+        // ALLHITBOXESMADE.push(this);
+        // console.log(ALLHITBOXESMADE);
+
     }
+
+    
 
     _debugDraw(ctx) {
         // debugger
         ctx.drawImage(this.debugImage, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
     }
+
+
 
 }
 

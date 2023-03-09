@@ -1,6 +1,13 @@
-console.log('hellos from index')
 import TileMap from "./TileMap.js"
 import Player from './Player.js'
+import Hitbox from './utils.js'
+document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
+
+    console.log('hello world')
+
+
+
+console.log('hellos from index')
 
 // game info so far... 
 // map size will be 30 x 20 squares. 
@@ -16,7 +23,7 @@ const theTileMapInstance = new TileMap(tileSize);
 const player = theTileMapInstance.getPlayer(1);
 
 const envObjects = theTileMapInstance.getObjects();
-console.log(envObjects);
+console.log(player);
 // debugger
 
 
@@ -26,7 +33,12 @@ function gameRender() { // layer draw calls to create layers
     player.animate(ctx)
     // console.log("hello")
     player.move();
+
+    
+    //below lines will draw hitboxes.. comment them out to disable hitbox rendering
+    player.hitbox._debugDraw(ctx)
     envObjects.forEach((obj) => obj.drawHitboxes(ctx));
+    // console.log(ALLHITBOXESMADE);
 }
 
 theTileMapInstance.setCanvasSize(canvas);
@@ -41,3 +53,11 @@ setInterval(gameRender, 1000/75);
 // separate player class. with a hitbox instance tied on an attribute. 
 // separate envionmental objects class. with a hitbox also tied. 
 // 
+
+// to do list: 
+// write out hitbox collision detection logic and refactor player.move() code to account. 
+// current problem is that in order to update collision, I need to iterate through all combinations of 
+// hitboxes... so I need to find a way of collecting them as they're created... 
+// look up a way of exporting an updatable class constant that I can use in the gameRender callback.
+
+})

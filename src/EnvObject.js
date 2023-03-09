@@ -1,5 +1,7 @@
 import Hitbox from "./utils.js";
 
+
+
 class EnvObject {
 
     //let rock = new EnvObject(col * this.tileSize, col * this.tileSize, this.tileSize, this.tileMap)
@@ -12,6 +14,7 @@ class EnvObject {
         this.tileMap = tileMap;
 
         this.hitboxes = new Hitbox(this.x, this.y, this.tileSize, this.tileSize, hitboxXOffset, hitboxYOffset);
+        
     }
 
     drawHitboxes(ctx) { // for debugging to see a semitransparent hitbox on all env objects like a rock.

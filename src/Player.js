@@ -5,6 +5,8 @@ const DIRS = [
     [-1,0]
 ]
 
+import Hitbox from "./utils.js";
+
 class Player {
     
     constructor(x, y, tileSize, velocity, tileMap) {
@@ -33,6 +35,8 @@ class Player {
         this.currentFrame = 0;
 
         this.lastMovingDirection;
+
+        this.hitbox = new Hitbox(this.x, this.y, this.tileSize, this.tileSize, -1, -4)
 
     }
 
@@ -72,12 +76,12 @@ class Player {
         if (this.currentMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 1, this.y -15, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x + 1, this.y -15, -32, 32)
             ctx.restore();
         } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 1, this.y -15, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x, this.y -15, -32, 32)
             ctx.restore();
         } else { 
             // ctx.save()
@@ -131,6 +135,8 @@ class Player {
         if (!!this.currentMovingDirection){
             this.y = this.currentMovingDirection[1]* this.velocity + this.y;
             this.x = this.currentMovingDirection[0]* this.velocity + this.x;
+            this.hitbox.x = this.x;
+            this.hitbox.y = this.y;
         }
         // console.log([this.x, this.y])
         // console.log(this.x)
