@@ -72,16 +72,16 @@ class Player {
         if (this.currentMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 16, this.y, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 1, this.y -15, -32, 32)
             ctx.restore();
         } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 16, this.y, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 1, this.y -15, -32, 32)
             ctx.restore();
         } else { 
             // ctx.save()
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x, this.y, 32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x -17, this.y -15, 32, 32)
             // ctx.restore()
         }    
         
