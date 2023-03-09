@@ -32,6 +32,7 @@ class Player {
 
         this.currentFrame = 0;
 
+        this.lastMovingDirection;
 
     }
 
@@ -43,11 +44,46 @@ class Player {
         // currentFrame = this.currentFrame % totalFrames;
 
         let srcX = this.currentFrame * 48 % 288;
-        let srcY = 208;
+        let srcY;
 
+        // switch(srcY) {
+        if (this.currentMovingDirection === DIRS[2]){ // right
+            srcY = 208;
+        } else if (this.currentMovingDirection === DIRS[0]){ // up
+            srcY = 255;
+        } else if (this.currentMovingDirection === DIRS[1]){ // down
+            srcY = 158;
+        } else if (this.currentMovingDirection === DIRS[3]){ // left
+            srcY = 208;  
+            srcX = (this.currentFrame * 48 % 288) * 1
+        } else {
+            if (this.lastMovingDirection === DIRS[2]){        // right idle
+                srcY = 64;
+            } else if (this.lastMovingDirection === DIRS[0]){ // up idle
+                srcY = 110;
+            } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
+                srcY = 64;
+            } else {                                          // down idle
+                srcY = 16;
+            }
+        }
 
-        ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x, this.y, 32, 32)
-
+        // really ugly code to mirror the right animation run.. :T
+        if (this.currentMovingDirection === DIRS[3]) {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 16, this.y, -32, 32)
+            ctx.restore();
+        } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x - 16, this.y, -32, 32)
+            ctx.restore();
+        } else { 
+            // ctx.save()
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x, this.y, 32, 32)
+            // ctx.restore()
+        }    
         
         
         this.framesDrawn++;
@@ -80,6 +116,7 @@ class Player {
 
     _keyup =(event) => {
         // console.log('up')
+        this.lastMovingDirection = this.currentMovingDirection;
         this.currentMovingDirection = null;
     }
 
@@ -95,6 +132,7 @@ class Player {
             this.y = this.currentMovingDirection[1]* this.velocity + this.y;
             this.x = this.currentMovingDirection[0]* this.velocity + this.x;
         }
+        console.log([this.x, this.y])
         // console.log(this.x)
         // console.log(this.y)
         // console.log(this.currentMovingDirection)

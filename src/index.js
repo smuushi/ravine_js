@@ -11,14 +11,14 @@ const ctx = canvas.getContext('2d'); // all rendering takes place on the ctx.
 
 const tileSize = 16;
 const theTileMapInstance = new TileMap(tileSize);
-const player = theTileMapInstance.getPlayer(2)
+const player = theTileMapInstance.getPlayer(1)
 
 
 function gameLoop() { // layer draw calls to create layers
     theTileMapInstance.draw(ctx)
     // debugger
     player.animate(ctx)
-    console.log("hello")
+    // console.log("hello")
     player.move();
 }
 

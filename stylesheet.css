@@ -1,14 +1,30 @@
 h3 {
     text-align: center;
-    background-color: green;
+    /* background-color: green; */
     max-width: 500px;
+}
+
+.mainheader {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(15, 99, 12);
+    margin: 10px;
+    max-width: 480px;
+    min-width: 480px;
+    border-radius: 5px;
 }
 
 #game-canvas {
     box-shadow: 10px 10px 20px black;
     border-radius: 2px;
+    margin: 10px;
+    border-radius: 5px;
+
 }
 
 body {
+    
     background-color: rgba(109, 109, 109, 0.782);
+    
+
 }
