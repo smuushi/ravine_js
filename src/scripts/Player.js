@@ -36,7 +36,7 @@ class Player {
 
         this.lastMovingDirection;
 
-        this.hitbox = new Hitbox(this.x, this.y, this.tileSize - 3, this.tileSize - 1, 1, -4)
+        this.hitbox = new Hitbox(this.x, this.y, this.tileSize -4, this.tileSize -3.5, 1.5, -4)
 
         if (!Player.prototype.keyss){
             Player.prototype.keyss = {}
@@ -191,8 +191,8 @@ class Player {
                 
                 while (this.hitbox.collisionState === true) {
                     // debugger
-                    this.y = this.currentMovingDirection[1]*(-3)* this.velocity + this.y; 
-                    this.x = this.currentMovingDirection[0]*(-3)* this.velocity + this.x;
+                    this.y = this.currentMovingDirection[1]*(-1)* this.velocity + this.y; 
+                    this.x = this.currentMovingDirection[0]*(-1)* this.velocity + this.x;
                     this.hitbox.x = this.x;
                     this.hitbox.y = this.y;
                     Hitbox.updateCollisionStateToTrueIfColliding();
@@ -212,7 +212,7 @@ class Player {
             }
 
 
-            // console.log([this.x, this.y])
+            console.log([this.x, this.y])
             // console.log(this.x)
             // console.log(this.y)
             // console.log(this.currentMovingDirection)
