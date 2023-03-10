@@ -1,6 +1,6 @@
 import TileMap from "./scripts/TileMap";
-// import Player from './scripts/Player';
-// import Hitbox from './scripts/utils';
+import Player from './scripts/Player';
+import Hitbox from './scripts/utils';
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
     console.log('hello world')
@@ -26,6 +26,7 @@ const envObjects = theTileMapInstance.getObjects();
 console.log(player);
 // debugger
 
+const hitboxes = Hitbox.prototype.ALLHITBOXESMADE;
 
 function gameRender() { // layer draw calls to create layers
     theTileMapInstance.draw(ctx)
@@ -36,9 +37,14 @@ function gameRender() { // layer draw calls to create layers
 
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-    // player.hitbox._debugDraw(ctx)
-    // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
-    // console.log(ALLHITBOXESMADE);
+        player.hitbox._debugDraw(ctx)
+        envObjects.forEach((obj) => obj.drawHitboxes(ctx));
+    // console.log(hitboxes);
+    Hitbox.updateCollisionStateToTrueIfColliding();
+    
+    
+
+
 }
 
 theTileMapInstance.setCanvasSize(canvas);
