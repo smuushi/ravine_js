@@ -36,8 +36,8 @@ function gameRender() { // layer draw calls to create layers
 
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-    player.hitbox._debugDraw(ctx)
-    envObjects.forEach((obj) => obj.drawHitboxes(ctx));
+    // player.hitbox._debugDraw(ctx)
+    // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
     // console.log(ALLHITBOXESMADE);
 }
 
