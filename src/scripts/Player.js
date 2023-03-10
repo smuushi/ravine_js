@@ -124,6 +124,12 @@ class Player {
         // console.log('down')
 
         // while (!!this.currentMovingDirection) {
+
+        // debugger
+        if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
+            this.tileMap.shakeStatus = true;
+            setTimeout(() => this.tileMap.shakeStatus = false, 300)
+        }
             
             
         
@@ -131,40 +137,51 @@ class Player {
 
     _keyup = (event) => {
         Player.prototype.keyss[event.code] = null;
-
-        console.log('key was let go')
-        // console.log('up')
-        // this.lastLastMovingDirectionLmao = this.lastMovingDirection; // this doesn't work lol
-        // note here.. attempting to make movement more fluid.. 
-
-
-        this.lastMovingDirection = this.currentMovingDirection;
-        
-        this.currentMovingDirection = null;
-
-        if (Object.values(Player.prototype.keyss).some((val) => !!val)){
-            
-            let stillHeldKey;
-            Object.values(Player.prototype.keyss).forEach((value) => {
-                if (!!value) {
-                    stillHeldKey = value
-                }
-            })
-            // console.log(stillHeldKey)
-
-            if (stillHeldKey === 'ArrowUp'){
-                this.currentMovingDirection = DIRS[0];
-            } else if ((stillHeldKey) === 'ArrowDown'){
-                this.currentMovingDirection = DIRS[1];
-            } else if ((stillHeldKey)=== 'ArrowLeft'){
-                this.currentMovingDirection = DIRS[3];
-            } else if ((stillHeldKey) === 'ArrowRight'){
-                // debugger
-                this.currentMovingDirection = DIRS[2];
+        // debugger
+        if (event.code === 'Space') {
+            if (this.tileMap.shakeStatus === true) {
+                this.tileMap.shakeStatus = false;
             }
+        } else {
 
-            // console.log(this.currentMovingDirection)
+            console.log('key was let go')
+            // console.log('up')
+            // this.lastLastMovingDirectionLmao = this.lastMovingDirection; // this doesn't work lol
+            // note here.. attempting to make movement more fluid.. 
+
+            // if (!!this.currentMovingDirection){
+                this.lastMovingDirection = this.currentMovingDirection;
+            // }
+            
+            
+                this.currentMovingDirection = null;
+            
+
+            if (Object.values(Player.prototype.keyss).some((val) => !!val)){
+                
+                let stillHeldKey;
+                Object.values(Player.prototype.keyss).forEach((value) => {
+                    if (!!value) {
+                        stillHeldKey = value
+                    }
+                })
+                // console.log(stillHeldKey)
+
+                if (stillHeldKey === 'ArrowUp'){
+                    this.currentMovingDirection = DIRS[0];
+                } else if ((stillHeldKey) === 'ArrowDown'){
+                    this.currentMovingDirection = DIRS[1];
+                } else if ((stillHeldKey)=== 'ArrowLeft'){
+                    this.currentMovingDirection = DIRS[3];
+                } else if ((stillHeldKey) === 'ArrowRight'){
+                    // debugger
+                    this.currentMovingDirection = DIRS[2];
+                }
+
+                // console.log(this.currentMovingDirection)
+            }
         }
+
     }
 
     

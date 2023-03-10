@@ -22,6 +22,11 @@ class TileMap {
 
         this.objectsImage = new Image();
         this.objectsImage.src = './src/graphics/sprites/objects/objects.png'
+
+        this.shakeFactor = 1;
+        this.shakeStatus = false;
+
+        this.currentFrame = 0;
         
     }
 
@@ -89,7 +94,7 @@ class TileMap {
                 } else if (tile === "R1") {
                     this._drawObject(ctx, 0, 16, 16, 16, row, col)
                 } else if (tile === "Ta") {
-                    this._drawObject(ctx, 50, 146, 47, 64, row, col)  
+                    this._drawObject(ctx, 50, 146, 47, 64, row, col, tile)  
                 } else {
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
@@ -102,9 +107,16 @@ class TileMap {
         ctx.drawImage(this.map1, 0, 0)
     }
 
-    _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col) {
-        ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth, cropSizeHeight, col*this.tileSize, row*this.tileSize, cropSizeWidth, cropSizeHeight)
+    _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col, tileType) {
+        if (tileType === "Ta" && this.shakeStatus === true && (this.currentFrame % 3 === 0 || this.currentFrame % 10 === 0 || this.currentFrame % 11 === 0 || this.currentFrame % 12 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 14 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 15 === 0)){
+            ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth - 1, cropSizeHeight, col*this.tileSize + (3-Math.floor(Math.random() * 10)/3), row*this.tileSize + Math.random(), cropSizeWidth, cropSizeHeight)
+        } else {
+            ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth, cropSizeHeight, col*this.tileSize, row*this.tileSize, cropSizeWidth, cropSizeHeight)
+        }
+        this.currentFrame++;
     } // drawing a specific object needs to have a hardcoded srcX and srcY, and also a hard coded cropsize. 
+      // specific drawing animations done here.... could maybe move this to the object instance,
+      // but this would require an extra reorganization.. 
 
     _drawWater (ctx, srcX, srcY, col, row, size) {
         ctx.drawImage(this.water, srcX, srcY, size, size, col * this.tileSize, row * this.tileSize, size, size)
