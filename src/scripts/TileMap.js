@@ -17,8 +17,13 @@ class TileMap {
         this.wro = new Image();
         this.wro.src = './src/graphics/sprites/objects/rock_in_water_01.png'
 
-        this.map1 = new Image();
-        this.map1.src = './src/graphics/maps/map1frame1.png'
+        this.map1 = {0 :new Image(), 1: new Image(), 2: new Image(), 3: new Image(), 4: new Image(), 5: new Image()};
+        this.map1[0].src = './src/graphics/maps/map1frame1.png'
+        this.map1[1].src = './src/graphics/maps/map1frame2.png'
+        this.map1[2].src = './src/graphics/maps/map1frame3.png'
+        this.map1[3].src = './src/graphics/maps/map1frame4.png'
+        this.map1[4].src = './src/graphics/maps/map1frame5.png'
+        this.map1[5].src = './src/graphics/maps/map1frame6.png'
 
         this.objectsImage = new Image();
         this.objectsImage.src = './src/graphics/sprites/objects/objects.png'
@@ -26,7 +31,10 @@ class TileMap {
         this.shakeFactor = 1;
         this.shakeStatus = false;
 
+
         this.currentFrame = 0;
+        this.framesDrawn = 0;
+
         
     }
 
@@ -58,8 +66,18 @@ class TileMap {
 
     draw(ctx) {
         // debugger
+        // adding some more if then logic to render background map animations so that it
+        // doesn't feel like we're on a floating landmass lmao.
 
-        this._drawBaseMap(ctx);
+                            this.framesDrawn = this.framesDrawn + Math.floor(Math.random()*10);
+                            if (this.framesDrawn >= 45){
+                                this.currentFrame++;
+                                this.framesDrawn = 0;
+                            }
+
+
+
+        this._drawBaseMap(ctx); 
 
         for (let row = 0; row < this.theMap1.length; row++) {
             for (let col = 0; col < this.theMap1[row].length; col++) {
@@ -104,7 +122,10 @@ class TileMap {
     }
 
     _drawBaseMap (ctx) {
-        ctx.drawImage(this.map1, 0, 0)
+        
+        let frameNum = this.currentFrame % 6
+
+        ctx.drawImage(this.map1[frameNum], 0, 0)
     }
 
     _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col, tileType) {
@@ -113,7 +134,7 @@ class TileMap {
         } else {
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth, cropSizeHeight, col*this.tileSize, row*this.tileSize, cropSizeWidth, cropSizeHeight)
         }
-        this.currentFrame++;
+        // this.currentFrame;
     } // drawing a specific object needs to have a hardcoded srcX and srcY, and also a hard coded cropsize. 
       // specific drawing animations done here.... could maybe move this to the object instance,
       // but this would require an extra reorganization.. 
