@@ -1,4 +1,4 @@
-const DIRS = [
+const DIRS = [ // directions made here to refer to. 
     [0, -1],
     [0, 1],
     [1, 0],
@@ -27,12 +27,15 @@ class Player {
         this.playerImage.src = "./src/graphics/sprites/characters/player.png" // idk how to use sprite sheets.. so I used the rock... 
         // this.playerImage.src = '../graphics/sprites/objects/rock_in_water_01.png'
 
+        this.dust = new Image();
+        this.dust.src = './src/graphics/sprites/particles/dust_particles_01.png'
+        
         this.currentMovingDirection = null;
 
         document.addEventListener('keydown', this._keydown) // 
         document.addEventListener('keyup', this._keyup) // listener to set player current moving direction to null if they let go of a direction.
 
-        this.currentFrame = 0;
+        // this.currentFrame = 0; // why is there a duplicate here??? idk lmaoo 
 
         this.lastMovingDirection;
 
@@ -100,8 +103,11 @@ class Player {
             this.currentFrame++;
             this.framesDrawn = 0;
         }
+
+        
  
     }
+
 
 
     _keydown = (event) => {
@@ -186,11 +192,17 @@ class Player {
 
     
 
-    draw(ctx) {
+    _drawDust(ctx) {
         // ctx.drawImage(this)
+        console.log(ctx)
+
+        ctx.drawImage(this.dust, this.x + 1, this.y -15)
+        // wanted to implement a dust particle effect while moving... but too much work for nothing..
+        // need to focus more on functionality at this beginning state.. Can come back later maybe. 
+
     }
 
-    move() {
+    move(ctx) { // move takes in a context to call movement specific additional drawings like dust particles. 
 
         if (Object.values(Player.prototype.keyss).some((val) => !!val) ){
 
@@ -215,7 +227,11 @@ class Player {
                     Hitbox.updateCollisionStateToTrueIfColliding();
 
                     // debugger
+                    return
                 }
+
+                // this._drawDust(ctx); // see note in _drawDust.
+
                 // if (this.hitbox.collisionState === true) {
                 //     // debugger
                 //     this.y = this.currentMovingDirection[1]*(-1)* this.velocity + this.y; 

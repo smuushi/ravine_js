@@ -4,6 +4,8 @@ import HitBox from './utils';
 
 import EnvObject from './EnvObject'
 
+import Consumable from './Consumable';
+
 class TileMap {
     
     constructor(tileSize) {
@@ -14,8 +16,14 @@ class TileMap {
         this.grass.src = "./src/graphics/sprites/tilesets/grass.png"
         this.water = new Image();
         this.water.src = './src/graphics/sprites/tilesets/water2.png'
-        this.wro = new Image();
-        this.wro.src = './src/graphics/sprites/objects/rock_in_water_01.png'
+        this.wro = [new Image(), new Image(), new Image(), new Image(), new Image(), new Image()]
+        this.wro[0].src = './src/graphics/sprites/objects/rock_in_water_01.png'
+        this.wro[1].src = './src/graphics/sprites/objects/rock_in_water_02.png'
+        this.wro[2].src = './src/graphics/sprites/objects/rock_in_water_03.png'
+        this.wro[3].src = './src/graphics/sprites/objects/rock_in_water_04.png'
+        this.wro[4].src = './src/graphics/sprites/objects/rock_in_water_05.png'
+        this.wro[5].src = './src/graphics/sprites/objects/rock_in_water_06.png'
+
 
         this.map1 = {0 :new Image(), 1: new Image(), 2: new Image(), 3: new Image(), 4: new Image(), 5: new Image()};
         this.map1[0].src = './src/graphics/maps/map1frame1.png'
@@ -43,25 +51,25 @@ class TileMap {
     // P = player
     theMap1 = [
         [' ',  ' ',  ' ',  ' ',  ' ','  ','BN','BN', 'BN','BN','BN','BN','  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Ta', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '  ', 'Wr',  ' ', 'BN','BN', ' ', ' ',  ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '  ', '  ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','BN', ' ','  ','BN','  ', ' ','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
+        [' ', '  ', 'Wr',  ' ', 'BN','BN', ' ', ' ',  ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', '  ', '  ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','BN', ' ','  ','BN','  ','Wr','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
         [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
         [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
-        [' ',  ' ',  ' ', 'BN',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ','BN', ' ', ' '],
+        [' ', 'Wr',  ' ', 'BN',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','  ','BN', ' ', ' '],
-        [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BC',  'P',  ' ', ' ', ' ', ' ', 'R1','R2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ','BC','BN', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ','BN', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ', ' ', ' ','BN', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ', ' ', ' ','BN','Wr', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'BC',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
         [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
-        [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     ]
 
     draw(ctx) {
@@ -144,7 +152,8 @@ class TileMap {
     }
 
     _drawWro (ctx, col, row, size) {
-        ctx.drawImage(this.wro, col * this.tileSize, row *this.tileSize, size, size)
+        let frameNum = this.currentFrame % 6;
+        ctx.drawImage(this.wro[frameNum], col * this.tileSize, row *this.tileSize, size, size)
     }
 
     _drawGrass (ctx, col, row, size) {
@@ -187,6 +196,8 @@ class TileMap {
                 } else if (tile === "Ta") {
                     let tree = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 23, 0, this, 3, 8)
                     objectsCollection.push(tree);
+                } else if (tile === "Co") {
+                    let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 0, -3)
                 }
 
                 

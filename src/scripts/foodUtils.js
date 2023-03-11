@@ -1,17 +1,10 @@
+import Hitbox from "./utils"
 
+class PassableHitbox {
 
-// const ALLHITBOXESMADE = [];
-
-class Hitbox { // hitbox logic... 
-    // track x, y positions in the game world. 
-    // track height and width of the hitbox. 
-    // MUST loop through all combinations of hitboxes to detect collisions. 
-    // isColliding(target, checkingWith) => `target.collisionState = true` && return true if target and checking with colliding.
-    // 
-    // Currently thinking of adding an x and y offset so I can attach accurate hitboxes to all the game assets.
-    // whenever a new object is made, hitboxes are tied to it through a callback. 
     constructor(x, y, width, height, xOffset = 0, yOffset = 0){
-        
+
+        // debugger
         this.x = x;
         this.y = y;
         
@@ -21,22 +14,23 @@ class Hitbox { // hitbox logic...
         this.width = width;
         this.height = height;
         
-        this.collisionState = false;
+        this.detectionState = false;
         
         this.debugImage = new Image();
         this.debugImage.src = './src/graphics/debug.png';
         
-        if (!Hitbox.prototype.ALLHITBOXESMADE){
-            Hitbox.prototype.ALLHITBOXESMADE = []
+
+        if (!Hitbox.prototype.PASSABLEHITBOXES){
+            Hitbox.prototype.PASSABLEHITBOXES = []
         }
 
-        Hitbox.prototype.ALLHITBOXESMADE.push(this);
-        // console.log(ALLHITBOXESMADE);
-        
+        Hitbox.prototype.PASSABLEHITBOXES.push(this);
+
+        console.log(Hitbox.prototype.PASSABLEHITBOXES)
     }
 
 
-    static updateCollisionStateToTrueIfColliding() { 
+    static updateDetectionStateToTrueIfDetecting() { 
         // if any hitboxes overlap, update their collision state to true,
         // else do nothing... need to use separate functions because
         // a collision may be detected early in this loop. 
@@ -64,7 +58,7 @@ class Hitbox { // hitbox logic...
 
     }
 
-    static _anyCollision(box1, box2) {
+    static _anyDetection(box1, box2) {
         // check to see if the positional coordinate is greater than the (other positional coordinate + that thing's dimesions..)
         // return false if ^ is true... 
         // else return true! hehe
@@ -89,10 +83,10 @@ class Hitbox { // hitbox logic...
 
     _debugDraw(ctx) {
         // debugger
-        if (this.collisionState === false){
+        if (this.detectionState === false){
             ctx.filter = 'none'
             ctx.drawImage(this.debugImage, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
-        } else if (this.collisionState === true) {
+        } else if (this.detectionState === true) {
             // debugger
             ctx.filter = 'invert(1)'
             // debugger
@@ -103,39 +97,6 @@ class Hitbox { // hitbox logic...
     }
 
 
-
 }
 
-// class PassableHitbox {
-
-//     constructor(x, y, width, height, xOffset = 0, yOffset = 0){
-
-//         debugger
-//         this.x = x;
-//         this.y = y;
-        
-//         this.xOffset = xOffset;
-//         this.yOffset = yOffset;
-        
-//         this.width = width;
-//         this.height = height;
-        
-//         this.detectionState = false;
-        
-//         this.debugImage = new Image();
-//         this.debugImage.src = './src/graphics/debug.pngg';
-        
-
-//         if (!Hitbox.prototype.PASSABLEHITBOXES){
-//             Hitbox.prototype.PASSABLEHITBOXES = []
-//         }
-
-//         Hitbox.prototype.PASSABLEHITBOXES.push(this);
-
-//         console.log(Hitbox.prototype.PASSABLEHITBOXES)
-//     }
-
-// }
-
-
-export default Hitbox
+export default PassableHitbox

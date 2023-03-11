@@ -33,12 +33,13 @@ function gameRender() { // layer draw calls to create layers
     // debugger
     player.animate(ctx)
     // console.log("hello")
-    player.move();
+    player.move(ctx);
 
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-        // player.hitbox._debugDraw(ctx)
+        player.hitbox._debugDraw(ctx)
         // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
+        hitboxes.forEach((box) => box._debugDraw(ctx));
     // console.log(hitboxes);
     Hitbox.updateCollisionStateToTrueIfColliding();
     
@@ -65,5 +66,17 @@ setInterval(gameRender, 1000/75);
 // current problem is that in order to update collision, I need to iterate through all combinations of 
 // hitboxes... so I need to find a way of collecting them as they're created... 
 // look up a way of exporting an updatable class constant that I can use in the gameRender callback.
+
+// above done by the end of Friday!
+
+
+// next to do list.. 
+// create a food item that will render and place itself based on the tilemap.. 
+// after creating the note below, I will also extend this food item from the env objects class. 
+// we'll call it 'consumable'
+//
+// create a new day functionality.. 
+// ^ will necessitate a rendering and processing of an object that will allow the player to sleep. 
+// ^ will not sure if this will be a custom environmental object.. maybe I can do that by extending the class. 
 
 })
