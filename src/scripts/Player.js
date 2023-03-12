@@ -60,7 +60,7 @@ class Player {
         // shaking trees make monsters more aggressive, but also drops more food.
 
         this.targetFood = 5; 
-        this.food = 0;
+        this.food = 3;
 
         this.health = 3;
 
@@ -68,12 +68,56 @@ class Player {
     }
 
     
+    animateDeath(ctx) {
+
+        // this.currentFrame = 0
+
+        // debugger
+        let srcX = this.currentFrame * 48;
+        if (srcX > 96) {
+            srcX = 96;
+        }
+        let srcY = 447
+// debugger
+
+        if (this.currentMovingDirection === DIRS[3]){
+            ctx.save()
+            ctx.scale(-1,1)
+            ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(-this.x -32), Math.floor(this.y -15), 39, 39)
+            ctx.restore()
+        } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
+
+            ctx.save()
+            ctx.scale(-1,1)
+            ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(-this.x -32), Math.floor(this.y -15), 39, 39)
+            ctx.restore()
+
+        } else {
+            ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(this.x -17), Math.floor(this.y -15), 39, 39)
+                // ctx.drawImage(this.playerImage, 32, 0, 32, 32, Math.floor(-this.x), Math.floor(this.y -15), -32, 32)
+        }
+        this.framesDrawn++
+        if (this.framesDrawn > 45) {
+            this.currentFrame++
+            this.framesDrawn = 0;
+        }
+
+    }   
+
 
     animate(ctx) {
         //288 x 480
         // requestAnimationFrame(animate)
 
         // currentFrame = this.currentFrame % totalFrames;
+        if (this.health === 0) {
+            /// DEATH ANIMATION LMAO
+            /// moved section up to be a separate function that is called when health === 0
+            console.log('dead')
+            this.currentFrame = 0
+            
+
+        }
 
         let srcX = this.currentFrame * 48 % 288;
         let srcY;
@@ -124,6 +168,15 @@ class Player {
             this.framesDrawn = 0;
         }
 
+        // if (this.health === 0) {
+        //     /// DEATH ANIMATION LMAO
+        //     /// moved section up to be a separate function that is called when health === 0
+        //     console.log('dead')
+        //     this.currentFrame = 0
+            
+
+        // }
+
         
  
     }
@@ -146,12 +199,16 @@ class Player {
         } else if (event.key === 'ArrowDown'){
             this.currentMovingDirection = DIRS[1];
         } else if (event.key === 'ArrowLeft'){
-            this.currentMovingDirection = DIRS[3];
+            if (this.health > 0) {
+                this.currentMovingDirection = DIRS[3];
+            }
             if (this.tileMap.bedMenu.selectionIndex === 1){
                 this.tileMap.bedMenu.selectionIndex--
             }
         } else if (event.key === 'ArrowRight'){
-            this.currentMovingDirection = DIRS[2];
+            if (this.health > 0) {
+                this.currentMovingDirection = DIRS[2];
+            }
             if (this.tileMap.bedMenu.selectionIndex === 0){
                 this.tileMap.bedMenu.selectionIndex++
             }
@@ -168,6 +225,11 @@ class Player {
                 //// TREE SHAKING OPERATIONS
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300);
+
+        } else if (false) {
+            //// BUSH SHAKING OPERATIONS
+
+           
         } else if (event.key === ' ' && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
                         // debugger
                 /// DOOR OPERATIONS HERE
@@ -224,6 +286,25 @@ class Player {
                     this.tileMap.level ++
                     console.log('chose to go to next day near bed')
                     this.tileMap.paused = false;
+
+                    this.food = this.food - this.targetFood - Math.floor(this.tileMap.level *.7)
+                    if (this.food < 0) {
+                        if (this.health > 0){
+                            this.health--
+                        }
+
+                        this.food = 0;
+                        if (this.health === 0) {
+                            this.currentFrame = 0;
+                        }
+                    } else {
+                        if (this.health < 3) {
+                            this.food--;
+                            this.health++;
+                        }
+                    }
+                    
+
                 } else if (this.tileMap.bedMenu.selectionIndex === 1) {
                     this.tileMap.paused = false;
                     console.log('chose to remain in the same day near bed')
@@ -265,16 +346,18 @@ class Player {
                     }
                 })
                 // console.log(stillHeldKey)
+                if (this.health > 0) {
+                    if (stillHeldKey === 'ArrowUp'){
+                        this.currentMovingDirection = DIRS[0];
+                    } else if ((stillHeldKey) === 'ArrowDown'){
+                        this.currentMovingDirection = DIRS[1];
+                    } else if ((stillHeldKey)=== 'ArrowLeft'){
+                        this.currentMovingDirection = DIRS[3];
+                    } else if ((stillHeldKey) === 'ArrowRight'){
+                        // debugger
+                        this.currentMovingDirection = DIRS[2];
+                    }
 
-                if (stillHeldKey === 'ArrowUp'){
-                    this.currentMovingDirection = DIRS[0];
-                } else if ((stillHeldKey) === 'ArrowDown'){
-                    this.currentMovingDirection = DIRS[1];
-                } else if ((stillHeldKey)=== 'ArrowLeft'){
-                    this.currentMovingDirection = DIRS[3];
-                } else if ((stillHeldKey) === 'ArrowRight'){
-                    // debugger
-                    this.currentMovingDirection = DIRS[2];
                 }
 
                 // console.log(this.currentMovingDirection)

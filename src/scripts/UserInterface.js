@@ -111,7 +111,8 @@ class UserInterface {
         this.foodTensNums[8].src = './src/graphics/userinterface/food/foodtens8.png'
         this.foodTensNums[9].src = './src/graphics/userinterface/food/foodtens9.png'
         
-
+        this.healthImg = new Image();
+        this.healthImg.src = './src/graphics/NinjaAdventure/HUD/Heart.png'
         
 
     }
@@ -134,7 +135,31 @@ class UserInterface {
         ctx.drawImage(this.foodTensNums[tensNum], 0, 0)
     }
 
+    drawHealthAmt(ctx) {
+        if (this.player.health === 3) {
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 300, 3, 16, 16)
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 317, 3, 16, 16)
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 334, 3, 16, 16)
+            
+        } else if (this.player.health === 2) {
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 300, 3, 16, 16)
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 317, 3, 16, 16)
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 334, 3, 16, 16)
 
+        } else if (this.player.health === 1) {
+            ctx.drawImage(this.healthImg,0, 0, 16, 16, 300, 3, 16, 16)
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 317, 3, 16, 16)
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 334, 3, 16, 16)
+
+        } else if (this.player.health === 0) {
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 300, 3, 16, 16)
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 317, 3, 16, 16)
+            ctx.drawImage(this.healthImg,64, 0, 16, 16, 334, 3, 16, 16)
+        }
+    }
+
+
+    
 
 
 

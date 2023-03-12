@@ -55,8 +55,15 @@ function gameRender() { // layer draw calls to create layers
         // debugger
         // player.animate(ctx)
         // console.log("hello")
-        player.move(ctx);
-        player.animate(ctx)
+        // player.move(ctx);
+        // player.animate(ctx)
+        if (player.health === 0) {
+            player.animateDeath(ctx);
+        } else {
+            player.move(ctx);
+
+            player.animate(ctx);
+        }
         theTileMapInstance.draw2(ctx);
     
     } else {
@@ -68,6 +75,7 @@ function gameRender() { // layer draw calls to create layers
     userInter.drawControls(ctx);
     userInter.drawDays(ctx);
     userInter.drawFoodAmt(ctx);
+    userInter.drawHealthAmt(ctx);
 
 
 
