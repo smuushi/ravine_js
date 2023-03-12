@@ -74,6 +74,19 @@ class UserInterface {
             new Image(),
             new Image(),
         ]
+
+        this.foodOnesNums[0].src = './src/graphics/userinterface/food/foodones0.png'
+        this.foodOnesNums[1].src = './src/graphics/userinterface/food/foodones1.png'
+        this.foodOnesNums[2].src = './src/graphics/userinterface/food/foodones2.png'
+        this.foodOnesNums[3].src = './src/graphics/userinterface/food/foodones3.png'
+        this.foodOnesNums[4].src = './src/graphics/userinterface/food/foodones4.png'
+        this.foodOnesNums[5].src = './src/graphics/userinterface/food/foodones5.png'
+        this.foodOnesNums[6].src = './src/graphics/userinterface/food/foodones6.png'
+        this.foodOnesNums[7].src = './src/graphics/userinterface/food/foodones7.png'
+        this.foodOnesNums[8].src = './src/graphics/userinterface/food/foodones8.png'
+        this.foodOnesNums[9].src = './src/graphics/userinterface/food/foodones9.png'
+
+
         this.foodTensNums = [
             new Image(),
             new Image(),
@@ -86,6 +99,17 @@ class UserInterface {
             new Image(),
             new Image(),
         ]
+
+        this.foodTensNums[0].src = './src/graphics/userinterface/food/foodtens0.png'
+        this.foodTensNums[1].src = './src/graphics/userinterface/food/foodtens1.png'
+        this.foodTensNums[2].src = './src/graphics/userinterface/food/foodtens2.png'
+        this.foodTensNums[3].src = './src/graphics/userinterface/food/foodtens3.png'
+        this.foodTensNums[4].src = './src/graphics/userinterface/food/foodtens4.png'
+        this.foodTensNums[5].src = './src/graphics/userinterface/food/foodtens5.png'
+        this.foodTensNums[6].src = './src/graphics/userinterface/food/foodtens6.png'
+        this.foodTensNums[7].src = './src/graphics/userinterface/food/foodtens7.png'
+        this.foodTensNums[8].src = './src/graphics/userinterface/food/foodtens8.png'
+        this.foodTensNums[9].src = './src/graphics/userinterface/food/foodtens9.png'
         
 
         
@@ -101,6 +125,13 @@ class UserInterface {
         let tensNum = (this.tileMap.level - onesNum) / 10;
         ctx.drawImage(this.dayOnesNums[onesNum], 0, 0)
         ctx.drawImage(this.dayTensNums[tensNum], 0, 0)
+    }
+
+    drawFoodAmt(ctx) {
+        let onesNum = this.player.food % 10;
+        let tensNum = (this.player.food - onesNum) / 10;
+        ctx.drawImage(this.foodOnesNums[onesNum], 0, 0)
+        ctx.drawImage(this.foodTensNums[tensNum], 0, 0)
     }
 
 

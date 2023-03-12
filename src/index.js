@@ -67,6 +67,7 @@ function gameRender() { // layer draw calls to create layers
 
     userInter.drawControls(ctx);
     userInter.drawDays(ctx);
+    userInter.drawFoodAmt(ctx);
 
 
 
