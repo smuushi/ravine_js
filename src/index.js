@@ -29,7 +29,10 @@ const envObjects = theTileMapInstance.getObjects();
 console.log(player);
 // debugger
 
+
+// if (!EnvObject.prototype.INTERACTIVEITEMS){
 const foodItems = EnvObject.prototype.INTERACTIVEITEMS;
+// }
             
 
 const hitboxes = Hitbox.prototype.ALLHITBOXESMADE;
