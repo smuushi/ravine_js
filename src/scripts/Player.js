@@ -83,6 +83,8 @@ class Player {
         if (this.currentMovingDirection === DIRS[3]){
             ctx.save()
             ctx.scale(-1,1)
+            
+            
             ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(-this.x -32), Math.floor(this.y -15), 39, 39)
             ctx.restore()
         } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
@@ -93,8 +95,13 @@ class Player {
             ctx.restore()
 
         } else {
-            ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(this.x -17), Math.floor(this.y -15), 39, 39)
+            if (Object.keys(Player.prototype.keyss).some((key) => !!Player.prototype.keyss[key])){
+                ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(this.x -17 + (Math.random() * 2)), Math.floor(this.y -15 + (Math.random() * 2)), 39, 39)
+
+            } else {
+                ctx.drawImage(this.playerImage, srcX, srcY, 39, 39, Math.floor(this.x -17), Math.floor(this.y -15), 39, 39)
                 // ctx.drawImage(this.playerImage, 32, 0, 32, 32, Math.floor(-this.x), Math.floor(this.y -15), -32, 32)
+            }
         }
         this.framesDrawn++
         if (this.framesDrawn > 45) {
@@ -265,7 +272,7 @@ class Player {
             //     this.tileMap.isDoorOpen = true;
             // }
             
-        } else if (event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
+        } else if ((this.health > 0) && event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
                 //// BED MENU OPERATIONS
             // if (this.tileMap.paused === true){
                 // if (this.tileMap.bedMenu.selectionIndex === 0){
@@ -287,7 +294,7 @@ class Player {
                     console.log('chose to go to next day near bed')
                     this.tileMap.paused = false;
 
-                    this.food = this.food - this.targetFood - Math.floor(this.tileMap.level *.7)
+                    this.food = this.food - this.targetFood - Math.floor(this.tileMap.level *.25)
                     if (this.food < 0) {
                         if (this.health > 0){
                             this.health--

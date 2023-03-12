@@ -93,8 +93,8 @@ class TileMap {
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' '],
         [' ', 'BN',  ' ', '  ', 'Co', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'Co',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co','  ', ' ','  ','BN','  ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
-        [' ', 'BN', 'BC',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
+        [' ', 'BN',  ' ',  ' ', ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
+        [' ', 'BN', 'BC',  ' ', 'Bu', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
         [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'Co', ' ','  ','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -158,6 +158,8 @@ class TileMap {
                 }else if (tile === "Bd") {
                     this._drawObject(ctx, 176, 32, 16, 32, row*.94, col*.95, "Bd")
                 
+                } else if (tile === "Bu"){
+                    this._drawObject(ctx, 0, 0, 32, 32, row, col, "Bu")    
                 } else {
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
@@ -225,6 +227,8 @@ class TileMap {
 
     _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col, tileType) {
         if (tileType === "Ta" && this.shakeStatus === true && (this.currentFrame % 3 === 0 || this.currentFrame % 10 === 0 || this.currentFrame % 11 === 0 || this.currentFrame % 12 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 14 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 15 === 0)){
+            ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth - 1, cropSizeHeight, col*this.tileSize + (3-Math.floor(Math.random() * 10)/3), row*this.tileSize + Math.random(), cropSizeWidth, cropSizeHeight)
+        } else if (tileType === "Bu" && this.shakeStatus === true) {
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth - 1, cropSizeHeight, col*this.tileSize + (3-Math.floor(Math.random() * 10)/3), row*this.tileSize + Math.random(), cropSizeWidth, cropSizeHeight)
         } else {
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth, cropSizeHeight, col*this.tileSize, row*this.tileSize, cropSizeWidth, cropSizeHeight)
