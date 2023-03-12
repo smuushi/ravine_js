@@ -1,13 +1,16 @@
 import TileMap from "./scripts/TileMap";
 import Player from './scripts/Player';
 import Hitbox from './scripts/utils';
+
+import PassableHitbox from "./scripts/foodUtils";
+import Consumable from "./scripts/Consumable";
+import EnvObject from "./scripts/EnvObject";
+
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
+
     console.log('hello world')
-
-
-
-console.log('hellos from index')
+    console.log('hellos from index')
 
 // game info so far... 
 // map size will be 30 x 20 squares. 
@@ -20,28 +23,42 @@ const tileSize = 16;
 const theTileMapInstance = new TileMap(tileSize);
 
 
-const player = theTileMapInstance.getPlayer(1);
+const player = theTileMapInstance.getPlayer(1.13);
 
 const envObjects = theTileMapInstance.getObjects();
 console.log(player);
 // debugger
 
+const foodItems = EnvObject.prototype.INTERACTIVEITEMS;
+            
+
 const hitboxes = Hitbox.prototype.ALLHITBOXESMADE;
+const passableHitboxes = PassableHitbox.prototype.PASSABLEHITBOXES;
 
 function gameRender() { // layer draw calls to create layers
     theTileMapInstance.draw(ctx)
+
+    foodItems.forEach((food) => food._drawFood(ctx));
+
     // debugger
     player.animate(ctx)
     // console.log("hello")
     player.move(ctx);
 
+
+
+
+    // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-        player.hitbox._debugDraw(ctx)
-        // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
-        hitboxes.forEach((box) => box._debugDraw(ctx));
+        // player.hitbox._debugDraw(ctx)
+        // hitboxes.forEach((box) => box._debugDraw(ctx));
+        // passableHitboxes.forEach((box) => box._debugDraww(ctx));
+
     // console.log(hitboxes);
     Hitbox.updateCollisionStateToTrueIfColliding();
+    PassableHitbox.updateDetectionStateToTrueIfDetecting();
+    
     
     
 

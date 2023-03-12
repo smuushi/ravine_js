@@ -36,6 +36,12 @@ class TileMap {
         this.objectsImage = new Image();
         this.objectsImage.src = './src/graphics/sprites/objects/objects.png'
 
+        // because food should disappear after interacting with the player, 
+        // I moved the food rendering to the foodUtils.js page.. and it'll just be another loop
+        // that I call during my index rendering... omg so messy. haha
+        // this.foodImage = new Image();
+        // this.foodImage.src = "./src/graphics/NinjaAdventure/Items/Food/Fish.png"
+
         this.shakeFactor = 1;
         this.shakeStatus = false;
 
@@ -59,15 +65,15 @@ class TileMap {
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BC',  'P',  ' ', ' ', ' ', ' ', 'R1','R2', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ','BC','BN', ' ', ' '],
+        [' ',  ' ', 'BC',  'P',  ' ', ' ', ' ', ' ', 'R1','R2', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ','BC','BN', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ', ' ', ' ','BN','Wr', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' '],
+        [' ', 'BN',  ' ', '  ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','  ', ' ','  ','BN','  ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'BC',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
-        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN'],
+        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','  ','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     ]
@@ -120,7 +126,11 @@ class TileMap {
                 } else if (tile === "R1") {
                     this._drawObject(ctx, 0, 16, 16, 16, row, col)
                 } else if (tile === "Ta") {
-                    this._drawObject(ctx, 50, 146, 47, 64, row, col, tile)  
+                    this._drawObject(ctx, 50, 146, 47, 64, row, col, tile) 
+                
+                } else if (tile === "Co") {   
+                    // this._drawFood(ctx, col, row, this.tileSize)
+                    // see notes above.
                 } else {
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
@@ -134,6 +144,13 @@ class TileMap {
         let frameNum = this.currentFrame % 6
 
         ctx.drawImage(this.map1[frameNum], 0, 0)
+    }
+
+    _drawFood(ctx, col, row, size) {
+
+        // ctx.drawImage(this.foodImage, col * this.tileSize, row *this.tileSize, size, size)
+        // depreciated.. see note in constructor. 
+
     }
 
     _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col, tileType) {
@@ -197,7 +214,7 @@ class TileMap {
                     let tree = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 23, 0, this, 3, 8)
                     objectsCollection.push(tree);
                 } else if (tile === "Co") {
-                    let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 0, -3)
+                    let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0)
                 }
 
                 

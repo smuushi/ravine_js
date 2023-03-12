@@ -2,11 +2,14 @@ import Hitbox from "./utils"
 
 class PassableHitbox {
 
-    constructor(x, y, width, height, xOffset = 0, yOffset = 0){
+    constructor(x, y, width, height, tiedObj, xOffset = 0, yOffset = 0){
 
         // debugger
         this.x = x;
         this.y = y;
+
+        this.tiedObj = tiedObj;
+        // ^ a pointer back to what thing we're tied to.. 
         
         this.xOffset = xOffset;
         this.yOffset = yOffset;
@@ -16,17 +19,17 @@ class PassableHitbox {
         
         this.detectionState = false;
         
-        this.debugImage = new Image();
-        this.debugImage.src = './src/graphics/debug.png';
+        this.debugImageee = new Image();
+        this.debugImageee.src = './src/graphics/debug.png';
         
 
-        if (!Hitbox.prototype.PASSABLEHITBOXES){
-            Hitbox.prototype.PASSABLEHITBOXES = []
+        if (!PassableHitbox.prototype.PASSABLEHITBOXES){
+            PassableHitbox.prototype.PASSABLEHITBOXES = []
         }
 
-        Hitbox.prototype.PASSABLEHITBOXES.push(this);
+        PassableHitbox.prototype.PASSABLEHITBOXES.push(this);
 
-        console.log(Hitbox.prototype.PASSABLEHITBOXES)
+        console.log(PassableHitbox.prototype.PASSABLEHITBOXES)
     }
 
 
@@ -37,26 +40,56 @@ class PassableHitbox {
         // Therefore, we need a one way switch. 
 
         // Let's first set everything that needs to be false to false.. 
-        for(let i = 0; i < Hitbox.prototype.ALLHITBOXESMADE.length; i++) {
-            Hitbox.prototype.ALLHITBOXESMADE[i].collisionState = false;
+        for(let i = 0; i < PassableHitbox.prototype.PASSABLEHITBOXES.length; i++) {
+            PassableHitbox.prototype.PASSABLEHITBOXES[i].detectionState = false;
         };   
         
 
-        for(let i = 0; i < Hitbox.prototype.ALLHITBOXESMADE.length; i++) {
-            for(let j = i + 1; j < Hitbox.prototype.ALLHITBOXESMADE.length; j++) {
+        for(let i = 0; i < PassableHitbox.prototype.PASSABLEHITBOXES.length; i++) {
+            for(let j = i + 1; j < PassableHitbox.prototype.PASSABLEHITBOXES.length; j++) {
                 // console.log([i, j])
-                let hitbox1 = Hitbox.prototype.ALLHITBOXESMADE[i];
-                let hitbox2 = Hitbox.prototype.ALLHITBOXESMADE[j];
+                let hitbox1 = PassableHitbox.prototype.PASSABLEHITBOXES[i];
+                let hitbox2 = PassableHitbox.prototype.PASSABLEHITBOXES[j];
 
-                if (Hitbox._anyCollision(hitbox1, hitbox2)) {
-                    hitbox1.collisionState = true;
-                    hitbox2.collisionState = true;
+                if (PassableHitbox._anyDetection(hitbox1, hitbox2)) {
+                    hitbox1.detectionState = true;
+                    hitbox2.detectionState = true;
                     // debugger
                 }
             }
         }
 
+
     }
+
+    _detectingWhat() { 
+        // copypasta'd the detections function above 
+        // so that it would return an array of detections that I can iterate through later to implement logic. 
+        
+        let referencingPassableHitbox = this; 
+
+        let listOfDetected = [];
+        
+
+        // for(let i = 0; i < PassableHitbox.prototype.PASSABLEHITBOXES.length; i++) {
+            for(let j = 0; j < PassableHitbox.prototype.PASSABLEHITBOXES.length; j++) {
+                // console.log([i, j])
+                // let hitbox1 = PassableHitbox.prototype.PASSABLEHITBOXES[i];
+
+                let hitbox2 = PassableHitbox.prototype.PASSABLEHITBOXES[j];
+
+                if ((PassableHitbox._anyDetection(referencingPassableHitbox, hitbox2)) && !(referencingPassableHitbox === hitbox2)) {
+                    // hitbox1.detectionState = true;
+                    hitbox2.detectionState = true;
+                    listOfDetected.push(hitbox2);
+                    // debugger
+                }
+            }
+        // }
+        return listOfDetected;
+        
+    }
+
 
     static _anyDetection(box1, box2) {
         // check to see if the positional coordinate is greater than the (other positional coordinate + that thing's dimesions..)
@@ -78,19 +111,26 @@ class PassableHitbox {
         }
     
     }
+
+    
     
 
 
-    _debugDraw(ctx) {
+    _debugDraww(ctx) {
+
         // debugger
         if (this.detectionState === false){
             ctx.filter = 'none'
-            ctx.drawImage(this.debugImage, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
+            // debugger
+            // ctx.drawImage(this.debugImage, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
+            // ctx.drawImage(this.debugImage, 16, 16, this.x + this.xOffset, this.y + this.yOffset)
+            ctx.drawImage(this.debugImageee, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
+            
         } else if (this.detectionState === true) {
             // debugger
             ctx.filter = 'invert(1)'
             // debugger
-            ctx.drawImage(this.debugImage, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
+            ctx.drawImage(this.debugImageee, 0, 0, 16, 16, this.x + this.xOffset, this.y + this.yOffset, this.width, this.height)
             ctx.filter = 'none'
         }
 

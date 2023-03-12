@@ -6,6 +6,7 @@ const DIRS = [ // directions made here to refer to.
 ]
 
 import Hitbox from "./utils.js";
+import PassableHitbox from "./foodUtils.js";
 
 class Player {
     
@@ -41,9 +42,26 @@ class Player {
 
         this.hitbox = new Hitbox(this.x, this.y, this.tileSize -4, this.tileSize -3.5, 1.5, -4)
 
+        this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize -3.5, this, 1.5, -4)
+
         if (!Player.prototype.keyss){
             Player.prototype.keyss = {}
         }
+
+        // logic is... the player needs to collect 5 food each day
+        // if he doesn't, he will die.
+        // colliding with a food increases this.food by one and 
+        // also destroys the food on the map.. 
+        // at the end of the day, the player spend the extra food they pick up
+        // to gain an ability to attack, increase speed, increase health.. 
+        // gaining extra stats require more food per day. 
+        // shaking trees make monsters more aggressive, but also drops more food.
+
+        this.targetFood = 5; 
+        this.food = 0;
+
+        this.health = 3;
+
 
     }
 
@@ -84,16 +102,16 @@ class Player {
         if (this.currentMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x + 1, this.y -15, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, Math.floor(-this.x + 1), Math.floor(this.y -15), -32, 32)
             ctx.restore();
         } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, -this.x, this.y -15, -32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, Math.floor(-this.x), Math.floor(this.y -15), -32, 32)
             ctx.restore();
         } else { 
             // ctx.save()
-            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, this.x -17, this.y -15, 32, 32)
+            ctx.drawImage(this.playerImage, srcX, srcY, 32, 32, Math.floor(this.x -17), Math.floor(this.y -15), 32, 32)
             // ctx.restore()
         }    
         
@@ -202,7 +220,15 @@ class Player {
 
     }
 
+
+
     move(ctx) { // move takes in a context to call movement specific additional drawings like dust particles. 
+
+        if (this.passableHitbox.detectionState === true) {
+            // debugger
+            this._isCollidingWithFood();
+        }
+        
 
         if (Object.values(Player.prototype.keyss).some((val) => !!val) ){
 
@@ -216,6 +242,8 @@ class Player {
                 this.x = this.currentMovingDirection[0]* this.velocity + this.x;
                 this.hitbox.x = this.x;
                 this.hitbox.y = this.y;
+                this.passableHitbox.x = this.x;
+                this.passableHitbox.y = this.y;
                 Hitbox.updateCollisionStateToTrueIfColliding()
                 
                 while (this.hitbox.collisionState === true) {
@@ -224,6 +252,8 @@ class Player {
                     this.x = this.currentMovingDirection[0]*(-1)* this.velocity + this.x;
                     this.hitbox.x = this.x;
                     this.hitbox.y = this.y;
+                    this.passableHitbox.x = this.x;
+                    this.passableHitbox.y = this.y;
                     Hitbox.updateCollisionStateToTrueIfColliding();
 
                     // debugger
@@ -249,6 +279,37 @@ class Player {
             // console.log(this.x)
             // console.log(this.y)
             // console.log(this.currentMovingDirection)
+        }
+    }
+
+    _isCollidingWithFood() {
+        if (this.passableHitbox.detectionState === true) {
+            let detections = this.passableHitbox._detectingWhat();
+
+            for(let i = 0; i < detections.length; i++) {
+                let questionedItem = detections[i];
+                // debugger
+                if (questionedItem.tiedObj.constructor.name === "Consumable") {
+                    console.log('food/consumable detected by player');
+                    this.food++;
+                    // questionedItem.tiedObj.hitbox = null;
+                    // questionedItem.tiedObj.passableHitbox = null;
+                    questionedItem.tiedObj.hitboxes.x = 0;
+                    questionedItem.tiedObj.hitboxes.y = 0;
+                    questionedItem.tiedObj.x = 0;
+                    questionedItem.tiedObj.y = 0;
+                    questionedItem.x = 0;
+                    questionedItem.y = 0;
+                    // debugger;
+                    // questionedItem.tiedObj = null;
+                    // questionedItem.x = null;
+                    // questionedItem.y = null;
+                    console.log(PassableHitbox.prototype.PASSABLEHITBOXES);
+                    this.passableHitbox.detectionState = false;
+                    // debugger
+                }
+            }
+
         }
     }
 
