@@ -49,7 +49,7 @@ class TileMap {
         this.currentFrame = 0;
         this.framesDrawn = 0;
 
-        this.level = 10;
+        this.level = 33;
 
     }
 
@@ -215,16 +215,19 @@ class TileMap {
                     let tree = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 23, 0, this, 3, 8)
                     objectsCollection.push(tree);
                 } else if (tile === "Co") {
-                    let rng = ((Math.floor(Math.random() * 10 )* 2) - Math.floor(this.level*(.8)))
-                        if ((rng) >= (10)) {
+                    if (this.level > 10) {
+                        this.spawn = 10;
+                    }
+
+                    let rng = ((Math.floor(Math.random() * 100 )/ 3 ) + this.spawn)
+                        if ((rng) <= (11)) {
                             let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
                         } 
 
                 } else if (tile === "Gc") {
                     let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
             
-            
-            }
+                }
 
                 
             }
