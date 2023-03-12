@@ -101,4 +101,11 @@ setInterval(gameRender, 1000/75);
 // ^ will necessitate a rendering and processing of an object that will allow the player to sleep. 
 // ^ will not sure if this will be a custom environmental object.. maybe I can do that by extending the class. 
 
+// food was done!... and picking up the food is tracking well... 
+// I just need to add the new day functionality now. 
+// I added a space to better contextualize where things will go.. So I added a room. 
+// Going to add a bed that will result in a menu prompt that will go to the next day and let the player spend their
+// collected surplus food on upgrades to speed, health, luck, and attacking. 
+
 })
+
