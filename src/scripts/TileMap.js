@@ -68,7 +68,7 @@ class TileMap {
         this.currentFrame = 0;
         this.framesDrawn = 0;
 
-        this.level = 7;
+        this.level = 1;
 
         //this.bedMenu is assigned in index because of poor file management... :(
 
@@ -257,6 +257,26 @@ class TileMap {
             }
         }
 
+    }
+
+    getNextDayFoodObjects() {
+        for (let row = 0; row < this.theMap1.length; row++) {
+            for (let col = 0; col < this.theMap1[row].length; col++) {
+                let tile = this.theMap1[row][col];
+                if (tile === "Co"){
+                    if (this.level > 10) {
+                        this.spawn = 10;
+                    } else {
+                        this.spawn = this.level;
+                    }
+
+                    let rng = ((Math.floor(Math.random() * 100 )/ 3 ) + this.spawn)
+                        if ((rng) <= (11)) {
+                            let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
+                        } 
+                }
+            }
+        }
     }
 
     getObjects() {

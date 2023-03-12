@@ -1,5 +1,6 @@
 import TileMap from "./scripts/TileMap";
 import Player from './scripts/Player';
+import UserInterface from "./scripts/UserInterface";
 import Hitbox from './scripts/utils';
 
 
@@ -27,7 +28,9 @@ const theTileMapInstance = new TileMap(tileSize);
 
 const player = theTileMapInstance.getPlayer(1.13);
 const nextDayMenu = new BedMenu(theTileMapInstance);
-theTileMapInstance.bedMenu = nextDayMenu;
+theTileMapInstance.bedMenu = nextDayMenu; // THIS IS AN IMPORTANT LINE OF CODE.. ughhh lmaoooo haha
+
+const userInter = new UserInterface(theTileMapInstance, player);
 
 const envObjects = theTileMapInstance.getObjects();
 console.log(player);
@@ -62,7 +65,8 @@ function gameRender() { // layer draw calls to create layers
         // render pause next day menu here!
     }
 
-    
+    userInter.drawControls(ctx);
+    userInter.drawDays(ctx);
 
 
 

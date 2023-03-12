@@ -220,7 +220,10 @@ class Player {
             } else {
                 if (this.tileMap.bedMenu.selectionIndex === 0){
                     //FUNCTION TO GO TO NEXT DAY
+                    this.tileMap.getNextDayFoodObjects();
+                    this.tileMap.level ++
                     console.log('chose to go to next day near bed')
+                    this.tileMap.paused = false;
                 } else if (this.tileMap.bedMenu.selectionIndex === 1) {
                     this.tileMap.paused = false;
                     console.log('chose to remain in the same day near bed')
