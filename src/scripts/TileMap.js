@@ -49,7 +49,7 @@ class TileMap {
         this.currentFrame = 0;
         this.framesDrawn = 0;
 
-        this.level = 33;
+        this.level = 7;
 
     }
 
@@ -217,6 +217,8 @@ class TileMap {
                 } else if (tile === "Co") {
                     if (this.level > 10) {
                         this.spawn = 10;
+                    } else {
+                        this.spawn = this.level;
                     }
 
                     let rng = ((Math.floor(Math.random() * 100 )/ 3 ) + this.spawn)
