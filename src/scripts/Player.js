@@ -153,7 +153,7 @@ class Player {
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300)
-        } else if (event.key === ' ' && (this.x > 110 && this.x < 125 && this.y < 110 && this.y > 55)){
+        } else if (event.key === ' ' && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
             
 
             if (this.tileMap.isDoorOpen === false){
@@ -180,6 +180,13 @@ class Player {
             //     this.tileMap.isDoorOpen = true;
             // }
             
+        } else if (event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
+            if (this.tileMap.paused === false){
+                this.tileMap.paused = true;
+            } else {
+                this.tileMap.paused = false;
+            }
+
         }
         
     }

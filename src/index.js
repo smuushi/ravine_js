@@ -2,9 +2,12 @@ import TileMap from "./scripts/TileMap";
 import Player from './scripts/Player';
 import Hitbox from './scripts/utils';
 
+
 import PassableHitbox from "./scripts/foodUtils";
 import Consumable from "./scripts/Consumable";
 import EnvObject from "./scripts/EnvObject";
+
+import BedMenu from "./scripts/Menus";
 
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
@@ -21,7 +24,7 @@ const ctx = canvas.getContext('2d'); // all rendering takes place on the ctx.
 
 const tileSize = 16;
 const theTileMapInstance = new TileMap(tileSize);
-
+const nextDayMenu = new BedMenu(theTileMapInstance);
 
 const player = theTileMapInstance.getPlayer(1.13);
 
@@ -39,16 +42,28 @@ const hitboxes = Hitbox.prototype.ALLHITBOXESMADE;
 const passableHitboxes = PassableHitbox.prototype.PASSABLEHITBOXES;
 
 function gameRender() { // layer draw calls to create layers
-    theTileMapInstance.draw(ctx)
+    
+    
+    if (theTileMapInstance.paused === false) {
+        theTileMapInstance.draw(ctx)
+    
+        foodItems.forEach((food) => food._drawFood(ctx));
+        // debugger
+        // player.animate(ctx)
+        // console.log("hello")
+        player.move(ctx);
+        player.animate(ctx)
+        theTileMapInstance.draw2(ctx);
+    
+    } else {
+        nextDayMenu.draw(ctx);
+        console.log("paused!")
+        // render pause next day menu here!
+    }
 
-    foodItems.forEach((food) => food._drawFood(ctx));
+    
 
-    // debugger
-    player.animate(ctx)
-    // console.log("hello")
-    player.move(ctx);
 
-    theTileMapInstance.draw2(ctx);
 
 
 

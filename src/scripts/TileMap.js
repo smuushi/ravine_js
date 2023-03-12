@@ -13,6 +13,9 @@ class TileMap {
         this.tileSize = tileSize;
 
 
+        this.paused = false;
+
+
         this.grass = new Image();
         this.grass.src = "./src/graphics/sprites/tilesets/grass.png"
         this.water = new Image();
@@ -76,7 +79,7 @@ class TileMap {
         [' ',  ' ',  ' ',  ' ',  ' ','  ','BN','BN', 'BN','BN','BN','BN','  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Ta', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
         [' ', '  ', 'Wr',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
         [' ', '  ', '  ',  ' ', 'BN','BN', ' ', 'P', 'Gc', ' ', ' ','BN','BN', ' ','  ','BN','  ','Wr','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
-        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN','Bd', ' ', ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
         [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ','BN','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
         [' ', 'Wr',  ' ', 'BN', 'BN','BN','BN','Dc', 'BN','BN','BN','BN', 'Co', ' ',' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','Co','  ','BN', ' ', ' '],
@@ -150,6 +153,9 @@ class TileMap {
                 } else if (tile === "Co") {   
                     // this._drawFood(ctx, col, row, this.tileSize)
                     // see notes above.
+                }else if (tile === "Bd") {
+                    this._drawObject(ctx, 176, 32, 16, 32, row*.94, col*.95, "Bd")
+                
                 } else {
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
@@ -291,8 +297,12 @@ class TileMap {
                     let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
             
                 } else if (tile === "Dc") {
-                    this.doorObj = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 7, 0, this, -4, -3)
+                    this.doorObj = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 6, 0, this, -4, -2)
+                } else if (tile === "Bd") {
+                    let bed = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, -4, -3)
+                    
                 }
+
 
                 
             }
