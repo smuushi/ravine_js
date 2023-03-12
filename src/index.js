@@ -24,9 +24,10 @@ const ctx = canvas.getContext('2d'); // all rendering takes place on the ctx.
 
 const tileSize = 16;
 const theTileMapInstance = new TileMap(tileSize);
-const nextDayMenu = new BedMenu(theTileMapInstance);
 
 const player = theTileMapInstance.getPlayer(1.13);
+const nextDayMenu = new BedMenu(theTileMapInstance);
+theTileMapInstance.bedMenu = nextDayMenu;
 
 const envObjects = theTileMapInstance.getObjects();
 console.log(player);

@@ -16,6 +16,8 @@ class Player {
         this.tileSize = tileSize; 
         this.velocity = velocity;
         this.tileMap = tileMap;
+
+        
         
         // const spriteCols = 10;
         // const spriteRows = 6;
@@ -129,6 +131,7 @@ class Player {
 
 
     _keydown = (event) => {
+        // pay attention to notes for which sections are doing what... 
         // debugger 
         // console.log(event)
         if (!Player.prototype.keyss[event.code]) {
@@ -136,29 +139,49 @@ class Player {
             console.log(Player.prototype.keyss[event.code])
         }
 
+
+
         if (event.key === 'ArrowUp'){
             this.currentMovingDirection = DIRS[0];
         } else if (event.key === 'ArrowDown'){
             this.currentMovingDirection = DIRS[1];
         } else if (event.key === 'ArrowLeft'){
             this.currentMovingDirection = DIRS[3];
+            if (this.tileMap.bedMenu.selectionIndex === 1){
+                this.tileMap.bedMenu.selectionIndex--
+            }
         } else if (event.key === 'ArrowRight'){
             this.currentMovingDirection = DIRS[2];
+            if (this.tileMap.bedMenu.selectionIndex === 0){
+                this.tileMap.bedMenu.selectionIndex++
+            }
         }
         // console.log('down')
 
         // while (!!this.currentMovingDirection) {
+        // if (this.tileMap.paused === true) {
+
+        // }    
 
         // debugger
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
+                //// TREE SHAKING OPERATIONS
             this.tileMap.shakeStatus = true;
-            setTimeout(() => this.tileMap.shakeStatus = false, 300)
+            setTimeout(() => this.tileMap.shakeStatus = false, 300);
         } else if (event.key === ' ' && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
-            
-
+                        // debugger
+                /// DOOR OPERATIONS HERE
             if (this.tileMap.isDoorOpen === false){
                 this.tileMap.isDoorOpen = true;
-            } 
+            }
+            //     if (this.tileMap.bedMenu.selectionIndex === 0){
+            //         //FUNCTION TO GO TO NEXT DAY
+            //         console.log('chose to go to next day near bed')
+            //     } else if (this.tileMap.bedMenu.selectionIndex === 1) {
+            //         this.tileMap.isDoorOpen = false;
+            //         console.log('chose to remain in the same day near bed')
+            //     }
+            // }
 
             // if (this.tileMap.isDoorOpen === true) {
             //     this.tileMap.isDoorOpen = false;
@@ -181,10 +204,27 @@ class Player {
             // }
             
         } else if (event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
+                //// BED MENU OPERATIONS
+            // if (this.tileMap.paused === true){
+                // if (this.tileMap.bedMenu.selectionIndex === 0){
+                //     //FUNCTION TO GO TO NEXT DAY
+                //     console.log('chose to go to next day near bed')
+                // } else if (this.tileMap.bedMenu.selectionIndex === 1) {
+                //     this.tileMap.paused = false;
+                //     console.log('chose to remain in the same day near bed')
+                // }
+            // }
+            
             if (this.tileMap.paused === false){
                 this.tileMap.paused = true;
             } else {
-                this.tileMap.paused = false;
+                if (this.tileMap.bedMenu.selectionIndex === 0){
+                    //FUNCTION TO GO TO NEXT DAY
+                    console.log('chose to go to next day near bed')
+                } else if (this.tileMap.bedMenu.selectionIndex === 1) {
+                    this.tileMap.paused = false;
+                    console.log('chose to remain in the same day near bed')
+                }
             }
 
         }

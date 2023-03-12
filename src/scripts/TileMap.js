@@ -70,6 +70,8 @@ class TileMap {
 
         this.level = 7;
 
+        //this.bedMenu is assigned in index because of poor file management... :(
+
     }
 
     
