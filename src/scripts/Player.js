@@ -40,9 +40,9 @@ class Player {
 
         this.lastMovingDirection;
 
-        this.hitbox = new Hitbox(this.x, this.y, this.tileSize -4, this.tileSize -3.5, 1.5, -4)
+        this.hitbox = new Hitbox(this.x, this.y, this.tileSize -4, this.tileSize, 1.5, -4)
 
-        this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize -3.5, this, 1.5, -4)
+        this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize, this, 1.5, -4)
 
         if (!Player.prototype.keyss){
             Player.prototype.keyss = {}
@@ -153,9 +153,34 @@ class Player {
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300)
+        } else if (event.key === ' ' && (this.x > 110 && this.x < 125 && this.y < 110 && this.y > 55)){
+            
+
+            if (this.tileMap.isDoorOpen === false){
+                this.tileMap.isDoorOpen = true;
+            } 
+
+            // if (this.tileMap.isDoorOpen === true) {
+            //     this.tileMap.isDoorOpen = false;
+                
+            //     this.tileMap._updateDoorHitbox()
+            //     // let papaya = this.tileMap._updateDoorHitbox.bind(this.tileMap)
+            //     // setTimeout(papaya, 50000)
+
+            //     Hitbox.updateCollisionStateToTrueIfColliding();
+            //     // debugger
+            //     if (this.hitbox.collisionState === true){
+            
+            //         this.tileMap.isDoorOpen = true;
+            //     } 
+
+
+
+            // } else {
+            //     this.tileMap.isDoorOpen = true;
+            // }
+            
         }
-            
-            
         
     }
 
@@ -272,6 +297,10 @@ class Player {
                 // }
 
 
+            }
+
+            if (!(this.x > 90 && this.x < 129 && this.y < 110 && this.y > 55)){
+                this.tileMap.isDoorOpen = false;
             }
 
 

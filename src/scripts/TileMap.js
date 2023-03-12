@@ -5,6 +5,7 @@ import HitBox from './utils';
 import EnvObject from './EnvObject'
 
 import Consumable from './Consumable';
+import Hitbox from './utils';
 
 class TileMap {
     
@@ -33,6 +34,21 @@ class TileMap {
         this.map1[4].src = './src/graphics/maps/map1frame5.png'
         this.map1[5].src = './src/graphics/maps/map1frame6.png'
 
+        this.room = new Image ();
+        this.room.src = './src/graphics/maps/room3.png'
+
+        this.isDoorOpen = false;
+
+        this.doorClosed = new Image();
+        this.doorClosed.src = './src/graphics/maps/doorclosed.png'
+
+        this.doorOpen = new Image();
+        this.doorOpen.src = './src/graphics/maps/dooropen.png'
+
+        this.doorObj; // a door is assigned to it below in getObjects();
+        
+        
+
         this.objectsImage = new Image();
         this.objectsImage.src = './src/graphics/sprites/objects/objects.png'
 
@@ -58,11 +74,11 @@ class TileMap {
     // P = player
     theMap1 = [
         [' ',  ' ',  ' ',  ' ',  ' ','  ','BN','BN', 'BN','BN','BN','BN','  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Ta', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '  ', 'Wr',  ' ', 'BN','BN', ' ', ' ',  ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '  ', '  ',  ' ', 'BN', ' ', ' ', 'P', 'Gc', ' ', ' ', ' ','BN', ' ','  ','BN','  ','Wr','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
-        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
-        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
-        [' ', 'Wr',  ' ', 'BN',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', 'Co', ' ',' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ','  ','BN', ' ', ' '],
+        [' ', '  ', 'Wr',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', '  ', '  ',  ' ', 'BN','BN', ' ', 'P', 'Gc', ' ', ' ','BN','BN', ' ','  ','BN','  ','Wr','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ','BN','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
+        [' ', 'Wr',  ' ', 'BN', 'BN','BN','BN','Dc', 'BN','BN','BN','BN', 'Co', ' ',' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','Co','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
@@ -93,6 +109,7 @@ class TileMap {
 
 
         this._drawBaseMap(ctx); 
+        this._drawRoom(ctx);
 
         for (let row = 0; row < this.theMap1.length; row++) {
             for (let col = 0; col < this.theMap1[row].length; col++) {
@@ -101,8 +118,9 @@ class TileMap {
                     // logic to denote what to render given the value in the theMap1 array.
                     // for now, just trying to render grass.. 
                     // this._drawGrass, but also render the player or something so that I can use a player to manip..
-                    this._drawGrass(ctx, col, row, this.tileSize);
+                    // this._drawGrass(ctx, col, row, this.tileSize);
                     // this.getPlayer()
+                    // depreciated section.. player drawing handled in player file.
                 } else if(tile === 'BN'){
 
                     // RENDER BOUNDARY HITBOX HERE
@@ -138,6 +156,49 @@ class TileMap {
                 }
             }
         }
+    }
+
+    draw2(ctx) { // draw things here that need to be drawn after the player renders. 
+
+        for (let row = 0; row < this.theMap1.length; row++) {
+            for (let col = 0; col < this.theMap1[row].length; col++) {
+                let tile = this.theMap1[row][col];
+
+                if (tile === "Dc") {
+                    this._drawDoor(ctx);
+                }
+
+            }
+        }
+
+    }
+
+    _drawDoor (ctx) {
+        if (this.isDoorOpen === false) {
+            ctx.drawImage(this.doorClosed, 0 , 0);
+            this._updateDoorHitbox();
+            // console.log(this.doorObj)
+        } else {
+            ctx.drawImage(this.doorOpen, 0, 0);
+            this._updateDoorHitbox();
+        }
+
+    }
+
+    _updateDoorHitbox() {
+        
+        if (this.isDoorOpen === true) {
+            this.doorObj.hitboxes.x = 0;
+            this.doorObj.hitboxes.y = 0;
+            
+        } else {
+            this.doorObj.hitboxes.x = 112;
+            this.doorObj.hitboxes.y = 80;
+        }
+    }
+
+    _drawRoom (ctx) {
+        ctx.drawImage(this.room, 0,0)
     }
 
     _drawBaseMap (ctx) {
@@ -229,6 +290,8 @@ class TileMap {
                 } else if (tile === "Gc") {
                     let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
             
+                } else if (tile === "Dc") {
+                    this.doorObj = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 7, 0, this, -4, -3)
                 }
 
                 

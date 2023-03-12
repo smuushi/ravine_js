@@ -48,6 +48,8 @@ function gameRender() { // layer draw calls to create layers
     // console.log("hello")
     player.move(ctx);
 
+    theTileMapInstance.draw2(ctx);
+
 
 
 
