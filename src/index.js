@@ -85,9 +85,9 @@ function gameRender() { // layer draw calls to create layers
     // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-        // player.hitbox._debugDraw(ctx)
-        // hitboxes.forEach((box) => box._debugDraw(ctx));
-        // passableHitboxes.forEach((box) => box._debugDraww(ctx));
+        player.hitbox._debugDraw(ctx)
+        hitboxes.forEach((box) => box._debugDraw(ctx));
+        passableHitboxes.forEach((box) => box._debugDraww(ctx));
 
     // console.log(hitboxes);
     Hitbox.updateCollisionStateToTrueIfColliding();

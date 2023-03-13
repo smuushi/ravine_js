@@ -63,6 +63,7 @@ class TileMap {
 
         this.shakeFactor = 1;
         this.shakeStatus = false;
+        this.shakeStatus2 = false;
 
 
         this.currentFrame = 0;
@@ -87,14 +88,14 @@ class TileMap {
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','Co','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BC',  ' ',  ' ', ' ', ' ', ' ', 'R1','R2', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ','Co', ' ','BC','BN', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ', 'Co',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
+        [' ',  ' ', 'BC',  ' ',  ' ', 'R1', 'R1', 'R1', 'R1','R2', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ','Co', ' ','BC','BN', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', 'Bu', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
+        [' ', 'BN',  ' ', 'Co',  ' ', ' ', '', ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' '],
         [' ', 'BN',  ' ', '  ', 'Co', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'Co',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co','  ', ' ','  ','BN','  ', ' '],
         [' ', 'BN',  ' ',  ' ', ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
-        [' ', 'BN', 'BC',  ' ', 'Bu', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
+        [' ', 'BN', 'BC',  ' ', ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
         [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'Co', ' ','  ','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
@@ -159,7 +160,7 @@ class TileMap {
                     this._drawObject(ctx, 176, 32, 16, 32, row*.94, col*.95, "Bd")
                 
                 } else if (tile === "Bu"){
-                    this._drawObject(ctx, 0, 0, 32, 32, row, col, "Bu")    
+                    this._drawObject(ctx, 49, 75, 46, 70, row*.85, col, "Bu")    
                 } else {
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
@@ -228,7 +229,7 @@ class TileMap {
     _drawObject (ctx, srcX, srcY, cropSizeWidth, cropSizeHeight, row, col, tileType) {
         if (tileType === "Ta" && this.shakeStatus === true && (this.currentFrame % 3 === 0 || this.currentFrame % 10 === 0 || this.currentFrame % 11 === 0 || this.currentFrame % 12 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 14 === 0 || this.currentFrame % 13 === 0 || this.currentFrame % 15 === 0)){
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth - 1, cropSizeHeight, col*this.tileSize + (3-Math.floor(Math.random() * 10)/3), row*this.tileSize + Math.random(), cropSizeWidth, cropSizeHeight)
-        } else if (tileType === "Bu" && this.shakeStatus === true) {
+        } else if (tileType === "Bu" && this.shakeStatus2 === true) {
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth - 1, cropSizeHeight, col*this.tileSize + (3-Math.floor(Math.random() * 10)/3), row*this.tileSize + Math.random(), cropSizeWidth, cropSizeHeight)
         } else {
             ctx.drawImage(this.objectsImage, srcX, srcY, cropSizeWidth, cropSizeHeight, col*this.tileSize, row*this.tileSize, cropSizeWidth, cropSizeHeight)
@@ -301,11 +302,15 @@ class TileMap {
                     let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize - 6, this.tileSize - 10, 0, this, 5, 5);
                     objectsCollection.push(invisBoundary);
                 } else if (tile === "R2" || tile === "R1"){
-                    let rock = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 0, -3)
+                    let rock = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 3, 0, this, 1, 0)
                     objectsCollection.push(rock);
 
                 } else if (tile === "Ta") {
                     let tree = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 23, 0, this, 3, 8)
+                    objectsCollection.push(tree);
+
+                } else if (tile == "Bu") {
+                    let tree = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 23, 0, this, 3, -9)
                     objectsCollection.push(tree);
                 } else if (tile === "Co") {
                     if (this.level > 10) {

@@ -42,7 +42,7 @@ class Player {
 
         this.lastMovingDirection;
 
-        this.hitbox = new Hitbox(this.x, this.y, this.tileSize -4, this.tileSize, 1.5, -4)
+        this.hitbox = new Hitbox(this.x, this.y, this.tileSize -5, this.tileSize, 1.5, -4)
 
         this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize, this, 1.5, -4)
 
@@ -170,7 +170,7 @@ class Player {
         
         
         this.framesDrawn++;
-        if (this.framesDrawn >= 12){
+        if (this.framesDrawn >= 11){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -233,7 +233,10 @@ class Player {
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300);
 
-        } else if (false) {
+        } else if (event.key === ' ' && (this.x > 88 && this.x < 200 && this.y < 210 && this.y > 190)){
+            //// TREE SHAKING OPERATIONS
+            this.tileMap.shakeStatus2 = true;
+            setTimeout(() => this.tileMap.shakeStatus2 = false, 300);
             //// BUSH SHAKING OPERATIONS
 
            
@@ -461,6 +464,9 @@ class Player {
                 if (questionedItem.tiedObj.constructor.name === "Consumable") {
                     console.log('food/consumable detected by player');
                     this.food++;
+                    if (this.food > 99) {
+                        this.food = 99;
+                    }
                     // questionedItem.tiedObj.hitbox = null;
                     // questionedItem.tiedObj.passableHitbox = null;
                     questionedItem.tiedObj.hitboxes.x = 0;
