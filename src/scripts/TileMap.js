@@ -6,6 +6,7 @@ import EnvObject from './EnvObject'
 
 import Consumable from './Consumable';
 import Hitbox from './utils';
+import Skeleton from './Skeleton'
 
 class TileMap {
     
@@ -74,6 +75,8 @@ class TileMap {
 
         this.level = 1;
 
+        this.enemies = []
+
         //this.bedMenu is assigned in index because of poor file management... :(
 
     }
@@ -94,12 +97,12 @@ class TileMap {
         [' ',  ' ', 'BC',  ' ',  ' ', 'R1', 'R1', 'R1', 'R1','R2', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ','Co', ' ','BC','BN', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', 'Bu', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ', 'Co',  ' ', ' ', '', ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sk', ' ','BN', ' ','Wr', ' '],
         [' ', 'BN',  ' ', '  ', 'Co', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'Co',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co','  ', ' ','  ','BN','  ', ' '],
         [' ', 'BN',  ' ',  ' ', ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
         [' ', 'BN', 'BC',  ' ', ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
-        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'Co', ' ','  ','BN'],
+        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'Co', ' ','Sk','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     ]
@@ -335,6 +338,8 @@ class TileMap {
                 } else if (tile === "Bd") {
                     let bed = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, -4, -3)
                     
+                } else if (tile === "Sk") {
+                    this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 1, this))
                 }
 
 

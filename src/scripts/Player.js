@@ -7,6 +7,7 @@ const DIRS = [ // directions made here to refer to.
 
 import Hitbox from "./utils.js";
 import PassableHitbox from "./foodUtils.js";
+import AttackBox from "./attackbox.js";
 
 import Sound from "./musics.js"
 
@@ -35,6 +36,8 @@ class Player {
 
         this.state = "idle"
         this.muted = false;
+
+        this.vulnerable = true;
         
         
         // const spriteCols = 10;
@@ -63,6 +66,9 @@ class Player {
         this.hitbox = new Hitbox(this.x, this.y, this.tileSize -5, this.tileSize, 1.5, -4)
 
         this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize, this, 1.5, -4)
+        this.attackBox = new AttackBox(this.x, this.y, this.tileSize + 3, this.tileSize, this, 1.5, -4)
+        /// attackbox will be located out of bounds.... when the player attacks, it will temporarily move the attack box to the player x, y pos. 
+
 
         if (!Player.prototype.keyss){
             Player.prototype.keyss = {}
@@ -187,7 +193,7 @@ class Player {
         }
 
         this.framesDrawn++;
-        if (this.framesDrawn >= 10){
+        if (this.framesDrawn >= 11){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -327,6 +333,7 @@ class Player {
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
                 //// TREE SHAKING OPERATIONS
             let randomChance = Math.random() * 80
+            console.log(randomChance)
             treeSound.play()
 
             this.tileMap.shakeStatus = true;
@@ -460,7 +467,12 @@ class Player {
                     if (this.food < 0) {
                         if (this.health > 0){
                             this.health--
+
                             ouchieSound.play();
+                            this.vulnerable = false;
+                            // console.log(this.vulnerable)
+                            const binded_resetVuln = this._resetVuln.bind(this);
+                            setTimeout(binded_resetVuln, 3000)
                         }
 
                         this.food = 0;
@@ -509,6 +521,13 @@ class Player {
             console.log('opened options menu')
         }
         
+    }
+
+    _resetVuln() {
+        if (this.vulnerable === false) {
+            // debugger
+            this.vulnerable = true;
+        }
     }
 
     _keyup = (event) => {
@@ -599,6 +618,8 @@ class Player {
                 this.hitbox.y = this.y;
                 this.passableHitbox.x = this.x;
                 this.passableHitbox.y = this.y;
+                this.attackBox.x = this.x;
+                this.attackBox.y = this.y;
                 Hitbox.updateCollisionStateToTrueIfColliding()
                 
                 while (this.hitbox.collisionState === true) {
@@ -609,6 +630,8 @@ class Player {
                     this.hitbox.y = this.y;
                     this.passableHitbox.x = this.x;
                     this.passableHitbox.y = this.y;
+                    this.attackBox.x = this.x;
+                    this.attackBox.y = this.y;
                     Hitbox.updateCollisionStateToTrueIfColliding();
 
                     // debugger
@@ -631,7 +654,7 @@ class Player {
 
             if (!(this.x > 90 && this.x < 129 && this.y < 110 && this.y > 55)){
                 this.tileMap.isDoorOpen = false;
-            }
+            } // autocloses door if out of the coordinates. 
 
 
             // console.log([this.x, this.y])
@@ -668,7 +691,7 @@ class Player {
                     // questionedItem.x = null;
                     // questionedItem.y = null;
                     console.log(PassableHitbox.prototype.PASSABLEHITBOXES);
-                    this.passableHitbox.detectionState = false;
+                    // this.passableHitbox.detectionState = false;
                     // debugger
                 }
             }

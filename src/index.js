@@ -39,7 +39,7 @@ theTileMapInstance.optionsMenu = theOptionsMenu; // by convention now.. all menu
 const userInter = new UserInterface(theTileMapInstance, player);
 
 const envObjects = theTileMapInstance.getObjects();
-console.log(player);
+// console.log(player);
 // debugger
 
 
@@ -57,6 +57,7 @@ function gameRender() { // layer draw calls to create layers
     
     
     if (theTileMapInstance.paused === false) {
+
         theTileMapInstance.draw(ctx)
     
         foodItems.forEach((food) => food._drawFood(ctx));
@@ -65,6 +66,38 @@ function gameRender() { // layer draw calls to create layers
         // console.log("hello")
         // player.move(ctx);
         // player.animate(ctx)
+        let aliveEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health > 0)
+        let deadEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health <= 0)
+        // console.log(aliveEnemies);
+
+
+        aliveEnemies.forEach((enemy) => {
+
+            if(enemy.vulnerable === true) {
+                enemy.animate(ctx)
+            } else if (enemy.vulnerable === false) {
+                enemy.currentFrame++
+                if (enemy.currentFrame % 2 === 0) {
+                    enemy.animate(ctx);
+                }
+            } 
+
+        })
+
+        aliveEnemies.forEach((enemy) => enemy.move())
+
+        deadEnemies.forEach((enemy) => enemy.animateDeath(ctx))
+
+
+        if (player.vulnerable === true) {
+            console.log('player IS VULNERABLE')
+        } else if (player.vulnerable === false) {
+            console.log('player is invulnerable')
+        }
+
+        // console.log(theTileMapInstance.enemies)
+        // console.log(player)
+        
         if (player.health === 0) {
 
             // player.currentFrame = 0;
@@ -74,14 +107,32 @@ function gameRender() { // layer draw calls to create layers
 
         } else {
             player.move(ctx);
-            if (player.state === "idle"){
-                player.animate(ctx);
-            } else if (player.state === "attacking"){
-                console.log('animating attacks')
-                player.animateAttack(ctx);
+
+            if (player.vulnerable === false){ 
+                // debugger
+                player.currentFrame++
+                if (player.currentFrame % 2 === 0) {
+                    // player.currentFrame++
+                    if (player.state === "idle"){
+                        // debugger
+                        player.animate(ctx);
+                    } else if (player.state === "attacking"){
+                        console.log('animating attacks')
+                        player.animateAttack(ctx);
+                    }
+                } 
+            } else if (player.vulnerable === true) {
+                if (player.state === "idle"){
+                    player.animate(ctx);
+                } else if (player.state === "attacking"){
+                    console.log('animating attacks')
+                    player.animateAttack(ctx);
+                }
             }
 
+
         }
+        
         theTileMapInstance.draw2(ctx);
     
     } else {
