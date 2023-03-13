@@ -9,6 +9,7 @@ import Consumable from "./scripts/Consumable";
 import EnvObject from "./scripts/EnvObject";
 
 import BedMenu from "./scripts/Menus";
+import OptionsMenu from "./scripts/Options";
 import Sound from "./scripts/musics";
 
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
@@ -29,7 +30,11 @@ const theTileMapInstance = new TileMap(tileSize);
 
 const player = theTileMapInstance.getPlayer(1.13);
 const nextDayMenu = new BedMenu(theTileMapInstance);
+const theOptionsMenu = new OptionsMenu(theTileMapInstance);
 theTileMapInstance.bedMenu = nextDayMenu; // THIS IS AN IMPORTANT LINE OF CODE.. ughhh lmaoooo haha
+theTileMapInstance.optionsMenu = theOptionsMenu; // by convention now.. all menus will be made this way lmaoo
+                                                 // it's important to tie the menus to the tileMap so that the player inputs can reference it when making their selections.. 
+
 
 const userInter = new UserInterface(theTileMapInstance, player);
 
@@ -61,22 +66,41 @@ function gameRender() { // layer draw calls to create layers
         // player.move(ctx);
         // player.animate(ctx)
         if (player.health === 0) {
+
+            // player.currentFrame = 0;
             player.animateDeath(ctx);
 
             gameOverMusic.play();
 
         } else {
             player.move(ctx);
-
-            player.animate(ctx);
+            if (player.state === "idle"){
+                player.animate(ctx);
+            } else if (player.state === "attacking"){
+                console.log('animating attacks')
+                player.animateAttack(ctx);
+            }
 
         }
         theTileMapInstance.draw2(ctx);
     
     } else {
-        nextDayMenu.draw(ctx);
         console.log("paused!")
-        // render pause next day menu here!
+        if (theTileMapInstance.optionsToggle === false) {
+            nextDayMenu.draw(ctx);
+            // render pause next day menu here!
+        } else if (theTileMapInstance.optionsToggle === true) {
+            theOptionsMenu.drawOptions(ctx);
+            console.log(player.health)
+            // debugger
+            if (player.health === 0) {
+                // debugger
+                theOptionsMenu.drawDeadStatus(ctx);
+
+            } else if (player.health > 0) {
+                theOptionsMenu.drawAliveStatus(ctx);
+            }
+        }
     }
 
     userInter.drawControls(ctx);

@@ -114,25 +114,35 @@ class UserInterface {
         this.healthImg = new Image();
         this.healthImg.src = './src/graphics/NinjaAdventure/HUD/Heart.png'
         
+        // this.optionsMenu = new Image ();
+        // this.optionsMenu.src = './src/graphics/menus/optionsMenu.png'
+
+        // this.aliveStatusImage = new Image();
+        // this.aliveStatusImage.src = './src/graphics/menus/aliveStatus.png'
+
+        // this.deadStatusImage = new Image();
+        // this.deadStatusImage.src = './src/graphics/menus/deadStatus.png'
 
     }
 
+    
+
     drawControls (ctx) {
-        ctx.drawImage(this.controls, 0, 0)
+        ctx.drawImage(this.controls, 0, 0);
     }
 
     drawDays(ctx) {
         let onesNum = this.tileMap.level % 10;
         let tensNum = (this.tileMap.level - onesNum) / 10;
-        ctx.drawImage(this.dayOnesNums[onesNum], 0, 0)
-        ctx.drawImage(this.dayTensNums[tensNum], 0, 0)
+        ctx.drawImage(this.dayOnesNums[onesNum], 0, 0);
+        ctx.drawImage(this.dayTensNums[tensNum], 0, 0);
     }
 
     drawFoodAmt(ctx) {
         let onesNum = this.player.food % 10;
         let tensNum = (this.player.food - onesNum) / 10;
-        ctx.drawImage(this.foodOnesNums[onesNum], 0, 0)
-        ctx.drawImage(this.foodTensNums[tensNum], 0, 0)
+        ctx.drawImage(this.foodOnesNums[onesNum], 0, 0);
+        ctx.drawImage(this.foodTensNums[tensNum], 0, 0);
     }
 
     drawHealthAmt(ctx) {
@@ -159,7 +169,7 @@ class UserInterface {
     }
 
 
-    
+
 
 
 

@@ -14,7 +14,7 @@ const foodSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Success1
 const treeSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/MiniImpact.wav")
 const ouchieSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Hit4.wav")
 const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/PowerUp1.wav")
-
+const normalNextDaySound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Success3.wav")
 
 class Player {
     
@@ -25,6 +25,7 @@ class Player {
         this.velocity = velocity;
         this.tileMap = tileMap;
 
+        this.state = "idle"
         
         
         // const spriteCols = 10;
@@ -119,20 +120,85 @@ class Player {
 
     }   
 
+    animateAttack(ctx) {
+        // console.log("reached line 124")
+        
+        let srcY;
+        
+        let srcX = this.currentFrame * 48 ;
+
+        if (srcX > 145) {
+            srcX = 144;
+        }
+        console.log(srcX)
+
+        if (this.currentMovingDirection === DIRS[2]){ // right attack
+            srcY = 352;
+        } else if (this.currentMovingDirection === DIRS[0]){ // up attack
+            srcY = 399;
+        } else if (this.currentMovingDirection === DIRS[1]){ // down
+            srcY = 304;
+        } else if (this.currentMovingDirection === DIRS[3]){ // left
+            srcY = 352;  
+            srcX = (this.currentFrame * 48 % 288) * 1
+        } else {
+            if (this.lastMovingDirection === DIRS[2]){        // right idle attack
+                srcY = 352;
+            } else if (this.lastMovingDirection === DIRS[0]){ // up idle attack
+                srcY = 399;
+            } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
+                srcY = 352;
+            } else {                                          // down idle
+                srcY = 304;
+            }
+        }
+
+
+        if (this.currentMovingDirection === DIRS[3]) {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.playerImage, srcX, srcY, 42, 32, Math.floor(-this.x + 1 + 11), Math.floor(this.y -15), -42, 32)
+            ctx.restore();
+        } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(this.playerImage, srcX, srcY, 42, 32, Math.floor(-this.x + 11), Math.floor(this.y -15), -42, 32)
+            ctx.restore();
+        } else { 
+            // ctx.save()
+            ctx.drawImage(this.playerImage, srcX, srcY, 42, 32, Math.floor(this.x -17), Math.floor(this.y -15), 42, 32)
+            // if (srcX === 144) {
+            //     this.state = "idle";
+            // }
+            // ctx.restore()
+        } 
+
+        if (srcX === 144) {
+            this.state = "idle";
+        }
+
+        this.framesDrawn++;
+        if (this.framesDrawn >= 10){
+            this.currentFrame++;
+            this.framesDrawn = 0;
+        }
+
+    }
+
 
     animate(ctx) {
         //288 x 480
         // requestAnimationFrame(animate)
 
         // currentFrame = this.currentFrame % totalFrames;
-        if (this.health === 0) {
-            /// DEATH ANIMATION LMAO
-            /// moved section up to be a separate function that is called when health === 0
-            console.log('dead')
-            this.currentFrame = 0
-            
-
-        }
+        // if (this.health === 0) {
+        //     /// DEATH ANIMATION LMAO
+        //     /// moved section up to be a separate function that is called when health === 0
+        //     console.log('dead')
+        //     this.currentFrame = 0
+        //     // return
+        // } /// currentFrame set to 0 at the moment of playerinput/action..
+                /// no need to check for it during the animation call. 
 
         let srcX = this.currentFrame * 48 % 288;
         let srcY;
@@ -220,12 +286,18 @@ class Player {
             if (this.tileMap.bedMenu.selectionIndex === 1){
                 this.tileMap.bedMenu.selectionIndex--
             }
+            if (this.tileMap.optionsMenu.selectionIndex === 1){
+                this.tileMap.optionsMenu.selectionIndex--
+            }
         } else if (event.key === 'ArrowRight'){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[2];
             }
             if (this.tileMap.bedMenu.selectionIndex === 0){
                 this.tileMap.bedMenu.selectionIndex++
+            }
+            if (this.tileMap.optionsMenu.selectionIndex === 0){
+                this.tileMap.optionsMenu.selectionIndex++
             }
         }
         // console.log('down')
@@ -356,12 +428,16 @@ class Player {
                         if (this.health === 0) {
                             this.currentFrame = 0;
                         }
+                    
                     } else {
-                        if (this.health < 3) {
+                        if (this.health < 3 && this.food > 1) {
                             this.food--;
                             this.health++;
                             healingSound.play();
+                        } else if (this.health === 3 && this.food > 1){
+                            normalNextDaySound.play();
                         }
+
                     }
                     this.tileMap.freeFood = 10;
                     
@@ -372,12 +448,30 @@ class Player {
                 }
             }
 
+        } else if (event.key === ' ' && this.state === "idle") {
+            console.log('attacking')
+            this.state = "attacking";
+            this.currentFrame = 0;
+            /// make an attacking animation.. attacking logic can go in here..
+            /// attacking animation occurs in the gameloop engine by checking this.state. 
+            // ATTACK FUNCTION HERE; not written yet because I have no enemies to test on.. 
+            // will come back later.  
+        } else if (event.key === 'Escape') {
+            if (this.tileMap.paused === false) {
+                this.tileMap.paused = true;
+                this.tileMap.optionsToggle = true;
+            } else {
+                this.tileMap.paused = false;
+                this.tileMap.optionsToggle = false;
+            }
+            console.log('opened options menu')
         }
         
     }
 
     _keyup = (event) => {
         Player.prototype.keyss[event.code] = null;
+        
         // debugger
         if (event.code === 'Space') {
             if (this.tileMap.shakeStatus === true) {

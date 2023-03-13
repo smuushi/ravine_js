@@ -14,6 +14,7 @@ class TileMap {
 
 
         this.paused = false;
+        this.optionsToggle = false;
 
 
         this.grass = new Image();
