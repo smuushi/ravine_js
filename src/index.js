@@ -91,7 +91,7 @@ function gameRender() { // layer draw calls to create layers
             // render pause next day menu here!
         } else if (theTileMapInstance.optionsToggle === true) {
             theOptionsMenu.drawOptions(ctx);
-            console.log(player.health)
+            // console.log(player.health)
             // debugger
             if (player.health === 0) {
                 // debugger

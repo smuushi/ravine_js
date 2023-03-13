@@ -15,6 +15,7 @@ const treeSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/MiniImpa
 const ouchieSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Hit4.wav")
 const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/PowerUp1.wav")
 const normalNextDaySound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Success3.wav")
+const swordSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Sword.wav")
 
 class Player {
     
@@ -332,7 +333,7 @@ class Player {
 
             }
 
-        } else if (event.key === ' ' && (this.x > 88 && this.x < 200 && this.y < 210 && this.y > 190)){
+        } else if (event.key === ' ' && (this.x > 88 && this.x < 145 && this.y < 210 && this.y > 190)){
             //// TREE SHAKING OPERATIONS
             treeSound.play();
             if (!this.counter) {
@@ -450,6 +451,7 @@ class Player {
 
         } else if (event.key === ' ' && this.state === "idle") {
             console.log('attacking')
+            swordSound.play();
             this.state = "attacking";
             this.currentFrame = 0;
             /// make an attacking animation.. attacking logic can go in here..
