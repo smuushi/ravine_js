@@ -8,6 +8,14 @@ const DIRS = [ // directions made here to refer to.
 import Hitbox from "./utils.js";
 import PassableHitbox from "./foodUtils.js";
 
+import Sound from "./musics.js"
+
+const foodSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Success1.wav")
+const treeSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/MiniImpact.wav")
+const ouchieSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Hit4.wav")
+const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/PowerUp1.wav")
+
+
 class Player {
     
     constructor(x, y, tileSize, velocity, tileMap) {
@@ -231,22 +239,30 @@ class Player {
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
                 //// TREE SHAKING OPERATIONS
             let randomChance = Math.random() * 80
-            
+            treeSound.play()
 
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300);
             if (randomChance < this.tileMap.freeFood / 2 && (this.tileMap.freeFood > 0)) {
+                if (!this.counter) {
+                    this.counter = 0;
+                }
                 this.tileMap.freeFood--;
                 this.food++;
+                foodSound.play()
+
                 this.counter++;
                 console.log(this.counter);
                 // this.tileMap.freeFood = randomChance;
             } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
                 this.food++;
+                foodSound.play()
+
             }
 
         } else if (event.key === ' ' && (this.x > 88 && this.x < 200 && this.y < 210 && this.y > 190)){
             //// TREE SHAKING OPERATIONS
+            treeSound.play();
             if (!this.counter) {
                 this.counter = 0;
             }
@@ -259,11 +275,14 @@ class Player {
                 if (randomChance < this.tileMap.freeFood / 2 && (this.tileMap.freeFood > 0)) {
                     this.tileMap.freeFood--;
                     this.food++;
+                    foodSound.play()
                     this.counter++;
                     console.log(this.counter);
                     // this.tileMap.freeFood = randomChance;
                 } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
                     this.food++;
+                    foodSound.play()
+
                 }
             // }, 10000)
             //// BUSH SHAKING OPERATIONS
@@ -330,6 +349,7 @@ class Player {
                     if (this.food < 0) {
                         if (this.health > 0){
                             this.health--
+                            ouchieSound.play();
                         }
 
                         this.food = 0;
@@ -340,6 +360,7 @@ class Player {
                         if (this.health < 3) {
                             this.food--;
                             this.health++;
+                            healingSound.play();
                         }
                     }
                     this.tileMap.freeFood = 10;
@@ -494,6 +515,7 @@ class Player {
                 if (questionedItem.tiedObj.constructor.name === "Consumable") {
                     console.log('food/consumable detected by player');
                     this.food++;
+                    foodSound.play();
                     if (this.food > 99) {
                         this.food = 99;
                     }

@@ -9,6 +9,7 @@ import Consumable from "./scripts/Consumable";
 import EnvObject from "./scripts/EnvObject";
 
 import BedMenu from "./scripts/Menus";
+import Sound from "./scripts/musics";
 
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
@@ -45,6 +46,8 @@ const foodItems = EnvObject.prototype.INTERACTIVEITEMS;
 const hitboxes = Hitbox.prototype.ALLHITBOXESMADE;
 const passableHitboxes = PassableHitbox.prototype.PASSABLEHITBOXES;
 
+const gameOverMusic = new Sound('./src/graphics/NinjaAdventure/Musics/14 - Curse.ogg') 
+
 function gameRender() { // layer draw calls to create layers
     
     
@@ -59,10 +62,14 @@ function gameRender() { // layer draw calls to create layers
         // player.animate(ctx)
         if (player.health === 0) {
             player.animateDeath(ctx);
+
+            gameOverMusic.play();
+
         } else {
             player.move(ctx);
 
             player.animate(ctx);
+
         }
         theTileMapInstance.draw2(ctx);
     
