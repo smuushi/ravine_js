@@ -16,6 +16,13 @@ const ouchieSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Hit4.w
 const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/PowerUp1.wav")
 const normalNextDaySound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Success3.wav")
 const swordSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Sword.wav")
+const menuSelectSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Menu/Menu2.wav")
+const optionsOpenSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu10.wav')
+const optionsCloseSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu11.wav')
+const toggleMuteOnSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept2.wav')
+const toggleMuteOffSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept.wav')
+
+
 
 class Player {
     
@@ -27,6 +34,7 @@ class Player {
         this.tileMap = tileMap;
 
         this.state = "idle"
+        this.muted = false;
         
         
         // const spriteCols = 10;
@@ -284,21 +292,28 @@ class Player {
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[3];
             }
-            if (this.tileMap.bedMenu.selectionIndex === 1){
+            if (this.tileMap.bedMenu.selectionIndex === 1 && this.tileMap.paused === true){
                 this.tileMap.bedMenu.selectionIndex--
+                menuSelectSound.play();
             }
-            if (this.tileMap.optionsMenu.selectionIndex === 1){
+            if (this.tileMap.optionsMenu.selectionIndex === 1 && this.tileMap.paused === true){
                 this.tileMap.optionsMenu.selectionIndex--
+                menuSelectSound.play();
+
             }
         } else if (event.key === 'ArrowRight'){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[2];
             }
-            if (this.tileMap.bedMenu.selectionIndex === 0){
+            if (this.tileMap.bedMenu.selectionIndex === 0 && this.tileMap.paused === true){
                 this.tileMap.bedMenu.selectionIndex++
+                menuSelectSound.play();
+
             }
-            if (this.tileMap.optionsMenu.selectionIndex === 0){
+            if (this.tileMap.optionsMenu.selectionIndex === 0 && this.tileMap.paused === true){
                 this.tileMap.optionsMenu.selectionIndex++
+                menuSelectSound.play();
+
             }
         }
         // console.log('down')
@@ -361,7 +376,7 @@ class Player {
             //// BUSH SHAKING OPERATIONS
 
            
-        } else if (event.key === ' ' && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
+        } else if (event.key === ' ' && this.tileMap.paused === false && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
                         // debugger
                 /// DOOR OPERATIONS HERE
             if (this.tileMap.isDoorOpen === false){
@@ -396,6 +411,29 @@ class Player {
             //     this.tileMap.isDoorOpen = true;
             // }
             
+        } else if (event.key === ' ' && this.tileMap.paused === true && this.tileMap.optionsToggle === true) {
+            console.log('tried to select something in the esc menu')  
+            
+            if (this.tileMap.optionsMenu.selectionIndex === 0){
+                
+               if (this.muted === false) {
+                    // toggleMuteOnSound.play()
+                    Sound.prototype.ALLSOUNDS.forEach( sound => sound.sound.volume = 0 )
+                    toggleMuteOnSound.sound.volume = 1;
+                    toggleMuteOnSound.play()
+
+                    this.muted = true;
+               } else if (this.muted === true) {
+                   Sound.prototype.ALLSOUNDS.forEach( sound => sound.sound.volume = 1 );
+                   toggleMuteOffSound.play();
+                    this.muted = false;
+               }
+                
+
+            } else if (this.tileMap.optionsMenu.selectionIndex === 1) {
+                window.location.reload(false)
+            }
+            /// escape menu functionality 
         } else if ((this.health > 0) && event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
                 //// BED MENU OPERATIONS
             // if (this.tileMap.paused === true){
@@ -462,9 +500,11 @@ class Player {
             if (this.tileMap.paused === false) {
                 this.tileMap.paused = true;
                 this.tileMap.optionsToggle = true;
+                optionsOpenSound.play();
             } else {
                 this.tileMap.paused = false;
                 this.tileMap.optionsToggle = false;
+                optionsCloseSound.play();
             }
             console.log('opened options menu')
         }

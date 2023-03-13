@@ -27,6 +27,12 @@ class OptionsMenu {
 
     drawOptions(ctx) {
         ctx.drawImage(this.optionsMenu, 0, 0);
+// debugger
+        if (this.selectionIndex === 0) {
+            ctx.drawImage(this.cursor, 140, 218)
+        } else if (this.selectionIndex === 1) {
+            ctx.drawImage(this.cursor, 236, 218)
+        }
     }
 
     drawAliveStatus(ctx) {

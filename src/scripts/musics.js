@@ -9,10 +9,17 @@ class Sound {
         this.play = function() {
             this.sound.play();
         }
+        
 
         this.stop = function() {
             this.sound.pause();
         }
+
+        if (!Sound.prototype.ALLSOUNDS) {
+            Sound.prototype.ALLSOUNDS = [];
+        }
+
+        Sound.prototype.ALLSOUNDS.push(this);
     }
 
 }
