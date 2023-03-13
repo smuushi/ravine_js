@@ -65,6 +65,8 @@ class TileMap {
         this.shakeStatus = false;
         this.shakeStatus2 = false;
 
+        this.freeFood = 10;
+
 
         this.currentFrame = 0;
         this.framesDrawn = 0;

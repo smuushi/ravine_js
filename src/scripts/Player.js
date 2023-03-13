@@ -230,13 +230,42 @@ class Player {
         // debugger
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
                 //// TREE SHAKING OPERATIONS
+            let randomChance = Math.random() * 80
+            
+
             this.tileMap.shakeStatus = true;
             setTimeout(() => this.tileMap.shakeStatus = false, 300);
+            if (randomChance < this.tileMap.freeFood / 2 && (this.tileMap.freeFood > 0)) {
+                this.tileMap.freeFood--;
+                this.food++;
+                this.counter++;
+                console.log(this.counter);
+                // this.tileMap.freeFood = randomChance;
+            } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
+                this.food++;
+            }
 
         } else if (event.key === ' ' && (this.x > 88 && this.x < 200 && this.y < 210 && this.y > 190)){
             //// TREE SHAKING OPERATIONS
+            if (!this.counter) {
+                this.counter = 0;
+            }
+
+            let randomChance = Math.random() * 80
+            console.log(randomChance);
             this.tileMap.shakeStatus2 = true;
             setTimeout(() => this.tileMap.shakeStatus2 = false, 300);
+            // setTimeout(() => {
+                if (randomChance < this.tileMap.freeFood / 2 && (this.tileMap.freeFood > 0)) {
+                    this.tileMap.freeFood--;
+                    this.food++;
+                    this.counter++;
+                    console.log(this.counter);
+                    // this.tileMap.freeFood = randomChance;
+                } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
+                    this.food++;
+                }
+            // }, 10000)
             //// BUSH SHAKING OPERATIONS
 
            
@@ -313,6 +342,7 @@ class Player {
                             this.health++;
                         }
                     }
+                    this.tileMap.freeFood = 10;
                     
 
                 } else if (this.tileMap.bedMenu.selectionIndex === 1) {
@@ -447,7 +477,7 @@ class Player {
             }
 
 
-            console.log([this.x, this.y])
+            // console.log([this.x, this.y])
             // console.log(this.x)
             // console.log(this.y)
             // console.log(this.currentMovingDirection)
