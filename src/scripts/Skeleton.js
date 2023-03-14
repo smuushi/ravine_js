@@ -1,5 +1,10 @@
 import PassableHitbox from "./foodUtils";
 import Hitbox from './utils';
+import Sound from "./musics";
+
+const hitSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Game/Hit.wav')
+hitSound.sound.volume = 0.3
+
 
 const DIRS = [ // directions made here to refer to. 
     [0, -1],
@@ -227,8 +232,12 @@ class Skeleton {
                         
                         console.log('Attacked by player');
                         this.health--; 
+                        hitSound.play();
                         if (this.health === 0) {
+
                             this.currentFrame = 0;
+                            this.hitbox.x = 0;
+                            this.hitbox.y = 0;
                         }
                         this.vulnerable = false;
                         let binded_resetVuln = this._resetVuln.bind(this);

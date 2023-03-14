@@ -18,8 +18,11 @@ const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Power
 const normalNextDaySound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Success3.wav")
 const swordSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Sword.wav")
 const menuSelectSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Menu/Menu2.wav")
+
 const optionsOpenSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu10.wav')
+optionsOpenSound.sound.volume = 0.2
 const optionsCloseSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu11.wav')
+optionsCloseSound.sound.volume =0.2
 const toggleMuteOnSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept2.wav')
 const toggleMuteOffSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept.wav')
 
@@ -66,7 +69,7 @@ class Player {
         this.hitbox = new Hitbox(this.x, this.y, this.tileSize -5, this.tileSize, 1.5, -4)
 
         this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize, this, 1.5, -4)
-        this.attackBox = new AttackBox(this.x, this.y, this.tileSize + 3, this.tileSize, this, 1.5, -4)
+        this.attackBox = new AttackBox(this.x, this.y, this.tileSize + 7, this.tileSize + 7, this, 1.5, -4)
         /// attackbox will be located out of bounds.... when the player attacks, it will temporarily move the attack box to the player x, y pos. 
 
 
@@ -142,8 +145,10 @@ class Player {
         
         let srcX = this.currentFrame * 48 ;
 
+        // debugger
         if (srcX > 145) {
             srcX = 144;
+            
         }
         console.log(srcX)
 
@@ -273,7 +278,8 @@ class Player {
 
         // }
 
-        
+        this.attackBox.x = 0;
+        this.attackBox.y = 0;
  
     }
 
@@ -504,6 +510,7 @@ class Player {
             swordSound.play();
             this.state = "attacking";
             this.currentFrame = 0;
+            this._moveAttackBox();
             /// make an attacking animation.. attacking logic can go in here..
             /// attacking animation occurs in the gameloop engine by checking this.state. 
             // ATTACK FUNCTION HERE; not written yet because I have no enemies to test on.. 
@@ -522,6 +529,54 @@ class Player {
         }
         
     }
+
+    _moveAttackBox(){
+        if (this.currentMovingDirection === DIRS[2]){ // right
+            this.attackBox.x = this.x + 7;
+            this.attackBox.y = this.y - 4;
+        } else if (this.currentMovingDirection === DIRS[0]){ // up
+            this.attackBox.x = this.x - 6;
+            this.attackBox.y = this.y - 13;
+        } else if (this.currentMovingDirection === DIRS[1]){ // down
+            this.attackBox.x = this.x - 5.5;
+            this.attackBox.y = this.y + 5;
+        } else if (this.currentMovingDirection === DIRS[3]){ // left
+            this.attackBox.x = this.x - 18;
+            this.attackBox.y = this.y - 4;
+        } else {
+            if (this.lastMovingDirection === DIRS[2]){        // right idle
+                this.attackBox.x = this.x + 7;
+                this.attackBox.y = this.y - 4;
+            } else if (this.lastMovingDirection === DIRS[0]){ // up idle
+                this.attackBox.x = this.x - 6;
+                this.attackBox.y = this.y - 13;
+            } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
+                this.attackBox.x = this.x - 18;
+                this.attackBox.y = this.y - 4;
+            } else {                                          // down idle
+                this.attackBox.x = this.x - 5.5;
+                this.attackBox.y = this.y + 5;
+            }
+        }
+
+
+        // binded_resetAttackBoxPos = this._resetAttackBoxPos.bind(this);
+
+        // setTimeout(binded_resetAttackBoxPos, 3000)
+
+        // this.attackBox.x = 0;
+        // this.attackBox.y = 0;
+
+
+
+    }
+
+    // _resetAttackBoxPos () {
+    //     debugger
+    //     this.attackBox.x = 0;
+    //     this.attackBox.y = 0;
+    // }
+
 
     _resetVuln() {
         if (this.vulnerable === false) {
@@ -618,8 +673,8 @@ class Player {
                 this.hitbox.y = this.y;
                 this.passableHitbox.x = this.x;
                 this.passableHitbox.y = this.y;
-                this.attackBox.x = this.x;
-                this.attackBox.y = this.y;
+                // this.attackBox.x = this.x;
+                // this.attackBox.y = this.y;
                 Hitbox.updateCollisionStateToTrueIfColliding()
                 
                 while (this.hitbox.collisionState === true) {
@@ -630,9 +685,10 @@ class Player {
                     this.hitbox.y = this.y;
                     this.passableHitbox.x = this.x;
                     this.passableHitbox.y = this.y;
-                    this.attackBox.x = this.x;
-                    this.attackBox.y = this.y;
+                    // this.attackBox.x = this.x;
+                    // this.attackBox.y = this.y;
                     Hitbox.updateCollisionStateToTrueIfColliding();
+
 
                     // debugger
                     return
