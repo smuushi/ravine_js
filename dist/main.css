@@ -9,27 +9,29 @@ h3 {
 
 .mainheader {
   display: flex;
-  position: relative;
   justify-content: center;
-  background-color: rgb(15, 99, 12);
-  margin: 10px;
+  background-color: rgb(69, 150, 66);
+  margin: auto;
   max-width: 480px;
   min-width: 480px;
   border-radius: 5px;
+  outline: 1px solid white;
 }
 
 .game-container {
   display: flex;
-  position: relative;
-  width: 240px;
+  justify-content: center;
+  width: 260px;
   height: 160px;
-  margin: 0 auto;
-  outline: 1px solid rgb(8, 203, 177);
+  margin: auto;
+  background-color: rgb(80, 137, 80);
+  outline: 1px solid rgb(255, 255, 255);
   transform: scale(4) translateY(40%);
+  border-radius: 3px;
 }
 
 #game-canvas {
-  position: relative;
+  position: block;
   box-shadow: 10px 10px 20px black;
   border-radius: 2px;
   margin: 10px;
@@ -37,6 +39,13 @@ h3 {
   image-rendering: pixelated;
 }
 
+.full-container {
+  display: flex;
+  justify-content: center;
+  background-color: aquamarine;
+  border-radius: 5px;
+}
+
 body {
-  background-color: rgba(109, 109, 109, 0.782);
+  background-color: rgba(118, 162, 218, 0.782);
 }
