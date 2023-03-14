@@ -34,7 +34,7 @@ const theOptionsMenu = new OptionsMenu(theTileMapInstance);
 theTileMapInstance.bedMenu = nextDayMenu; // THIS IS AN IMPORTANT LINE OF CODE.. ughhh lmaoooo haha
 theTileMapInstance.optionsMenu = theOptionsMenu; // by convention now.. all menus will be made this way lmaoo
                                                  // it's important to tie the menus to the tileMap so that the player inputs can reference it when making their selections.. 
-
+theTileMapInstance.player = player; // this is also vital for skeleton pathing.. lmao
 
 const userInter = new UserInterface(theTileMapInstance, player);
 
@@ -69,30 +69,49 @@ function gameRender() { // layer draw calls to create layers
         let aliveEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health > 0)
         let deadEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health <= 0)
         // console.log(aliveEnemies);
-
-
+        
+        deadEnemies.forEach((enemy) => {
+            enemy.animateDeath(ctx)
+            enemy.hitbox.x = 0;
+            enemy.hitbox.y = 0;
+        })
+        
         aliveEnemies.forEach((enemy) => {
 
             if(enemy.vulnerable === true) {
-                enemy.animate(ctx)
-            } else if (enemy.vulnerable === false) {
-                enemy.currentFrame++
-                if (enemy.currentFrame % 2 === 0) {
+                
+                if (enemy.aggressionState === "idle"){
                     enemy.animate(ctx);
+                } else if (enemy.aggressionState === "aggro") {
+                    enemy.animateAttack(ctx);
+                }
+                
+            } else if (enemy.vulnerable === false) {
+                
+                enemy.framesDrawn++
+                if (enemy.framesDrawn % 3 === 0) {
+                    if (enemy.aggressionState === "idle"){
+                        enemy.animate(ctx);
+                    } else if (enemy.aggressionState === "aggro") {
+                        enemy.animateAttack(ctx);
+                    }
                 }
             } 
-
+            
+            if (enemy.health > 0){
+                enemy.move();
+            }
+            
         })
 
-        aliveEnemies.forEach((enemy) => enemy.move())
+        // aliveEnemies.forEach((enemy) => enemy.move())
 
-        deadEnemies.forEach((enemy) => enemy.animateDeath(ctx))
 
 
         if (player.vulnerable === true) {
-            console.log('player IS VULNERABLE')
+            // console.log('player IS VULNERABLE')
         } else if (player.vulnerable === false) {
-            console.log('player is invulnerable')
+            // console.log('player is invulnerable')
         }
 
         // console.log(theTileMapInstance.enemies)
@@ -105,13 +124,15 @@ function gameRender() { // layer draw calls to create layers
 
             gameOverMusic.play();
 
+            // aliveEnemies.forEach((enemy) => enemy.move())
+
         } else {
             player.move(ctx);
 
             if (player.vulnerable === false){ 
                 // debugger
-                player.currentFrame++
-                if (player.currentFrame % 2 === 0) {
+                player.framesDrawn++
+                if (player.framesDrawn % 2 === 0) {
                     // player.currentFrame++
                     if (player.state === "idle"){
                         // debugger
@@ -167,9 +188,9 @@ function gameRender() { // layer draw calls to create layers
     // envObjects.forEach((obj) => obj.drawHitboxes(ctx));
     
     //below lines will draw hitboxes.. comment them out to disable hitbox rendering
-        player.hitbox._debugDraw(ctx)
-        hitboxes.forEach((box) => box._debugDraw(ctx));
-        passableHitboxes.forEach((box) => box._debugDraww(ctx));
+        // player.hitbox._debugDraw(ctx)
+        // hitboxes.forEach((box) => box._debugDraw(ctx));
+        // passableHitboxes.forEach((box) => box._debugDraww(ctx));
 
     // console.log(hitboxes);
     Hitbox.updateCollisionStateToTrueIfColliding();

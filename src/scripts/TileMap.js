@@ -8,6 +8,11 @@ import Consumable from './Consumable';
 import Hitbox from './utils';
 import Skeleton from './Skeleton'
 
+
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
 class TileMap {
     
     constructor(tileSize) {
@@ -78,6 +83,7 @@ class TileMap {
         this.enemies = []
 
         //this.bedMenu is assigned in index because of poor file management... :(
+            // this.player is assigned in index because of poor file management again sorry lmao
 
     }
 
@@ -93,16 +99,16 @@ class TileMap {
         [' ', 'Wr',  ' ', 'BN', 'BN','BN','BN','Dc', 'BN','BN','BN','BN', 'Co', ' ',' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','Co','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', 'Sk', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  'Sk',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ',  ' ', 'BC',  ' ',  ' ', 'R1', 'R1', 'R1', 'R1','R2', ' ', ' ', ' ', 'Sk', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN', ' ','Co', ' ','BC','BN', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', 'Bu', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ', 'Co',  ' ', ' ', '', ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sk', ' ','BN', ' ','Wr', ' '],
         [' ', 'BN',  ' ', '  ', 'Co', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' '],
         [' ', 'BN', 'Co',  ' ',  ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co','  ', ' ','  ','BN','  ', ' '],
-        [' ', 'BN',  ' ',  ' ', ' ', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
-        [' ', 'BN', 'BC',  ' ', ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
-        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'Co', ' ','Sk','BN'],
+        [' ', 'BN',  ' ',  ' ', 'Sk', ' ', ' ','BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co', ' ','BN', ' ', ' '],
+        [' ', 'BN', 'BC',  ' ', ' ', ' ', ' ','BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Sk', ' ', ' ', ' ', ' ', ' ', ' ','BN','BN','  '],
+        [' ',  ' ', 'BN', 'BC', '  ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC','BC','BC','BC', 'SkG', ' ','Co','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     ]
@@ -290,6 +296,25 @@ class TileMap {
         }
     }
 
+    getNextDayEnemies() {
+        for (let row = 0; row < this.theMap1.length; row++) {
+            for (let col = 0; col < this.theMap1[row].length; col++) {
+                let tile = this.theMap1[row][col];
+
+                if (tile === "Sk") {
+                    let sub = this.level
+                    let rand = randomIntFromInterval(1,(15-sub))
+                    if (rand < 4) {
+                        this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
+                    }
+                }
+
+             }
+        }
+        
+
+    }
+
     getObjects() {
         let objectsCollection = [];
         for (let row = 0; row < this.theMap1.length; row++) {
@@ -301,11 +326,11 @@ class TileMap {
                     // console.log(objectsCollection)
                 } else if (tile === 'BN'){
                     // render border hitbox here
-                    let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 6, 0, this, 3);
+                    let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 5, 0, this, 3);
                     objectsCollection.push(invisBoundary);
                     // console.log(objectsCollection)
                 } else if (tile === 'BC'){
-                    let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize - 6, this.tileSize - 10, 0, this, 5, 5);
+                    let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize - 6, this.tileSize - 9, 0, this, 5, 5);
                     objectsCollection.push(invisBoundary);
                 } else if (tile === "R2" || tile === "R1"){
                     let rock = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 3, 0, this, 1, 0)
@@ -339,7 +364,13 @@ class TileMap {
                     let bed = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, -4, -3)
                     
                 } else if (tile === "Sk") {
-                    this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 1, this))
+                    let rand = randomIntFromInterval(1,(15-this.level))
+                    if (rand < 4) {
+                        this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
+                    }
+                } else if (tile === "SkG") {
+                    this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
+
                 }
 
 

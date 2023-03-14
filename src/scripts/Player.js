@@ -18,6 +18,7 @@ const healingSound = new Sound ("./src/graphics/NinjaAdventure/Sounds/Game/Power
 const normalNextDaySound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Success3.wav")
 const swordSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Sword.wav")
 const menuSelectSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Menu/Menu2.wav")
+const badLuckSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/GameOver.wav")
 
 const optionsOpenSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu10.wav')
 // optionsOpenSound.sound.volume = 0.5
@@ -27,7 +28,9 @@ const toggleMuteOnSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/A
 const toggleMuteOffSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept.wav')
 const doorSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Game/Voice3.wav')
 
-
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 class Player {
     
@@ -136,6 +139,8 @@ class Player {
             this.currentFrame++
             this.framesDrawn = 0;
         }
+        this.attackBox.x = 0;
+        this.attackBox.y = 0;
 
     }   
 
@@ -369,6 +374,12 @@ class Player {
                 foodSound.play()
 
             }
+            let rando = randomIntFromInterval (1, 100)
+                if (rando === 1) {
+                    this.tileMap.getNextDayEnemies();
+                    badLuckSound.play();
+                }
+                    
 
         } else if (event.key === ' ' && (this.x > 88 && this.x < 145 && this.y < 210 && this.y > 190)){
             //// TREE SHAKING OPERATIONS
@@ -394,6 +405,13 @@ class Player {
                     foodSound.play()
 
                 }
+                let rando = randomIntFromInterval (1, 100)
+                if (rando === 1) {
+                    this.tileMap.getNextDayEnemies();
+                    badLuckSound.play();
+                }
+                    
+                
             // }, 10000)
             //// BUSH SHAKING OPERATIONS
 
@@ -475,6 +493,7 @@ class Player {
                 if (this.tileMap.bedMenu.selectionIndex === 0){
                     //FUNCTION TO GO TO NEXT DAY
                     this.tileMap.getNextDayFoodObjects();
+                    this.tileMap.getNextDayEnemies();
                     this.tileMap.level ++
                     console.log('chose to go to next day near bed')
                     this.tileMap.paused = false;
@@ -663,10 +682,12 @@ class Player {
 
     move(ctx) { // move takes in a context to call movement specific additional drawings like dust particles. 
 
+        console.log([this.x, this.y])
         
         if (this.passableHitbox.detectionState === true) {
             // debugger
             this._isCollidingWithFood();
+            this._isCollidingWithAttack();
         }
         
 
@@ -730,6 +751,51 @@ class Player {
             // console.log(this.y)
             // console.log(this.currentMovingDirection)
         }
+    }
+
+    _isCollidingWithAttack() {
+        // console.log('DETECT DAMAGE COLLISIONS')
+
+        if (this.vulnerable === false) {
+            return
+        }
+
+        if (this.passableHitbox.detectionState === true) {
+            let detections = this.passableHitbox._detectingWhat();
+            // debugger;
+
+            for(let i = 0; i < detections.length; i++) {
+                let questionedDetection = detections[i];
+
+                // debugger;
+                if(questionedDetection.tiedObj.constructor.name === "Skeleton" 
+                    && questionedDetection.constructor.name === "AttackBox"){
+                        
+                        console.log('Attacked by skeleton');
+                        this.health--; 
+                        ouchieSound.play();
+                        if (this.health === 0) {
+
+                            this.currentFrame = 0;
+                            this.hitbox.x = 0;
+                            this.hitbox.y = 0;
+                        }
+                        this.vulnerable = false;
+                        let binded_resetVuln = this._resetVuln.bind(this);
+
+                        setTimeout(binded_resetVuln, 3000)
+
+                        // play hurt sound here. 
+
+                }
+
+            }
+            
+
+
+
+        }
+
     }
 
     _isCollidingWithFood() {
