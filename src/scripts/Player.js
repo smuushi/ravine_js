@@ -20,11 +20,12 @@ const swordSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Game/Sword.wa
 const menuSelectSound = new Sound("./src/graphics/NinjaAdventure/Sounds/Menu/Menu2.wav")
 
 const optionsOpenSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu10.wav')
-optionsOpenSound.sound.volume = 0.2
+// optionsOpenSound.sound.volume = 0.5
 const optionsCloseSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Menu11.wav')
-optionsCloseSound.sound.volume =0.2
+// optionsCloseSound.sound.volume = 0.5
 const toggleMuteOnSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept2.wav')
 const toggleMuteOffSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Menu/Accept.wav')
+const doorSound = new Sound('./src/graphics/NinjaAdventure/Sounds/Game/Voice3.wav')
 
 
 
@@ -195,7 +196,15 @@ class Player {
 
         if (srcX === 144) {
             this.state = "idle";
+            
         }
+
+        if (srcX === 96) {
+            this.attackBox.x = 0;
+            this.attackBox.y = 0;
+        }
+
+        console.log(srcX)
 
         this.framesDrawn++;
         if (this.framesDrawn >= 11){
@@ -278,8 +287,8 @@ class Player {
 
         // }
 
-        this.attackBox.x = 0;
-        this.attackBox.y = 0;
+        // this.attackBox.x = 0;
+        // this.attackBox.y = 0;
  
     }
 
@@ -394,6 +403,7 @@ class Player {
                 /// DOOR OPERATIONS HERE
             if (this.tileMap.isDoorOpen === false){
                 this.tileMap.isDoorOpen = true;
+                doorSound.play();
             }
             //     if (this.tileMap.bedMenu.selectionIndex === 0){
             //         //FUNCTION TO GO TO NEXT DAY
@@ -653,6 +663,7 @@ class Player {
 
     move(ctx) { // move takes in a context to call movement specific additional drawings like dust particles. 
 
+        
         if (this.passableHitbox.detectionState === true) {
             // debugger
             this._isCollidingWithFood();
@@ -710,9 +721,10 @@ class Player {
 
             if (!(this.x > 90 && this.x < 129 && this.y < 110 && this.y > 55)){
                 this.tileMap.isDoorOpen = false;
+                // doorSound.play();
             } // autocloses door if out of the coordinates. 
 
-
+            
             // console.log([this.x, this.y])
             // console.log(this.x)
             // console.log(this.y)

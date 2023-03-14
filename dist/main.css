@@ -9,6 +9,7 @@ h3 {
 
 .mainheader {
   display: flex;
+  position: relative;
   justify-content: center;
   background-color: rgb(15, 99, 12);
   margin: 10px;
@@ -17,11 +18,23 @@ h3 {
   border-radius: 5px;
 }
 
+.game-container {
+  display: flex;
+  position: relative;
+  width: 240px;
+  height: 160px;
+  margin: 0 auto;
+  outline: 1px solid rgb(8, 203, 177);
+  transform: scale(4) translateY(40%);
+}
+
 #game-canvas {
+  position: relative;
   box-shadow: 10px 10px 20px black;
   border-radius: 2px;
   margin: 10px;
   border-radius: 5px;
+  image-rendering: pixelated;
 }
 
 body {
