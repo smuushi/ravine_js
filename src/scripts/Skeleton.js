@@ -586,6 +586,7 @@ class Skeleton {
                         
                         console.log('Attacked by player');
                         this.health--; 
+                        this.velocity = 0.3
                         hitSound.play();
                         if (this.health === 0) {
 
@@ -614,6 +615,7 @@ class Skeleton {
     _resetVuln() {
         if (this.vulnerable === false) {
             this.vulnerable = true;
+            this.velocity = 0.7;
         }
     }
 

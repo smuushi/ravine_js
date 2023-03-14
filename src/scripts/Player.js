@@ -73,7 +73,7 @@ class Player {
         this.hitbox = new Hitbox(this.x, this.y, this.tileSize -5, this.tileSize, 1.5, -4)
 
         this.passableHitbox = new PassableHitbox(this.x, this.y, this.tileSize -4, this.tileSize, this, 1.5, -4)
-        this.attackBox = new AttackBox(this.x, this.y, this.tileSize + 7, this.tileSize + 7, this, 1.5, -4)
+        this.attackBox = new AttackBox(this.x, this.y, this.tileSize + 13, this.tileSize + 13, this, 1.5, -4)
         /// attackbox will be located out of bounds.... when the player attacks, it will temporarily move the attack box to the player x, y pos. 
 
 
@@ -151,12 +151,13 @@ class Player {
         
         let srcX = this.currentFrame * 48 ;
 
+        
         // debugger
         if (srcX > 145) {
             srcX = 144;
             
         }
-        console.log(srcX)
+        // console.log(srcX)
 
         if (this.currentMovingDirection === DIRS[2]){ // right attack
             srcY = 352;
@@ -310,11 +311,11 @@ class Player {
 
 
 
-        if (event.key === 'ArrowUp'){
+        if (event.key === 'ArrowUp' || event.key === 'w'){
             this.currentMovingDirection = DIRS[0];
-        } else if (event.key === 'ArrowDown'){
+        } else if (event.key === 'ArrowDown' || event.key === "s"){
             this.currentMovingDirection = DIRS[1];
-        } else if (event.key === 'ArrowLeft'){
+        } else if (event.key === 'ArrowLeft' || event.key === "a"){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[3];
             }
@@ -327,7 +328,7 @@ class Player {
                 menuSelectSound.play();
 
             }
-        } else if (event.key === 'ArrowRight'){
+        } else if (event.key === 'ArrowRight' || event.key === "d"){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[2];
             }
@@ -377,6 +378,8 @@ class Player {
             let rando = randomIntFromInterval (1, 100)
                 if (rando === 1) {
                     this.tileMap.getNextDayEnemies();
+                    this.tileMap.getBadLuckEnemies();
+
                     badLuckSound.play();
                 }
                     
@@ -408,6 +411,7 @@ class Player {
                 let rando = randomIntFromInterval (1, 100)
                 if (rando === 1) {
                     this.tileMap.getNextDayEnemies();
+                    this.tileMap.getBadLuckEnemies();
                     badLuckSound.play();
                 }
                     
@@ -564,8 +568,8 @@ class Player {
             this.attackBox.x = this.x + 7;
             this.attackBox.y = this.y - 4;
         } else if (this.currentMovingDirection === DIRS[0]){ // up
-            this.attackBox.x = this.x - 6;
-            this.attackBox.y = this.y - 13;
+            this.attackBox.x = this.x - 8;
+            this.attackBox.y = this.y - 15;
         } else if (this.currentMovingDirection === DIRS[1]){ // down
             this.attackBox.x = this.x - 5.5;
             this.attackBox.y = this.y + 5;
@@ -577,8 +581,8 @@ class Player {
                 this.attackBox.x = this.x + 7;
                 this.attackBox.y = this.y - 4;
             } else if (this.lastMovingDirection === DIRS[0]){ // up idle
-                this.attackBox.x = this.x - 6;
-                this.attackBox.y = this.y - 13;
+                this.attackBox.x = this.x - 8;
+                this.attackBox.y = this.y - 15;
             } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
                 this.attackBox.x = this.x - 18;
                 this.attackBox.y = this.y - 4;
@@ -647,13 +651,13 @@ class Player {
                 })
                 // console.log(stillHeldKey)
                 if (this.health > 0) {
-                    if (stillHeldKey === 'ArrowUp'){
+                    if (stillHeldKey === 'ArrowUp' || stillHeldKey === "w"){
                         this.currentMovingDirection = DIRS[0];
-                    } else if ((stillHeldKey) === 'ArrowDown'){
+                    } else if ((stillHeldKey) === 'ArrowDown' || stillHeldKey === "s"){
                         this.currentMovingDirection = DIRS[1];
-                    } else if ((stillHeldKey)=== 'ArrowLeft'){
+                    } else if ((stillHeldKey) === 'ArrowLeft' || stillHeldKey === "a"){
                         this.currentMovingDirection = DIRS[3];
-                    } else if ((stillHeldKey) === 'ArrowRight'){
+                    } else if ((stillHeldKey) === 'ArrowRight' || stillHeldKey === "d"){
                         // debugger
                         this.currentMovingDirection = DIRS[2];
                     }
@@ -772,7 +776,10 @@ class Player {
                     && questionedDetection.constructor.name === "AttackBox"){
                         
                         console.log('Attacked by skeleton');
-                        this.health--; 
+                        this.health--;
+                        if (this.health < 0) {
+                            this.health = 0;f
+                        }
                         ouchieSound.play();
                         if (this.health === 0) {
 
