@@ -5,19 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Project</title>
+    <style>
+        @font-face { font-family: arcadeclassic; src: url('./src/graphics/ARCADECLASSIC.ttf'); } 
+    </style>
     <link rel="stylesheet" href="./dist/main.css">
     <!-- <script type="module" src="/src/index.js" defer></script> -->
     <script src="./dist/main.js"></script>
     <link rel="shortcut Icon" type="image/x-icon" href="./src/graphics/NinjaAdventure/Actor/Animals/Frog/Faceset.png">
+
 </head>
 <body>
-    <div class="full-contaier">
+
+
+    <div class="full-container">
         <div class="mainheader">
-            <h3>Ravine</h3>
+            <img src="./src/graphics/header.png" alt="">
+            <!-- <h3>Ravine</h3> -->
+            <button id="modal-button" class="btn btn-open"></button>
+            <div class="buttons">
+
+                <a href="https://github.com/smuushi">Github</a>
+            </div>
         </div>
         <div class="game-container"> 
             <canvas id="game-canvas"></canvas>
         </div>
+
     </div>
+
+    <section class='modal'>
+
+        <div class="flex">
+            <img src="./src/graphics/NinjaAdventure/Actor/Animals/Racoon/Faceset.png">
+            <button id="modal-button-close" class="btn-close">Go To Game</button>
+            
+        </div>
+
+
+        <div>
+            <h4>Info</h4>
+            <p>In Ravine, you must survive as many days as you can! Gather enough food and 
+                avoid the enemies! <br>
+                - Interact with your bed to progress to the next day. <br>
+                - Move around with Arrow Keys. 
+            </p>
+            <div class="tips">
+                <h4>Tips</h4>
+                <ul>
+                    <li> - Required food per day scales with how many days have passed.</li>
+                    <li> - Shake the trees for more food if not enough spawned on the ground, 
+                        but don't shake it too much. 
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="highscores">
+                <h4>Local Highscore</h4>
+
+                <ul>
+                    <li>score 1</li>
+                    <li>score 2</li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+    <div class="overlay"></div>
+    <!-- <button class="btn btn-open"></button> -->
+
+
 </body>
 </html>

@@ -14,6 +14,29 @@ import Sound from "./scripts/musics";
 
 document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to load first. lmao
 
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".overlay");
+    const openModalBtn = document.querySelector(".btn-open");
+    const closeModalBtn = document.querySelector(".btn-close");
+    
+
+    const openModal = function () {
+        modal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+    };
+
+    const closeModal = function () {
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+        this.gameStateFocused = true;
+
+    };
+
+    openModalBtn.addEventListener("click", openModal);
+    const tileSize = 16;
+    const theTileMapInstance = new TileMap(tileSize);
+    closeModalBtn.addEventListener("click", closeModal.bind(theTileMapInstance));
+
 
     console.log('hello world')
     console.log('hellos from index')
@@ -25,8 +48,6 @@ document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to lo
 const canvas = document.getElementById('game-canvas'); // gathered my html elements that I will be working in. 
 const ctx = canvas.getContext('2d'); // all rendering takes place on the ctx. 
 
-const tileSize = 16;
-const theTileMapInstance = new TileMap(tileSize);
 
 const player = theTileMapInstance.getPlayer(1.13);
 const nextDayMenu = new BedMenu(theTileMapInstance);

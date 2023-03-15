@@ -309,6 +309,17 @@ class Player {
             console.log(Player.prototype.keyss[event.code])
         }
 
+        if (this.tileMap.gameStateFocused === false){
+            if (event.key === 'Escape') {
+                
+                if (this.tileMap.gameStateFocused === false){
+                    document.getElementById('modal-button-close').click();
+                }
+            }
+            return
+            // if not focused on the game because extra info Modal is loaded, 
+            // then don't take any inputs. 
+        }
 
 
         if (event.key === 'ArrowUp' || event.key === 'w'){
@@ -323,7 +334,7 @@ class Player {
                 this.tileMap.bedMenu.selectionIndex--
                 menuSelectSound.play();
             }
-            if (this.tileMap.optionsMenu.selectionIndex === 1 && this.tileMap.paused === true){
+            if (this.tileMap.optionsMenu.selectionIndex > 0 && this.tileMap.paused === true){
                 this.tileMap.optionsMenu.selectionIndex--
                 menuSelectSound.play();
 
@@ -337,7 +348,7 @@ class Player {
                 menuSelectSound.play();
 
             }
-            if (this.tileMap.optionsMenu.selectionIndex === 0 && this.tileMap.paused === true){
+            if (this.tileMap.optionsMenu.selectionIndex < 2 && this.tileMap.paused === true){
                 this.tileMap.optionsMenu.selectionIndex++
                 menuSelectSound.play();
 
@@ -457,6 +468,7 @@ class Player {
             // }
             
         } else if (event.key === ' ' && this.tileMap.paused === true && this.tileMap.optionsToggle === true) {
+            // OPTIONS MENU FUNCTIONS
             console.log('tried to select something in the esc menu')  
             
             if (this.tileMap.optionsMenu.selectionIndex === 0){
@@ -477,6 +489,13 @@ class Player {
 
             } else if (this.tileMap.optionsMenu.selectionIndex === 1) {
                 window.location.reload(false)
+            } else if (this.tileMap.optionsMenu.selectionIndex === 2) {
+                // LOAD MODAL EXTRA MENU WITH GITHUB AND TIPS 
+                document.getElementById('modal-button').click();
+                //
+                //
+                //
+                this.tileMap.gameStateFocused = false;
             }
             /// escape menu functionality 
         } else if ((this.health > 0) && event.key === ' ' && (this.x > 90 && this.x < 100 && this.y < 60 && this.y > 46)) {
@@ -549,6 +568,7 @@ class Player {
             // ATTACK FUNCTION HERE; not written yet because I have no enemies to test on.. 
             // will come back later.  
         } else if (event.key === 'Escape') {
+            
             if (this.tileMap.paused === false) {
                 this.tileMap.paused = true;
                 this.tileMap.optionsToggle = true;

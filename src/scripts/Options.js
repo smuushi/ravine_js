@@ -6,7 +6,7 @@ class OptionsMenu {
         this.selectionIndex = 0;
 
         this.optionsMenu = new Image ();
-        this.optionsMenu.src = './src/graphics/menus/optionsMenu.png'
+        this.optionsMenu.src = './src/graphics/menus/updatedoptionsmenu.png'
 
         this.aliveStatusImage = new Image();
         this.aliveStatusImage.src = './src/graphics/menus/aliveStatus.png'
@@ -32,6 +32,9 @@ class OptionsMenu {
             ctx.drawImage(this.cursor, 140, 218)
         } else if (this.selectionIndex === 1) {
             ctx.drawImage(this.cursor, 236, 218)
+        } else if (this.selectionIndex === 2) {
+            ctx.drawImage(this.cursor, 291, 238)
+
         }
     }
 
