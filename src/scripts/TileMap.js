@@ -66,6 +66,9 @@ class TileMap {
         this.objectsImage = new Image();
         this.objectsImage.src = './src/graphics/sprites/objects/objects.png'
 
+        this.raccoon = new Image();
+        this.raccoon.src = './src/graphics/NinjaAdventure/Actor/Animals/Racoon/SpriteSheet.png'
+
         // because food should disappear after interacting with the player, 
         // I moved the food rendering to the foodUtils.js page.. and it'll just be another loop
         // that I call during my index rendering... omg so messy. haha
@@ -143,9 +146,9 @@ class TileMap {
     theMap1 = [
         [' ',  ' ',  ' ',  ' ',  ' ','  ','BN','BN', 'BN','BN','BN','BN','  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Ta', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
         [' ', '  ', 'Wr',  ' ', 'BN','BN','BN','BN', 'BN','BN','BN','BN','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN','  ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '  ', '  ',  ' ', 'BN','BN', ' ', 'P', 'Gc', ' ', ' ','BN','BN', 'Wr','  ','BN','  ','  ','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
+        [' ', '  ', '  ',  ' ', 'BN','BN', ' ', 'P', 'Gc', ' ','Ra','BN','BN', 'Wr','  ','BN','  ','  ','  ','BN','BN','BN','  ','BN','BN','  ', ' ', ' ', ' ', ' '],
         [' ',  ' ',  ' ',  ' ', 'BN','Bd', ' ', ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ','  ', ' ','BN','BN', ' ', ' ', ' '],
-        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ','BN','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' ',  ' ', ' ',' ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ','  ', ' ','BN','  ', ' ', ' '],
         [' ', 'Wr',  ' ', 'BN', 'BN','BN','BN','Dc', 'BN','BN','BN','BN', 'Co', ' ',' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ', 'Skt','Skt', 'Skt','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ', ' ','Co','  ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ', ' ', ' ', ' ',  ' ', ' ', ' ', ' ', 'Sk', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN', ' ', ' ', ' ', ' ','BN', ' ', ' '],
@@ -223,7 +226,8 @@ class TileMap {
                 
                 } else if (tile === "Bu"){
                     this._drawObject(ctx, 49, 75, 46, 70, row*.85, col, "Bu")    
-                } else {
+                } else if (tile === "Ra"){
+                    ctx.drawImage(this.raccoon,0,0,16,16, col*this.tileSize + 3, row*this.tileSize, 16,16);
                     // debugger
                     // this._drawGrass(ctx, col, row, this.tileSize);
                 }
@@ -261,6 +265,7 @@ class TileMap {
     _updateDoorHitbox() {
         
         if (this.isDoorOpen === true) {
+            this.gameStartMusic.play();
             this.doorObj.hitboxes.x = 0;
             this.doorObj.hitboxes.y = 0;
             
