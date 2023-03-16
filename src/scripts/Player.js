@@ -411,7 +411,7 @@ class Player {
             }
 
             let randomChance = Math.random() * 80
-            console.log(randomChance);
+            // console.log(randomChance);
             this.tileMap.shakeStatus2 = true;
             setTimeout(() => this.tileMap.shakeStatus2 = false, 300);
             // setTimeout(() => {
@@ -420,7 +420,7 @@ class Player {
                     this.food++;
                     foodSound.play()
                     this.counter++;
-                    console.log(this.counter);
+                    // console.log(this.counter);
                     // this.tileMap.freeFood = randomChance;
                 } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
                     this.food++;
@@ -576,7 +576,7 @@ class Player {
 
                 } else if (this.tileMap.bedMenu.selectionIndex === 1) {
                     this.tileMap.paused = false;
-                    console.log('chose to remain in the same day near bed')
+                    // console.log('chose to remain in the same day near bed')
                 }
             }
 
@@ -723,7 +723,7 @@ class Player {
 
     _drawDust(ctx) {
         // ctx.drawImage(this)
-        console.log(ctx)
+        // console.log(ctx)
 
         ctx.drawImage(this.dust, this.x + 1, this.y -15)
         // wanted to implement a dust particle effect while moving... but too much work for nothing..
