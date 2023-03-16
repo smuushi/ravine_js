@@ -440,6 +440,8 @@ class TileMap {
                 } else if (tile === "SkG") {
                     this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
 
+                } else if (tile === "Ra") {
+                    new EnvObject(col * this.tileSize, row * this.tileSize - 6, this.tileSize - 9, 0, this, 5, 5)
                 }
 
 
