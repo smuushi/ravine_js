@@ -69,6 +69,14 @@ class TileMap {
         this.raccoon = new Image();
         this.raccoon.src = './src/graphics/NinjaAdventure/Actor/Animals/Racoon/SpriteSheet.png'
 
+        this.racStatus = false;
+
+        this.raccoonHelpImageGood = new Image();
+        this.raccoonHelpImageGood.src = './src/graphics/menus/allgood.png'
+
+        this.raccoonHelpImageBad = new Image();
+        this.raccoonHelpImageBad.src = './src/graphics/menus/allnotgood.png'
+
         // because food should disappear after interacting with the player, 
         // I moved the food rendering to the foodUtils.js page.. and it'll just be another loop
         // that I call during my index rendering... omg so messy. haha
@@ -79,7 +87,7 @@ class TileMap {
         this.shakeStatus = false;
         this.shakeStatus2 = false;
 
-        this.freeFood = 10;
+        this.freeFood = 17;
 
         this.deads = []
 
@@ -319,6 +327,17 @@ class TileMap {
         ctx.drawImage(this.grass, col * this.tileSize, row *this.tileSize, size, size)
     }
 
+
+    drawRacHelp(ctx) {
+        if (this.racStatus === true){
+            if (this.player.food > (this.player.targetFood - Math.floor(this.level *.25))){
+                ctx.drawImage(this.raccoonHelpImageGood, 0, 0); 
+            } else {
+                ctx.drawImage(this.raccoonHelpImageBad, 0, 0)
+            }
+        } 
+    }
+
     getPlayer(velocity) {
         for (let row = 0; row < this.theMap1.length; row++) {
             for (let col = 0; col < this.theMap1[row].length; col++) {
@@ -372,7 +391,7 @@ class TileMap {
             for (let col = 0; col < this.theMap1[row].length; col++) {
                 let tile = this.theMap1[row][col];
                 if (tile === "Skt"){
-                    let rand = randomIntFromInterval(1, 3)
+                    let rand = randomIntFromInterval(1, 4)
 
                     if (rand === 1) {
                         this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))

@@ -363,6 +363,8 @@ class Player {
 
         // }    
 
+        
+
         // debugger
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
                 //// TREE SHAKING OPERATIONS
@@ -431,6 +433,16 @@ class Player {
                 
             // }, 10000)
             //// BUSH SHAKING OPERATIONS
+
+        } else if (event.key === ' ' && (this.x > 145 && this.x < 167 && this.y < 44 && this.y > 30)){
+            // raccoon operations
+            // debugger;
+            if (this.tileMap.racStatus === false) {
+                this.tileMap.racStatus = true;
+                let bindedRac = this._resetRacStatus.bind(this.tileMap);
+
+                setTimeout(bindedRac, 2000);
+            }
 
            
         } else if (event.key === ' ' && this.tileMap.paused === false && (this.x > 110 && this.x < 129 && this.y < 110 && this.y > 55)){
@@ -637,6 +649,12 @@ class Player {
     //     this.attackBox.y = 0;
     // }
 
+    _resetRacStatus(){
+        // debugger;
+        if (this.racStatus === true){
+            this.racStatus = false;
+        }
+    }
 
     _resetVuln() {
         if (this.vulnerable === false) {
@@ -713,7 +731,7 @@ class Player {
 
     move(ctx) { // move takes in a context to call movement specific additional drawings like dust particles. 
 
-        console.log([this.x, this.y])
+        // console.log([this.x, this.y])
         
         if (this.passableHitbox.detectionState === true) {
             // debugger

@@ -29,9 +29,9 @@ li {
 .mainheader {
     // background-image: url(“./src/graphics/header.png”);
     display: flex;
-
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
+    // flex-direction: column;
     background-color: rgb(78, 161, 75);
     margin: auto;
     max-width: 480px;
@@ -52,6 +52,14 @@ li {
     max-width: 100px;
     text-align: center;
     position: relative;
+    max-height: 25px;
+
+}
+
+.mainheader .buttons {
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
 }
 
 .mainheader img {
@@ -62,8 +70,8 @@ li {
     background-color: rgb(255, 254, 219);
     
     border:#000000 solid 3px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-left: 80px;
+    margin-right: 80px;
     margin-top: 10px;
     margin-bottom: 10px;
     // position: relative;

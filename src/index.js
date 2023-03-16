@@ -230,6 +230,9 @@ function gameRender() { // layer draw calls to create layers
         }
     }
 
+
+    theTileMapInstance.drawRacHelp(ctx);
+
     userInter.drawControls(ctx);
     userInter.drawDays(ctx);
     userInter.drawFoodAmt(ctx);
