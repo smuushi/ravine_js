@@ -589,7 +589,7 @@ class Skeleton {
                         this.velocity = 0.3
                         hitSound.play();
                         if (this.health === 0) {
-
+                            this.tileMap.totalEnemiesKilled++;
                             this.currentFrame = 0;
                             this.hitbox.x = 0;
                             this.hitbox.y = 0;

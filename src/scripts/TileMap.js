@@ -7,7 +7,10 @@ import EnvObject from './EnvObject'
 import Consumable from './Consumable';
 import Hitbox from './utils';
 import Skeleton from './Skeleton'
+import Sound from './musics';
 
+
+// const gameStartMusic = new Sound('./src/graphics/NinjaAdventure/Musics/16 = Melancholia.ogg')
 
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -18,6 +21,7 @@ class TileMap {
     constructor(tileSize) {
         this.tileSize = tileSize;
 
+        this.gameStartMusic = new Sound('./src/graphics/NinjaAdventure/Musics/16 - Melancholia.ogg')
 
         this.paused = false;
         this.optionsToggle = false;
@@ -74,20 +78,66 @@ class TileMap {
 
         this.freeFood = 10;
 
+        this.deads = []
 
         this.currentFrame = 0;
         this.framesDrawn = 0;
 
         this.level = 1;
 
+        if (!localStorage.getItem('BESTDAY')) {
+            this.bestLevel = 1;
+        } else {
+            // debugger;
+            this.bestLevel = JSON.parse(localStorage.getItem('BESTDAY'))
+        }
+
+        if (!localStorage.getItem('ENEMIES')) {
+            this.totalEnemiesKilled = 0;
+        } else {
+            // debugger;
+            this.totalEnemiesKilled = JSON.parse(localStorage.getItem('BESTDAY'))
+        }
+
+
         this.enemies = []
+
+        
+
+
 
         //this.bedMenu is assigned in index because of poor file management... :(
             // this.player is assigned in index because of poor file management again sorry lmao
 
     }
 
-    
+    updateScores() {
+        if (this.level > this.bestLevel){
+            // debugger
+            const newScore = this.level;
+        
+            localStorage.setItem('BESTDAY', JSON.stringify(newScore));
+        }
+
+        const bestday = JSON.parse(localStorage.getItem('BESTDAY'))
+        const thedayHTMLele = document.getElementById('days-count')
+
+        thedayHTMLele.innerHTML = bestday;
+
+        if (this.totalEnemiesKilled > JSON.parse(localStorage.getItem('ENEMIES'))){
+            // debugger;
+            const newEnemyScore = this.totalEnemiesKilled;
+            localStorage.setItem('ENEMIES', JSON.stringify(newEnemyScore))
+        }
+
+
+        const bestkillcount = JSON.parse(localStorage.getItem('ENEMIES'))
+        const theEnemyHTMLele = document.getElementById('enemies-count')
+        theEnemyHTMLele.innerHTML = bestkillcount;
+
+
+
+    }
     
     // P = player
     theMap1 = [

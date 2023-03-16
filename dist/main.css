@@ -16,6 +16,8 @@ li {
   padding: 0;
   box-sizing: border-box;
   font-family: "arcadeclassic";
+  image-rendering: pixelated;
+  word-spacing: 5px;
 }
 
 .mainheader {
@@ -28,6 +30,7 @@ li {
   min-width: 480px;
   border-radius: 5px;
   outline: 1px solid white;
+  padding-bottom: 10px;
 }
 
 .mainheader a {
@@ -80,6 +83,12 @@ li {
 }
 
 .flex img {
+  border-radius: 5px;
+  border: 1px solid white;
+}
+
+li img {
+  align-items: center;
   border-radius: 5px;
   border: 1px solid white;
 }

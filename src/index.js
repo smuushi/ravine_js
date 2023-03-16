@@ -30,6 +30,13 @@ document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to lo
         overlay.classList.add("hidden");
         this.gameStateFocused = true;
 
+        // debugger
+
+        if (this.paused === false) {
+            // debugger;
+            this.gameStartMusic.play();
+        }
+
     };
 
     openModalBtn.addEventListener("click", openModal);
@@ -54,8 +61,18 @@ const nextDayMenu = new BedMenu(theTileMapInstance);
 const theOptionsMenu = new OptionsMenu(theTileMapInstance);
 theTileMapInstance.bedMenu = nextDayMenu; // THIS IS AN IMPORTANT LINE OF CODE.. ughhh lmaoooo haha
 theTileMapInstance.optionsMenu = theOptionsMenu; // by convention now.. all menus will be made this way lmaoo
-                                                 // it's important to tie the menus to the tileMap so that the player inputs can reference it when making their selections.. 
+// it's important to tie the menus to the tileMap so that the player inputs can reference it when making their selections.. 
 theTileMapInstance.player = player; // this is also vital for skeleton pathing.. lmao
+
+// debugger;
+if (!(localStorage.getItem('ENEMIES'))){
+    // debugger;
+    theTileMapInstance.totalEnemiesKilled = 0;
+    // localStorageEnemiesCount = 0;
+} else {
+    theTileMapInstance.totalEnemiesKilled = JSON.parse(localStorage.getItem('ENEMIES'))
+}
+
 
 const userInter = new UserInterface(theTileMapInstance, player);
 
@@ -74,8 +91,18 @@ const passableHitboxes = PassableHitbox.prototype.PASSABLEHITBOXES;
 
 const gameOverMusic = new Sound('./src/graphics/NinjaAdventure/Musics/14 - Curse.ogg') 
 
+// const gameStartMusic = new Sound('./src/graphics/NinjaAdventure/Musics/16 = Melancholia.ogg')
+// gameStartMusic.play();
+
+// debugger
 function gameRender() { // layer draw calls to create layers
     
+    //update stats at each render because yeah.. idk bro.. I'm kinda tired
+    // so I'm just coding a little randomly to get these features done. 
+
+    theTileMapInstance.updateScores();
+
+
     
     if (theTileMapInstance.paused === false) {
 
@@ -89,6 +116,11 @@ function gameRender() { // layer draw calls to create layers
         // player.animate(ctx)
         let aliveEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health > 0)
         let deadEnemies = theTileMapInstance.enemies.filter((enemy) => enemy.health <= 0)
+        theTileMapInstance.deads = deadEnemies;
+        const enemiesKilled = deadEnemies.length;
+
+
+
         // console.log(aliveEnemies);
         
         deadEnemies.forEach((enemy) => {
@@ -142,12 +174,14 @@ function gameRender() { // layer draw calls to create layers
 
             // player.currentFrame = 0;
             player.animateDeath(ctx);
-
+            theTileMapInstance.gameStartMusic.stop();
             gameOverMusic.play();
 
             // aliveEnemies.forEach((enemy) => enemy.move())
 
         } else {
+
+            // theTileMapInstance.gameStartMusic.play();
             player.move(ctx);
 
             if (player.vulnerable === false){ 

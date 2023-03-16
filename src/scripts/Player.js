@@ -45,6 +45,8 @@ class Player {
         this.muted = false;
 
         this.vulnerable = true;
+
+        
         
         
         // const spriteCols = 10;
@@ -535,6 +537,11 @@ class Player {
 
                         this.food = 0;
                         if (this.health === 0) {
+
+                            
+
+                            ///// update local storage here!
+
                             this.currentFrame = 0;
                         }
                     
@@ -802,6 +809,10 @@ class Player {
                         }
                         ouchieSound.play();
                         if (this.health === 0) {
+
+
+                            //// update local storage here
+
 
                             this.currentFrame = 0;
                             this.hitbox.x = 0;

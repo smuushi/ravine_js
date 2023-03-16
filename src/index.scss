@@ -14,6 +14,7 @@ h3 {
 
 li {
     list-style: none;
+    
 }
 
 * {
@@ -21,7 +22,9 @@ li {
     padding: 0;
     box-sizing: border-box;
     font-family: 'arcadeclassic';
-  }
+    image-rendering: pixelated;
+    word-spacing: 5px;
+}
 
 .mainheader {
     // background-image: url(“./src/graphics/header.png”);
@@ -36,6 +39,8 @@ li {
     
     border-radius: 5px;
     outline: 1px solid white;
+
+    padding-bottom: 10px;
 
 }
 
@@ -63,6 +68,20 @@ li {
     margin-bottom: 10px;
     // position: relative;
 }
+
+// li img {
+//     padding: 5px;
+//     padding-left: 20px;
+//     padding-right: 20px;
+//     border-radius: 5px;
+//     background-color: rgb(255, 254, 219);
+    
+//     border:#000000 solid 3px;
+//     margin-left: 100px;
+//     margin-right: 100px;
+//     margin-top: 10px;
+//     margin-bottom: 10px;
+// }
 
 // .game-container{
 //     display: flex;
@@ -105,6 +124,12 @@ li {
 }
 
 .flex img {
+    border-radius: 5px;
+    border: 1px solid white;
+}
+
+li img {
+    align-items: center;
     border-radius: 5px;
     border: 1px solid white;
 }
