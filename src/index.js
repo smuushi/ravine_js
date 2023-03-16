@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => { // waiting for stuff to lo
     closeModalBtn.addEventListener("click", closeModal.bind(theTileMapInstance));
 
 
-    console.log('hello world')
-    console.log('hellos from index')
+    // console.log('hello world')
+    // console.log('hellos from index')
 
 // game info so far... 
 // map size will be 30 x 20 squares. 
@@ -193,7 +193,7 @@ function gameRender() { // layer draw calls to create layers
                         // debugger
                         player.animate(ctx);
                     } else if (player.state === "attacking"){
-                        console.log('animating attacks')
+                        // console.log('animating attacks')
                         player.animateAttack(ctx);
                     }
                 } 
@@ -201,7 +201,7 @@ function gameRender() { // layer draw calls to create layers
                 if (player.state === "idle"){
                     player.animate(ctx);
                 } else if (player.state === "attacking"){
-                    console.log('animating attacks')
+                    // console.log('animating attacks')
                     player.animateAttack(ctx);
                 }
             }
@@ -212,7 +212,7 @@ function gameRender() { // layer draw calls to create layers
         theTileMapInstance.draw2(ctx);
     
     } else {
-        console.log("paused!")
+        // console.log("paused!")
         if (theTileMapInstance.optionsToggle === false) {
             nextDayMenu.draw(ctx);
             // render pause next day menu here!

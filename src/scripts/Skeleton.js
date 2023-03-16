@@ -213,7 +213,7 @@ class Skeleton {
         let srcX = 64 * this.currentFrame % 320 + 12;
         let srcY;
 
-        console.log(srcX)
+        // console.log(srcX)
 
         // switch(srcY) {
         if (this.currentMovingDirection === DIRS[2]){ // right
@@ -533,7 +533,7 @@ class Skeleton {
                 if (this._anyCollision(hitbox1, hitbox2)) {
                     // debugger
 
-                    console.log(Hitbox._anyCollision)
+                    // console.log(Hitbox._anyCollision)
 
                     return true;
                 } else {
@@ -584,7 +584,7 @@ class Skeleton {
                 if(questionedDetection.tiedObj.constructor.name === "Player" 
                     && questionedDetection.constructor.name === "AttackBox"){
                         
-                        console.log('Attacked by player');
+                        // console.log('Attacked by player');
                         this.health--; 
                         this.velocity = 0.3
                         hitSound.play();

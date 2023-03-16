@@ -29,7 +29,7 @@ class PassableHitbox {
 
         PassableHitbox.prototype.PASSABLEHITBOXES.push(this);
 
-        console.log(PassableHitbox.prototype.PASSABLEHITBOXES)
+        // console.log(PassableHitbox.prototype.PASSABLEHITBOXES)
     }
 
 

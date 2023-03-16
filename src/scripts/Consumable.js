@@ -32,7 +32,7 @@ class Consumable extends EnvObject {
         this.foodHitbox = new PassableHitbox(x, y, tileSize - 3, tileSize - 3, this, passHitboxXOffset + 1.5, passHitboxYOffset + 2)
         
         
-        console.log(this)
+        // console.log(this)
 
         if (!EnvObject.prototype.INTERACTIVEITEMS) {
             EnvObject.prototype.INTERACTIVEITEMS = []

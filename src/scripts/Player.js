@@ -212,7 +212,7 @@ class Player {
             this.attackBox.y = 0;
         }
 
-        console.log(srcX)
+        // console.log(srcX)
 
         this.framesDrawn++;
         if (this.framesDrawn >= 11){
@@ -312,7 +312,7 @@ class Player {
         // console.log(event)
         if (!Player.prototype.keyss[event.code]) {
             Player.prototype.keyss[event.code] = event.code;
-            console.log(Player.prototype.keyss[event.code])
+            // console.log(Player.prototype.keyss[event.code])
         }
 
         if (this.tileMap.gameStateFocused === false){
@@ -373,7 +373,7 @@ class Player {
         if (event.key === ' ' && (this.x > 347 && this.x < 390 && this.y < 70 && this.y > 50)){
                 //// TREE SHAKING OPERATIONS
             let randomChance = Math.random() * 80
-            console.log(randomChance)
+            // console.log(randomChance)
             treeSound.play()
 
             this.tileMap.shakeStatus = true;
@@ -487,7 +487,7 @@ class Player {
             
         } else if (event.key === ' ' && this.tileMap.paused === true && this.tileMap.optionsToggle === true) {
             // OPTIONS MENU FUNCTIONS
-            console.log('tried to select something in the esc menu')  
+            // console.log('tried to select something in the esc menu')  
             
             if (this.tileMap.optionsMenu.selectionIndex === 0){
                 
@@ -536,7 +536,7 @@ class Player {
                     this.tileMap.getNextDayFoodObjects();
                     this.tileMap.getNextDayEnemies();
                     this.tileMap.level ++
-                    console.log('chose to go to next day near bed')
+                    // console.log('chose to go to next day near bed')
                     this.tileMap.paused = false;
 
                     this.food = this.food - this.targetFood - Math.floor(this.tileMap.level *.25)
@@ -581,7 +581,7 @@ class Player {
             }
 
         } else if (event.key === ' ' && this.state === "idle") {
-            console.log('attacking')
+            // console.log('attacking')
             swordSound.play();
             this.state = "attacking";
             this.currentFrame = 0;
@@ -601,7 +601,7 @@ class Player {
                 this.tileMap.optionsToggle = false;
                 optionsCloseSound.play();
             }
-            console.log('opened options menu')
+            // console.log('opened options menu')
         }
         
     }
@@ -677,7 +677,7 @@ class Player {
             }
         } else {
 
-            console.log('key was let go')
+            // console.log('key was let go')
             // console.log('up')
             // this.lastLastMovingDirectionLmao = this.lastMovingDirection; // this doesn't work lol
             // note here.. attempting to make movement more fluid.. 
@@ -824,7 +824,7 @@ class Player {
                 if(questionedDetection.tiedObj.constructor.name === "Skeleton" 
                     && questionedDetection.constructor.name === "AttackBox"){
                         
-                        console.log('Attacked by skeleton');
+                        // console.log('Attacked by skeleton');
                         this.health--;
                         if (this.health < 0) {
                             this.health = 0;f
@@ -866,7 +866,7 @@ class Player {
                 let questionedItem = detections[i];
                 // debugger
                 if (questionedItem.tiedObj.constructor.name === "Consumable") {
-                    console.log('food/consumable detected by player');
+                    // console.log('food/consumable detected by player');
                     this.food++;
                     foodSound.play();
                     if (this.food > 99) {
@@ -884,7 +884,7 @@ class Player {
                     // questionedItem.tiedObj = null;
                     // questionedItem.x = null;
                     // questionedItem.y = null;
-                    console.log(PassableHitbox.prototype.PASSABLEHITBOXES);
+                    // console.log(PassableHitbox.prototype.PASSABLEHITBOXES);
                     // this.passableHitbox.detectionState = false;
                     // debugger
                 }

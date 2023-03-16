@@ -151,6 +151,41 @@ if (this.vulnerable === false) {
 
 ### Sprite Animations
 
+Sprite animations were done by tracking keeping track of the object's current frame, and then using that number as an index to tell canvas where to start cropping from. It is possible to use a built in method called #request animation frame, but there was more control over each object's animation this way. 
+
+```
+this.framesDrawn++
+        if (this.framesDrawn > 45) {
+            this.currentFrame++
+            this.framesDrawn = 0;
+        }
+```
+
+
+## Implementation Timeline
+
+Friday and weekend:
+- Focus on creating the engine that most of the logic will interact with. This included a moving player class as well as the boundaries that the player will operate in. This necessitated producing a functional game loop and a collision detection system. 
+- The food object class was also created during this time. 
+
+Monday: 
+- A way to progress to the next day and more environment details like a building for the player to spawn and rest in. 
+
+Tuesday:
+- Enemy programming. Skeletons that would spawn as well as inflict damage onto the player. 
+
+Wednesday:
+- Menu, UI creation and CSS polishing.
+
+Thursday:
+- README and deployment. 
+
+(Sprite animations were done at each step along the way)
+
+
+## Future features
+
+There is a lot of room for future developments. One aspect is programming a smarter enemy AI that can pathfind to the player. There were attempts to implement various searching algorithms that were out of the scope of a 1 week pure JS project. Additional possible features also include a more robust acheivement/player progression tracking to track more than just # of enemies killed and days progressed. 
 
 
 
