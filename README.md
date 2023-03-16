@@ -41,7 +41,7 @@ Interactions include opening the door, attacking enemies, shaking a tree, collec
 
 ### Enemies
 
-- Movement Behavior:
+Movement Behavior:
 
 The distance to the player dictates the enemy behavior. They are programmed to move randomly when in an "idle" status, but then chase the player when in an "aggro" status. The status is constantly updated based on the absolute distance to the player. In order to achieve this absolute distance in a 2D environment, the enemies utilize a simple a^2 + b^ = c^2 calculation.
 
@@ -54,6 +54,16 @@ _calcDistanceFromPlayer() {
         return distance
     }
 
+move() {
+
+    let distance = this._calcDistanceFromPlayer();
+    if (distance < 45) {
+        this.aggressionState = "aggro"
+    } else {
+        this.aggressionState = "idle"
+    }
+}
+
 ```
 This snippet of code is utilized as a callback for the enemy class whenever it moves it's x,y position so that it can change it's direction accordingly. 
 
@@ -65,76 +75,90 @@ Hitboxes were their own object class and tied to every entity as needed. Modifyi
 
 ![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/hitbox.gif?raw=true)
 
+The hitboxes have two main classes. Passable Hitboxes and Impassable Hitboxes. Passable Hitboxes were primarily used to dictate different behaviors and logic such as collecting and attacking. Impassable Hitboxes were mainly used for creating a border/boundary for the entities.  
+
 
 
 ### Statistics tracker
-    Navigating to the More Info section of the options menu also displays a section to keep track of player progress. It utilizes a function that goes into the browser's local storage to continuously grabe and update the value. 
+
+Navigating to the More Info section of the options menu also displays a section to keep track of player progress. It utilizes a function that goes into the browser's local storage to continuously grabe and update the value. 
 
 ![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/stats.png?raw=true)  
 
 
 
+### Environment
+
+Key aspects of the environment were rendered and created based on a tile map system using a 2d array. 
+
+```
+theMap1 = [
+        [' ',  ' ',  ' ',  ' ',  ' ','  ', 'BN', 'BN', 'BN','BN','BN','BN','  ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Ta',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' '],
+        [' ', '  ', 'Wr',  ' ', 'BN','BN', 'BN', 'BN', 'BN','BN','BN','BN','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' '],
+        [' ', '  ', '  ',  ' ', 'BN','BN',  ' ',  'P', 'Gc', ' ','Ra','BN','BN','Wr','  ','BN','  ','  ','  ','BN','BN','BN','  ', 'BN', 'BN',  ' ',  ' ', ' ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN','Bd',  ' ',  ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ',  ' ',  ' ', 'BN', 'BN', ' ', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN', ' ',  ' ',  ' ',  ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ',  ' ',  ' ',  ' ', 'BN','  ', ' ', ' '],
+        [' ', 'Wr',  ' ', 'BN', 'BN','BN', 'BN', 'Dc', 'BN','BN','BN','BN','Co', ' ', ' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ','Skt','Skt','Skt',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Sk', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  ' ',  ' ','Sk',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BC',  ' ',  ' ','R1', 'R1', 'R1', 'R1','R2', ' ', ' ', ' ','Sk', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN',  ' ', 'Co',  ' ', 'BC','BN', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ', 'Bu',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' '],
+        [' ', 'BN',  ' ', 'Co',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ', 'Sk',  ' ', 'BN', ' ','Wr', ' '],
+        [' ', 'BN',  ' ', '  ', 'Co', ' ','Skt','Skt','Skt', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
+        [' ', 'BN', 'Co',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co',  ' ',  ' ',  ' ','BN','  ', ' '],
+        [' ', 'BN',  ' ',  ' ', 'Sk', ' ',  ' ', 'BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
+        [' ', 'BN', 'BC',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sk', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN','BN','  '],
+        [' ',  ' ', 'BN', 'BC',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC', 'BC', 'BC', 'BC','SkG', ' ','Co','BN'],
+        [' ',  ' ',  ' ',  ' ', 'BN','BN', 'BN', 'BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ',  ' ',  ' ', 'BN', 'BN','BN','BN','BN'],
+        [' ',  ' ',  ' ',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ']
+    ]
+```
+
+The engine will iterate through each position only once in order to gather and create the necessary objects. This process is only done once per day cycle. Once the objects are created, then the engine will loop through the gathered objects instead of looping through the tile map array. 
+
+### Menus
+
+The approach to menu implementation used logic to determine what images to draw based on whether or not the game was paused by the player, as well as a modal with the HTML/CSS implementation to display futher less interactive information. 
+
+For instance, muting the game or restarting the game is a dynamic feature and thus drawn inside the game logic. In contrast, the statistics section will always update whether or not the player asks and is therefore placed in the modal section of the menu. 
+
+![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/menus.gif?raw=true)  
+
+### Throttling
+
+In order to throttle player input and object interactivity, a quick flag was set to the objects when an interaction occurred. Utilizing JS's asynchronous capabilities here was important so that a time a could be set to reset the flag back to default. A simple setTimeout function worked well here. 
+
+```
+if (this.vulnerable === false) {
+    return
+} 
+
+// Do an early return if invulnerable
+// otherwise, execute below
+
+    console.log('Skeleton Attacked by player');
+
+    this.health--; 
+    this.vulnerable = false;
+
+    let binded_resetVuln = this._resetVuln.bind(this);
+    setTimeout(binded_resetVuln, 1000)
+
+// skeleton reset vulnerability called after 1 second. 
+```
+
+### Sprite Animations
 
 
 
 
 
 
-- A controllable character that has collision detection and ways to interact with the environment -- Moving around a determined set environment with collision on the borders and certain environemntal objects like rocks and trees. 
-- A random generation of useable environmental objects that the player can acquire like food that will keep the player alive.
-- An interactive user interface to keep track of certain statistics like health and days survived. 
-- An enemy entity that will try to seek out the player as the days progress.
-
-
-## Regarding the controllable character: 
-- Functionality should include moving around and a way to implement an attack with hitbox detection as well as srpite animations. 
-- Additionally, there should be ways of interacting with environment objects like a chest or basket that will allow the player to acquire new items. ie. pressing the spacebar while in front of a chest will add items to the player's inventory. 
-
-## Regarding enemies and progression:
-- As the days progress, more enemies with more health and more aggressive patterns will seek out the player, requiring more input from the player to avoid and handle them. At earlier stages, avoiding one enemy will be feasible, but as more enemies cover more spaces, the player will have to implement attacks in order to survive and gather food. 
 
 
 
-###########
-
-Implementation Timeline
-
-Friday Afternoon and Weekend 
-- establish player movement and collision detection.. ie. Player cannot move out of bounds and cannot move into a rock object.. 
-- This will necessitate map rendering logic as well as creating the class skeletons for a moveable player and stationary objects. 
-
-Monday 
-- Implementing food aquisition and keep track of health. Creating a food object that the player can interact with and increase their hunger/health attribute. 
-
-Tuesday 
-- Implementing random generation of resources to pick up as well as a functionality to cycle days. 
-
-Wednesday 
-- Implementing enemy obstacles that will seek out the player. 
-
-############
-
-Basic Wireframe
-
-
-![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/wireframe.png?raw=true)
-
-
-
-############
-
-Class Structure 
-
-- In order to keep track of all entities and functionality, this project will attempt to approach the design through an 'object oriented programming' philosophy. By keeping track of the various instances and how they interact and are related to each other, this should allow for a smoother development. 
-
-- Players will interact with environmental objects like rocks as well as other entities like enemies. Player, EnvObjects, Enemy. 
-- All three of these classes will be constructed, rendered, and interact in environemnt of the tilemap. 
-- When needed, these classes will pull common functionality like movement and hitbox collision from the utilities section that is outside of the tilemap. 
-
-
-Basic Class Structure Wireframe
-
-![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/classwireframe.png?raw=true)
 
 
 
