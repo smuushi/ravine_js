@@ -561,8 +561,8 @@ class Skeleton {
     _calcDistanceFromPlayer() {
         let dx = this.player.x - (this.x)
         let dy = this.player.y - (this.y)
-
         let distance = Math.sqrt((dx * dx) + (dy * dy))
+        
         return distance
     }
 

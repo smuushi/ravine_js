@@ -874,12 +874,12 @@ class Player {
                     }
                     // questionedItem.tiedObj.hitbox = null;
                     // questionedItem.tiedObj.passableHitbox = null;
-                    questionedItem.tiedObj.hitboxes.x = 0;
+                    questionedItem.tiedObj.hitboxes.x = -70;
                     questionedItem.tiedObj.hitboxes.y = 0;
-                    questionedItem.tiedObj.x = 0;
+                    questionedItem.tiedObj.x = -70;
                     questionedItem.tiedObj.y = 0;
-                    questionedItem.x = 0;
-                    questionedItem.y = 0;
+                    questionedItem.x = -70;
+                    questionedItem.y = -70;
                     // debugger;
                     // questionedItem.tiedObj = null;
                     // questionedItem.x = null;
