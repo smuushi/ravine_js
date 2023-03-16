@@ -230,6 +230,7 @@ function gameRender() { // layer draw calls to create layers
         }
     }
 
+    // hi ty for looking!
 
     theTileMapInstance.drawRacHelp(ctx);
 
