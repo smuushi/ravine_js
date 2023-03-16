@@ -32,11 +32,11 @@ In this context, inserting and executing code in the correct sequence within the
 - Sprite Animations
 
 ### Player movement and interactivity
-    The player is able to use the arrow keys to move around and also interact with objects in the environment. 
+The player is able to use the arrow keys to move around and also interact with objects in the environment. 
 
 ![alt text](https://github.com/smuushi/ravine_js/blob/main/md_asset/interactiveenvironment.gif?raw=true)
 
-    Interactions include opening the door, attacking enemies, shaking a tree, collecting food, etc. 
+Interactions include opening the door, attacking enemies, shaking a tree, collecting food, etc. 
 
 
 ### Enemies
