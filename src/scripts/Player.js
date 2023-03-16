@@ -303,6 +303,10 @@ class Player {
 
 
     _keydown = (event) => {
+
+        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+            event.preventDefault();
+        }
         // pay attention to notes for which sections are doing what... 
         // debugger 
         // console.log(event)
