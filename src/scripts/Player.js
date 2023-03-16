@@ -434,7 +434,7 @@ class Player {
             // }, 10000)
             //// BUSH SHAKING OPERATIONS
 
-        } else if (event.key === ' ' && (this.x > 145 && this.x < 167 && this.y < 44 && this.y > 30)){
+        } else if (event.key === ' ' && (this.x > 145 && this.x < 167 && this.y < 44 && this.y > 30) && this.tileMap.paused === false){
             // raccoon operations
             // debugger;
             if (this.tileMap.racStatus === false) {
