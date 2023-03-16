@@ -387,7 +387,7 @@ class Player {
                 foodSound.play()
 
                 this.counter++;
-                console.log(this.counter);
+                // console.log(this.counter);
                 // this.tileMap.freeFood = randomChance;
             } else if (randomChance < 0.35 && this.tileMap.freeFood === 0) {
                 this.food++;
