@@ -124,30 +124,21 @@ class TileMap {
 
     updateScores() {
         if (this.level > this.bestLevel){
-            // debugger
             const newScore = this.level;
-        
             localStorage.setItem('BESTDAY', JSON.stringify(newScore));
         }
-
         const bestday = JSON.parse(localStorage.getItem('BESTDAY'))
         const thedayHTMLele = document.getElementById('days-count')
-
         thedayHTMLele.innerHTML = bestday;
+        
 
         if (this.totalEnemiesKilled > JSON.parse(localStorage.getItem('ENEMIES'))){
-            // debugger;
             const newEnemyScore = this.totalEnemiesKilled;
             localStorage.setItem('ENEMIES', JSON.stringify(newEnemyScore))
         }
-
-
         const bestkillcount = JSON.parse(localStorage.getItem('ENEMIES'))
         const theEnemyHTMLele = document.getElementById('enemies-count')
         theEnemyHTMLele.innerHTML = bestkillcount;
-
-
-
     }
     
     // P = player
