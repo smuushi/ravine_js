@@ -44,6 +44,31 @@ li {
 
 }
 
+.mainheader2 {
+    // background-image: url(“./src/graphics/header.png”);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // flex-direction: column;
+    background-color: rgb(78, 161, 75);
+    position: absolute;
+    margin: 20px;
+    width: 200px;
+    
+    border-radius: 5px;
+    outline: 1px solid white;
+
+    padding-bottom: 10px;
+
+}
+
+.mainheader2 .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+}
+
 .mainheader a {
     background-color: white;
     border-radius: 3px;

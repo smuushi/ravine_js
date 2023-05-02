@@ -96,7 +96,7 @@ class TraversalPoint {
 
 
 
-class Skeleton {
+class Slime {
 
     constructor(x, y, tileSize, velocity, tileMap) {
 
@@ -118,7 +118,7 @@ class Skeleton {
         this.framesDrawn = 0;
 
         this.skeleboyImage = new Image();
-        this.skeleboyImage.src = ("./src/graphics/sprites/characters/skeleton.png")
+        this.skeleboyImage.src = ("./src/graphics/sprites/characters/slime.png")
 
         this.currentMovingDirection = null;
 
@@ -130,7 +130,7 @@ class Skeleton {
 
         this.attackBox = new AttackBox(0, 0, this.tileSize + 10, this.tileSize + 10, this, -12, -7)
 
-        this.health = 3;
+        this.health = 1;
 
         this.player = tileMap.player;
 
@@ -141,12 +141,12 @@ class Skeleton {
 
     animateDeath(ctx) {
         // let srcX = this.currentFrame * 1 % 384;
-        let srcX = 64 * this.currentFrame + 12;
+        let srcX = 64 * this.currentFrame;
         // console.log(srcX)
-        if (srcX > 268){
-            srcX = 268;
+        if (srcX > 168){
+            srcX = 128;
         }
-        let srcY = 282;
+        let srcY = 125;
 
         // switch(srcY) {
         if (this.currentMovingDirection === DIRS[2]){ // right
@@ -194,7 +194,7 @@ class Skeleton {
         // console.log('trying to draw skeleboy')
 
         this.framesDrawn++;
-        if (this.framesDrawn >= 9){
+        if (this.framesDrawn >= 15){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -210,52 +210,97 @@ class Skeleton {
 
     animateAttack(ctx) {
 
-        let srcX = 64 * this.currentFrame % 320 + 12;
-        let srcY;
+        // let srcX = 64 * this.currentFrame % 224;
 
-        // console.log(srcX)
+        // let srcY;
+
+        // // console.log(srcX)
+
+        // // switch(srcY) {
+        // if (this.currentMovingDirection === DIRS[2]){ // right
+        //     srcY = 155;
+        // } else if (this.currentMovingDirection === DIRS[0]){ // up
+        //     srcY = 155;
+        // } else if (this.currentMovingDirection === DIRS[1]){ // down
+        //     srcY = 155;
+        // } else if (this.currentMovingDirection === DIRS[3]){ // left
+        //     srcY = 155;  
+        //     // srcX = (this.currentFrame * 48 % 288) * 1
+        // } else {
+        //     if (this.lastMovingDirection === DIRS[2]){        // right idle
+        //         srcY = 155;
+        //     } else if (this.lastMovingDirection === DIRS[0]){ // up idle
+        //         srcY = 155;
+        //     } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
+        //         srcY = 155;
+        //     } else {                                          // down idle
+        //         // debugger
+        //         srcY = 155;
+        //     }
+        // }
+
+        let srcX = 64 * this.currentFrame % 224;
+        let srcY;
 
         // switch(srcY) {
         if (this.currentMovingDirection === DIRS[2]){ // right
-            srcY = 155;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[0]){ // up
-            srcY = 155;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[1]){ // down
-            srcY = 155;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[3]){ // left
-            srcY = 155;  
+            srcY = 60;  
             // srcX = (this.currentFrame * 48 % 288) * 1
         } else {
             if (this.lastMovingDirection === DIRS[2]){        // right idle
-                srcY = 155;
+                srcY = 60;
             } else if (this.lastMovingDirection === DIRS[0]){ // up idle
-                srcY = 155;
+                srcY = 60;
             } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
-                srcY = 155;
+                srcY = 60;
             } else {                                          // down idle
                 // debugger
-                srcY = 155;
+                srcY = 60;
             }
         }
 
+        // if (this.currentMovingDirection === DIRS[3]) {
+        //     // let srcX = 64 * this.currentFrame % 384 + 12;
+        //     ctx.save();
+        //     ctx.scale(-1, 1);
+        //     ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(-this.x + 26), Math.floor(this.y -15), -50, 32)
+        //     ctx.restore();
+        // } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
+        //     ctx.save();
+        //     ctx.scale(-1, 1);
+        //     ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(-this.x + 26), Math.floor(this.y -15), -50, 32)
+        //     ctx.restore();
+        // } else { 
+        //     // ctx.save()
+        //     // console.log('trying to draw basic')
+        //     ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(this.x -17), Math.floor(this.y - 15), 50, 32)
+        //     // ctx.restore()
+        // }    
+        
         if (this.currentMovingDirection === DIRS[3]) {
             // let srcX = 64 * this.currentFrame % 384 + 12;
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(-this.x + 26), Math.floor(this.y -15), -50, 32)
+            ctx.drawImage(this.skeleboyImage, srcX, srcY, 32, 32, Math.floor(-this.x + 14), Math.floor(this.y -15), -32, 32)
             ctx.restore();
-        } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
-            ctx.save();
-            ctx.scale(-1, 1);
-            ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(-this.x + 26), Math.floor(this.y -15), -50, 32)
-            ctx.restore();
+        // } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
+        //     ctx.save();
+        //     ctx.scale(-1, 1);
+        //     ctx.drawImage(this.skeleboyImage, srcX, srcY, 32, 32, Math.floor(-this.x + 6), Math.floor(this.y -15), -32, 32)
+        //     ctx.restore();
         } else { 
             // ctx.save()
             // console.log('trying to draw basic')
-            ctx.drawImage(this.skeleboyImage, srcX, srcY, 50, 32, Math.floor(this.x -17), Math.floor(this.y - 15), 50, 32)
+            ctx.drawImage(this.skeleboyImage, srcX, srcY, 33, 32, Math.floor(this.x -14), Math.floor(this.y - 15), 33, 32)
             // ctx.restore()
-        }    
-        
+        }   
+
         // console.log(this.currentMovingDirection)
 
         // console.log('trying to draw skeleboy')
@@ -264,17 +309,16 @@ class Skeleton {
         //     this.attackBox.x = 0;
         //     this.attackBox.y = 0;
         // } 
+        this.attackBox.x = this.x;
+        this.attackBox.y = this.y;
 
-        if (srcX === 204) {
-            this.attackBox.x = this.x;
-            this.attackBox.y = this.y;
-        } else {
+        if (srcX > 200) {
             this.attackBox.x = 0;
             this.attackBox.y = 0;
         }
 
-        this.framesDrawn++;
-        if (this.framesDrawn >= 12){
+        this.framesDrawn += Math.random()* 3;
+        if (this.framesDrawn >= 15){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -286,29 +330,29 @@ class Skeleton {
 
 
         // let srcX = this.currentFrame * 1 % 384;
-        let srcX = 64 * this.currentFrame % 384 + 12;
+        let srcX = 64 * this.currentFrame % 224;
         let srcY;
 
         // switch(srcY) {
         if (this.currentMovingDirection === DIRS[2]){ // right
-            srcY = 91;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[0]){ // up
-            srcY = 91;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[1]){ // down
-            srcY = 91;
+            srcY = 60;
         } else if (this.currentMovingDirection === DIRS[3]){ // left
-            srcY = 91;  
+            srcY = 60;  
             // srcX = (this.currentFrame * 48 % 288) * 1
         } else {
             if (this.lastMovingDirection === DIRS[2]){        // right idle
-                srcY = 26;
+                srcY = 60;
             } else if (this.lastMovingDirection === DIRS[0]){ // up idle
-                srcY = 26;
+                srcY = 60;
             } else if (this.lastMovingDirection === DIRS[3]){ // left idle... same as right idle lmao
-                srcY = 26;
+                srcY = 60;
             } else {                                          // down idle
                 // debugger
-                srcY = 26;
+                srcY = 60;
             }
         }
 
@@ -316,7 +360,7 @@ class Skeleton {
             // let srcX = 64 * this.currentFrame % 384 + 12;
             ctx.save();
             ctx.scale(-1, 1);
-            ctx.drawImage(this.skeleboyImage, srcX, srcY, 32, 32, Math.floor(-this.x + 7), Math.floor(this.y -15), -32, 32)
+            ctx.drawImage(this.skeleboyImage, srcX, srcY, 32, 32, Math.floor(-this.x + 14), Math.floor(this.y -15), -32, 32)
             ctx.restore();
         // } else if (this.currentMovingDirection === null && this.lastMovingDirection === DIRS[3]) {
         //     ctx.save();
@@ -326,7 +370,7 @@ class Skeleton {
         } else { 
             // ctx.save()
             // console.log('trying to draw basic')
-            ctx.drawImage(this.skeleboyImage, srcX, srcY, 33, 32, Math.floor(this.x -17), Math.floor(this.y - 15), 33, 32)
+            ctx.drawImage(this.skeleboyImage, srcX, srcY, 33, 32, Math.floor(this.x -14), Math.floor(this.y - 15), 33, 32)
             // ctx.restore()
         }    
         
@@ -334,8 +378,10 @@ class Skeleton {
 
         // console.log('trying to draw skeleboy')
         
-        this.framesDrawn++;
-        if (this.framesDrawn >= 9){
+        // this.framesDrawn++;
+        this.framesDrawn += Math.random() * 2;
+
+        if (this.framesDrawn >= 15){
             this.currentFrame++;
             this.framesDrawn = 0;
         }
@@ -596,6 +642,7 @@ class Skeleton {
 
                             const idxToDelete = Hitbox.prototype.ALLHITBOXESMADE.indexOf(this.hitbox)
                             Hitbox.prototype.ALLHITBOXESMADE.splice(idxToDelete, 1);
+                            this.player.food++ 
                             // delete this.hitbox;
                         }
                         this.vulnerable = false;
@@ -625,4 +672,4 @@ class Skeleton {
 
 }
 
-export default Skeleton;
+export default Slime;

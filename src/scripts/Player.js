@@ -328,11 +328,11 @@ class Player {
         }
 
 
-        if (event.key === 'ArrowUp' || event.key === 'w'){
+        if (event.key === 'ArrowUp'){
             this.currentMovingDirection = DIRS[0];
-        } else if (event.key === 'ArrowDown' || event.key === "s"){
+        } else if (event.key === 'ArrowDown'){
             this.currentMovingDirection = DIRS[1];
-        } else if (event.key === 'ArrowLeft' || event.key === "a"){
+        } else if (event.key === 'ArrowLeft'){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[3];
             }
@@ -345,7 +345,7 @@ class Player {
                 menuSelectSound.play();
 
             }
-        } else if (event.key === 'ArrowRight' || event.key === "d"){
+        } else if (event.key === 'ArrowRight'){
             if (this.health > 0) {
                 this.currentMovingDirection = DIRS[2];
             }
@@ -821,8 +821,10 @@ class Player {
                 let questionedDetection = detections[i];
 
                 // debugger;
-                if(questionedDetection.tiedObj.constructor.name === "Skeleton" 
-                    && questionedDetection.constructor.name === "AttackBox"){
+                if((questionedDetection.tiedObj.constructor.name === "Skeleton" 
+                    && questionedDetection.constructor.name === "AttackBox")|| 
+                    (questionedDetection.tiedObj.constructor.name === "Slime" 
+                    && questionedDetection.constructor.name === "AttackBox")){
                         
                         // console.log('Attacked by skeleton');
                         this.health--;

@@ -9,6 +9,8 @@ import Hitbox from './utils';
 import Skeleton from './Skeleton'
 import Sound from './musics';
 
+import Slime from './Slime';
+
 
 // const gameStartMusic = new Sound('./src/graphics/NinjaAdventure/Musics/16 = Melancholia.ogg')
 
@@ -147,19 +149,19 @@ class TileMap {
         [' ', '  ', 'Wr',  ' ', 'BN','BN', 'BN', 'BN', 'BN','BN','BN','BN','BN', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ','  ','BN',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' '],
         [' ', '  ', '  ',  ' ', 'BN','BN',  ' ',  'P', 'Gc', ' ','Ra','BN','BN','Wr','  ','BN','  ','  ','  ','BN','BN','BN','  ', 'BN', 'BN',  ' ',  ' ', ' ', ' ', ' '],
         [' ',  ' ',  ' ',  ' ', 'BN','Bd',  ' ',  ' ',  ' ', ' ', ' ','BN','BN','BN','BN', ' ','BN','BN','BN', ' ', ' ', ' ', ' ',  ' ',  ' ', 'BN', 'BN', ' ', ' ', ' '],
-        [' ',  ' ',  ' ',  ' ', 'BN', ' ',  ' ',  ' ',  ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ',  ' ',  ' ',  ' ', 'BN','  ', ' ', ' '],
-        [' ', 'Wr',  ' ', 'BN', 'BN','BN', 'BN', 'Dc', 'BN','BN','BN','BN','Co', ' ', ' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ','Skt','Skt','Skt',  ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BN',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','  ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BN',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Sk', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
+        [' ',  ' ',  ' ',  ' ', 'BN', ' ',  ' ',  ' ',  ' ', ' ', ' ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sl', ' ','Co', ' ',  ' ',  ' ',  ' ', 'BN','  ', ' ', ' '],
+        [' ', 'Wr',  ' ', 'BN', 'BW','BW', 'BW', 'Dc', 'BW','BW','BW','BW','Co', ' ', ' ','Co','Co', ' ', ' ', ' ', ' ', ' ', ' ','Sl','Skt','Skt',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','  ', ' ','Sl', ' ', ' ', ' ','BC','BC','BC','BC','BC',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
+        [' ',  ' ', 'BN', 'Sl',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Sk', ' ', ' ', ' ', ' ', ' ','BN', ' ','Wr', ' ','BN',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
         [' ',  ' ', 'BN',  ' ',  ' ','Sk',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BN', ' ', ' ', ' ','BN',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
-        [' ',  ' ', 'BC',  ' ',  ' ','R1', 'R1', 'R1', 'R1','R2', ' ', ' ', ' ','Sk', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN',  ' ', 'Co',  ' ', 'BC','BN', ' ', ' '],
+        [' ',  ' ', 'BC',  ' ',  ' ','R1', 'R1', 'R1', 'R1','R2','Sl', ' ', ' ','Sk', ' ','Co', ' ', ' ','BN', ' ', ' ', ' ','BN',  ' ', 'Co',  ' ', 'BC','BN', ' ', ' '],
         [' ', 'BN',  ' ',  ' ',  ' ', ' ', 'Bu',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ', 'Co',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' '],
-        [' ', 'BN',  ' ',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ', 'Sk',  ' ', 'BN', ' ','Wr', ' '],
-        [' ', 'BN',  ' ', '  ', 'Co', ' ','Skt','Skt','Skt', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
-        [' ', 'BN', 'Co',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Co',  ' ',  ' ',  ' ','BN','  ', ' '],
-        [' ', 'BN',  ' ',  ' ', 'Sk', ' ',  ' ', 'BN', '  ','BN', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
-        [' ', 'BN', 'BC',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sk', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN','BN','  '],
+        [' ', 'BN',  ' ', 'Co',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ', ' ','Sl','Sl','Sl', ' ',  ' ',  ' ',  ' ', 'BN', ' ', ' ', ' '],
+        [' ', 'BN',  ' ',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sl', ' ', ' ', ' ', ' ', ' ', ' ',  ' ', 'Sk',  ' ', 'BN', ' ','Wr', ' '],
+        [' ', 'BN',  ' ', '  ', 'Co', ' ','Skt','Slt','Slt', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN', ' ', ' '],
+        [' ', 'BN', 'Co',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ','Sl', ' ', ' ', ' ', ' ', 'Co',  ' ',  ' ',  ' ','BN','  ', ' '],
+        [' ', 'BN',  ' ',  ' ', 'Sk','Sl',  ' ', 'BN', '  ','BN', ' ','Sl', ' ', ' ', ' ', ' ', ' ','Co', ' ', ' ', ' ', ' ', ' ',  ' ',  ' ', 'Co',  ' ','BN', ' ', ' '],
+        [' ', 'BN', 'BC',  ' ',  ' ', ' ',  ' ', 'BC', 'BC','BC', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Sl', ' ', ' ',  ' ',  ' ',  ' ',  ' ','BN','BN','  '],
         [' ',  ' ', 'BN', 'BC',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ','BC','BC','BC','BC','BC', ' ','Co', ' ','BC','BC', 'BC', 'BC', 'BC','SkG', ' ','Co','BN'],
         [' ',  ' ',  ' ',  ' ', 'BN','BN', 'BN', 'BN', 'BN','BN','BN','BN','BN','BN', ' ', ' ', ' ','BN','BN','BN','BN','BN', ' ',  ' ',  ' ', 'BN', 'BN','BN','BN','BN'],
         [' ',  ' ',  ' ',  ' ',  ' ', ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ','Wr', ' ', ' ',  ' ',  ' ',  ' ',  ' ', ' ', ' ', ' ']
@@ -369,8 +371,16 @@ class TileMap {
                 if (tile === "Sk" || tile === "Skt") {
                     let sub = this.level
                     let rand = randomIntFromInterval(1,(15-sub))
-                    if (rand < 4) {
+                    if (rand < 2) {
                         this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
+                    }
+                }
+
+                if (tile === "Sl" || tile === "Slt") {
+                    let sub = this.level
+                    let rand = randomIntFromInterval(1,(15-sub))
+                    if (rand < 4) {
+                        this.enemies.push(new Slime (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
                     }
                 }
              }
@@ -403,6 +413,9 @@ class TileMap {
                     let rock = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 0, -3)
                     objectsCollection.push(rock);
                     // console.log(objectsCollection)
+                } else if (tile === "BW"){
+                    let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 1, 0, this, 1);
+                    objectsCollection.push(invisBoundary);
                 } else if (tile === 'BN'){
                     // render border hitbox here
                     let invisBoundary = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize - 5, 0, this, 3);
@@ -438,15 +451,23 @@ class TileMap {
                     let food = new Consumable(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, 6.5, 6.5, 0, 0, Math.floor(Math.random() * 1000))
             
                 } else if (tile === "Dc") {
-                    this.doorObj = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 6, 0, this, -4, -2)
+                    this.doorObj = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize + 2, 0, this, 0, -3)
                 } else if (tile === "Bd") {
                     let bed = new EnvObject(col * this.tileSize, row * this.tileSize, this.tileSize, 0, this, -4, -3)
                     
                 } else if (tile === "Sk") {
                     let rand = randomIntFromInterval(1,(15-this.level))
-                    if (rand < 4) {
+                    if (rand < 2) {
                         this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
                     }
+                }else if (tile === "Sl"){
+                    // console.log("poop")
+                    let rand = randomIntFromInterval(1,(15-this.level))
+                    if (rand < 4) {
+                        this.enemies.push(new Slime (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
+                    }   
+
+
                 } else if (tile === "SkG") {
                     this.enemies.push(new Skeleton (col *this.tileSize, row * this.tileSize, this.tileSize, 0.7, this))
 
